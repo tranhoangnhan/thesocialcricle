@@ -16,7 +16,7 @@ return new class extends Migration
             // $table->integer('user_one_id');
             // $table->integer('user_two_id');
             $table->enum('status',['0','1']);
-            $table->datetime('time_accept');
+            $table->datetime('time_accept')->nullable();
             $table->timestamps();
         });
     }
