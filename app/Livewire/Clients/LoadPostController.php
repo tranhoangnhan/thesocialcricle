@@ -118,7 +118,7 @@ class LoadPostController extends Component
                  'message'=>auth()->user()->user_fullname.' đã bình luận một bài viết của bạn',
                  'time'=>date('Y-m-d H:i:s'),
             ]);
-            event(new PostLike(auth()->user()->user_fullname.' đã bình luận một bài viết của bạn',auth()->user()));
+            event(new PostLike(auth()->user()->user_fullname.' đã bình luận một bài viết của bạn',auth()->user(),$post->user_id));
         }
     }
     public function render()
