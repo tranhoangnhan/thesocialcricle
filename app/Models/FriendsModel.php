@@ -10,8 +10,6 @@ class FriendsModel extends Model
     use HasFactory;
 
     public $table="friends";
-    
-    public $fillable = ['status',	'time_accept',	'user_one_id',	'user_two_id', 'created_at',	'updated_at'];
     public function userOne()
     {
         return $this->belongsTo(UsersModel::class, 'user_one_id');
