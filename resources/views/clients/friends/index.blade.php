@@ -32,7 +32,7 @@
 
             
 
-                   @livewire('Clients.show-add-friends')
+                   @livewire('Clients.Friends.ShowAddFriend')
                    
 
                 </ul>
