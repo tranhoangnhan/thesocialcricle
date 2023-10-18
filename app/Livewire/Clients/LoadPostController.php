@@ -84,10 +84,29 @@ class LoadPostController extends Component
             'post_id' => $id,
             'user_id' => auth()->user()->user_id,
         ]);
+
+        $post = PostsModel::find($post_id);
+        $post->comments = $post->comments + 1;
+        $post->save();
+        $this->ContentComment[$post_id] = '';
+        if(auth()->user()->user_id != $post->user_id){
+            NotificationModel::create([
+               'from_user_id'=>auth()->user()->user_id,
+                 'to_user_id'=>$post->user_id,
+                 'action'=>'comment',
+                 'node_type'=>'post',
+                 'node_url'=>$post->post_id,
+                 'message'=>auth()->user()->user_fullname.' đã bình luận một bài viết của bạn',
+                 'time'=>date('Y-m-d H:i:s'),
+            ]);
+            event(new PostLike(auth()->user()->user_fullname.' đã bình luận một bài viết của bạn',auth()->user(),$post->user_id));
+        }
+
        
 
      
        
+
     }
 }
 

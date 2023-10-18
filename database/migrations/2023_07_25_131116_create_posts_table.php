@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('post_id');
             $table->enum('user_type', ['user', 'page']);
-            $table->enum('in_group',['0', '1'])->default('0')->nullable();
+            $table->enum('in_group',['0', '1'])->default(0);
             // $table->integer('group_id')->nullable();
             $table->enum('group_approved',['0','1'])->default('0');
             $table->enum('in_wall',['0','1'])->default('0');
