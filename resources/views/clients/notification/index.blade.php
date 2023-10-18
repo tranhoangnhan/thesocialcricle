@@ -1,7 +1,7 @@
 @livewire('clients.notification.index')
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script>
-    Pusher.logToConsole = true;
+    Pusher.logToConsole = false;
 
     var pusher = new Pusher('150f6fc3c93d4b5e8aec', {
         cluster: 'ap1'
