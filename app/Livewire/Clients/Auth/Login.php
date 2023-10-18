@@ -84,6 +84,6 @@ class Login extends Component
     {
         Auth::logout();
         session()->flush();
-        return redirect(route('home'));
+        return redirect(route('/index'));
     }
 }

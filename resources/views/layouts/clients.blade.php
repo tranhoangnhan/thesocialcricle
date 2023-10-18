@@ -168,7 +168,9 @@
 
 
     <!-- Javascript
+        
     ================================================== -->
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('clients/assets/js/tippy.all.min.js') }}"></script>
@@ -181,9 +183,57 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var submitButton = document.getElementById("submit-button");
+            var contentInput = document.getElementById("content-input");
+    
+            contentInput.addEventListener("input", function () {
+                // Kiểm tra nội dung của trường input
+                if (contentInput.value.trim() === "") {
+                    submitButton.disabled = true; // Nếu trống, tắt nút submit
+                } else {
+                    submitButton.disabled = false; // Ngược lại, bật nút submit
+                }
+            });
+        });
+    </script>
+    <script>
+        // Lắng nghe sự kiện click trên các liên kết tab
+        document.addEventListener("DOMContentLoaded", function() {
+            const tabLinks = document.querySelectorAll(".responsive-nav a");
+    
+            tabLinks.forEach(function(link) {
+                link.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    // Lấy href của liên kết
+                    const tabId = link.getAttribute("href").substring(1);
+    
+                    // Gọi hàm để tải dữ liệu tương ứng với tab đã chọn
+                    loadTabData(tabId);
+                });
+            });
+        });
+    
+        function loadTabData(tabId) {
+            const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/load-tab-data?tab=" + tabId, true);
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const responseData = xhr.responseText;
+            // Cập nhật nội dung trang với dữ liệu nhận được
+            document.getElementById("tab-content").innerHTML = responseData;
+        }
+    };
+
+    xhr.send();
+        }
+    </script>
+    
     @yield('js')
     @livewireScripts()
 </body>
+
 
 </html>

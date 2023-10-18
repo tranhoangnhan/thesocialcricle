@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Clients\Friends;
+namespace App\Livewire\Clients;
 
 use Livewire\Component;
 use App\Models\FriendsModel;
@@ -27,7 +27,7 @@ class ShowAddFriends extends Component
     }
     public function render()
     {
-        return view('livewire.clients.friends.show-add-friends',[
+        return view('livewire.clients.show-add-friends',[
           'listFriends' => $this->showFriends()
         ]);
     }

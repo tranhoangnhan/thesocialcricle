@@ -13,12 +13,12 @@ use App\Livewire\Counter;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Clients\Auth\Login;
 use App\Livewire\Clients\HomeController as HomeC;
-use App\Livewire\Clients\Conversations\Post;
+use App\Livewire\Clients\PostController as Post;
+use App\Http\Controllers\GoogleDriveController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ShowAddFriendsController;
+use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\VideoController;
-use App\Events\PostLike;
-use App\Livewire\Clients\HomeController as ClientsHomeController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,10 +37,65 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/logout', [Login::class, 'logout'])->name('logout');
     Route::get('/group', [GroupController::class, 'index'])->name('group');
     Route::get('/messages/{id?}', [ConversationsController::class, 'index'])->name('messages');
+    Route::post('/search', [SearchController::class, 'index'])->name('search');
+    Route::get('/friends',[ShowAddFriendsController::class,'render'])->name('friends');
     Route::post('/create-post', [Post::class, 'createPostIndex'])->name('createPostIndex');
 });
+
+// Route::get('/test', function(){
+//     return 'test';
+// })->middleware('auth.basic');
+
 Route::get('/reset-password/{key}', [AuthController::class,'reset_password'])->name('reset_password');
 Route::get('/forgotpassword', [AuthController::class, 'forgot'])->name('forgotpassword');
 Route::get('/check', function () {
     dd(request());
 });
+Route::get('/test', [PostController::class, 'index']);
+
+
+
+Route::get('/son', [UserController::class, 'addPermission']);
+
+Auth::routes();
+
+
+// <div class="relative" uk-slider="finite: true">
+
+// <div class="container px-1 py-3 row gy-2">
+//     <div class="card col-3">
+//         <div class="card-media h-28">
+//             <div class="card-media-overly"></div>
+//             <img src="{{asset('clients/assets/images/group/group-cover-1.jpg')}}" alt="">
+//             <div class="absolute bg-red-100 font-semibold px-2.5 py-1 rounded-lg text-red-500 text-xs top-2.5 left-2.5"> Trend </div>
+//         </div>
+//         <div class="card-body">
+//             <a href="timeline-group.html" class="font-semibold text-lg truncate"> Graphic Design </a>
+//             <div class="flex items-center flex-wrap space-x-1 mt-1 text-sm text-gray-500 capitalize">
+//                 <a href="#"> <span> 232k members </span> </a>
+//                 <a href="#"> <span> 1.7k post a day </span> </a>
+//             </div>
+//             <div class="flex mt-3.5 space-x-2">
+//                 <div class="flex items-center -space-x-2 -mt-1">
+//                     <img alt="Image placeholder" src="{{asset('clients/assets/images/avatars/avatar-6.jpg')}}" class="border-2 border-white rounded-full w-7">
+//                     <img alt="Image placeholder" src="{{asset('clients/assets/images/avatars/avatar-5.jpg')}}" class="border-2 border-white rounded-full w-7">
+//                 </div>
+//                 <div class="flex-1 leading-5 text-sm">
+//                     <div> <strong>Johnson</strong> and 5 freind are members </div>
+//                 </div>
+//             </div>
+//             <div class="flex mt-3.5 space-x-2 text-sm font-medium">
+//                 <a href="#" class="bg-blue-600 flex flex-1 h-8 items-center justify-center rounded-md text-white capitalize">
+//                     Join
+//                 </a>
+//                 <a href="#" class="bg-gray-200 flex flex-1 h-8 items-center justify-center rounded-md capitalize">
+//                     View
+//                 </a>
+//             </div>
+//         </div>
+//     </div>
+  
+    
+// </div>
+
+// </div>

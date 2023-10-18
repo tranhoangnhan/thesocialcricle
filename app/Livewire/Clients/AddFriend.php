@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Clients\Friends;
+namespace App\Livewire\Clients;
 
 use Livewire\Component;
 use App\Models\FriendsModel;
@@ -47,7 +47,7 @@ class AddFriend extends Component
     public function render()
     {
         
-        return view('livewire.clients.friends.add-friend',[
+        return view('livewire.clients.add-friend',[
             'Users' => UsersModel::all(),
         ]);
     }

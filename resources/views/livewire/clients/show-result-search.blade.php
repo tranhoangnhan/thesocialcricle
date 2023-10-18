@@ -37,7 +37,7 @@
                                         <div class="flex-1">
                                             <a href="timeline-page.html" class="text-base font-semibold capitalize"> {{$friend->user_fullname}} </a>
                                         </div>
-                                        @livewire('Clients.Friends.AddFriend', ['friendData' => $friend], key($friend->user_id))
+                                        @livewire('Clients.AddFriend', ['friendData' => $friend], key($friend->user_id))
 
                                      
                                     </div>

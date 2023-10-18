@@ -17,7 +17,7 @@
                         @csrf
                         <textarea
                             class="uk-textare text-black shadow-none focus:shadow-none text-xl font-medium resize-none"
-                            rows="5" placeholder=" {{auth()->user()->user_fullname}}, bạn muốn đăng gì?"
+                            rows="5" id="content-input" placeholder=" {{auth()->user()->user_fullname}}, bạn muốn đăng gì?" 
                             name="content"></textarea>
                 </div>
 
@@ -89,10 +89,10 @@
                 </div>
             </div>
             <div class="flex items-center w-full justify-between border-t p-3">
-
+               
                 <select name="privacy" id="privacy" class="form-select" aria-label="Default select example"  >
                     <option value="me">Chỉ mình tôi</option>
-                    <option value="public" selected>Mọi ngời</option>
+                    <option value="public">Mọi ngời</option>
                     <option value="friends">Bạn bè </option>
 
                 </select>
@@ -108,9 +108,24 @@
                             </path>
                         </svg>
                         Live </a>
-                    <button  type="submit"
+                    <button  type="submit" disabled id="submit-button" 
                         class="bg-blue-600 flex h-9 items-center justify-center rounded-md text-white px-5 font-medium">
                         Share </button>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                var submitButton = document.getElementById("submit-button");
+                                var contentInput = document.getElementById("content-input");
+                        
+                                contentInput.addEventListener("input", function () {
+                                    // Kiểm tra nội dung của trường input
+                                    if (contentInput.value.trim() === "") {
+                                        submitButton.disabled = true; // Nếu trống, tắt nút submit
+                                    } else {
+                                        submitButton.disabled = false; // Ngược lại, bật nút submit
+                                    }
+                                });
+                            });
+                        </script>
                     </form>
 
                 </div>
@@ -120,3 +135,4 @@
         </div>
 
     </div>
+  
