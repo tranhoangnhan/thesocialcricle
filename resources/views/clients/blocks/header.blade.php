@@ -21,9 +21,52 @@
             </div>
 
             <!-- search icon for mobile -->
-            <div>
-                {{--                <livewire:search/>--}}
-                @livewire('Clients.Search')
+            <div class="header-search-icon" uk-toggle="target: #wrapper ; cls: show-searchbox"> </div>
+            <div class="header_search"><i class="uil-search-alt"></i>
+                <input value="" type="text" class="form-control"
+                    placeholder="Tìm kiếm bạn bè, video, và nhiều hơn nữa,..." autocomplete="off">
+                <div uk-drop="mode: click" class="header_search_dropdown">
+
+                    <h4 class="search_title"> Recently </h4>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <img src="{{ asset('clients/assets/images/avatars/avatar-1.jpg') }}" alt=""
+                                    class="list-avatar">
+                                <div class="list-name"> Erica Jones </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="{{ asset('clients/assets/images/avatars/avatar-2.jpg') }}" alt=""
+                                    class="list-avatar">
+                                <div class="list-name"> Coffee Addicts </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="{{ asset('clients/assets/images/avatars/avatar-3.jpg') }}" alt=""
+                                    class="list-avatar">
+                                <div class="list-name"> Mountain Riders </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="{{ asset('clients/assets/images/avatars/avatar-4.jpg') }}" alt=""
+                                    class="list-avatar">
+                                <div class="list-name"> Property Rent And Sale </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <img src="{{ asset('clients/assets/images/avatars/avatar-5.jpg') }}" alt=""
+                                    class="list-avatar">
+                                <div class="list-name"> Erica Jones </div>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
             </div>
 
             <div class="right_side">
@@ -140,34 +183,7 @@
                         </div>
                     </div> --}}
 
-                    <a href="#" class="is_icon" uk-tooltip="title: Notifications">
-                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z">
-                            </path>
-                        </svg>
-                        <span>3</span>
-                    </a>
-                    <div uk-drop="mode: click" class="header_dropdown">
-                        <div class="dropdown_scrollbar" data-simplebar>
-                            <div class="drop_headline">
-                                <h4>Notifications </h4>
-                                <div class="btn_action">
-                                    <a href="#" data-tippy-placement="left" title="Notifications">
-                                        <ion-icon name="settings-outline"></ion-icon>
-                                    </a>
-                                    <a href="#" data-tippy-placement="left" title="Mark as read all">
-                                        <ion-icon name="checkbox-outline"></ion-icon>
-                                    </a>
-                                </div>
-                            </div>
-                            <ul>
-                             
-                                {{-- @livewire('Notification-component') --}}
-                            </ul>
-                        </div>
-                    </div>
-
+                    @include('clients.notification.index')
                     <!-- Message -->
                     <a href="#" class="is_icon" uk-tooltip="title: Message">
                         <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
