@@ -13,13 +13,14 @@ use App\Livewire\Counter;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Clients\Auth\Login;
 use App\Livewire\Clients\HomeController as HomeC;
-use App\Livewire\Clients\PostController as Post;
+use App\Livewire\Clients\Posts\PostController as Post;
 use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShowAddFriendsController;
 use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\EducationController;
+use App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +45,10 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/courses', [EducationController::class, 'index'])->name('Courses');
     Route::get('/courses/{slug}', [EducationController::class, 'courses_intro'])->name('courses_intro');
     Route::get('/courses/video', [EducationController::class, 'courses_video'])->name('courses_video');
+    Route::get('/profile/{id}', [ProfileController::class, 'showInfo'])->name('profile_render');
+    Route::post('/upanh', [ProfileController::class, 'upanh'])->name('profile_about');
+
+
 });
 
 // Route::get('/test', function(){

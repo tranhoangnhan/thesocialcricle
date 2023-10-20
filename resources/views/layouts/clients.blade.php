@@ -198,6 +198,7 @@
             });
         });
     </script>
+    
     <script>
         // Lắng nghe sự kiện click trên các liên kết tab
         document.addEventListener("DOMContentLoaded", function() {
