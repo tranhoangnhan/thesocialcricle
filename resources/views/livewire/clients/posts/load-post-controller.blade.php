@@ -6,11 +6,11 @@
             <!-- post header-->
             <div class="flex justify-between items-center lg:p-4 p-2.5">
                 <div class="flex flex-1 items-center space-x-4">
-                    <a href="#">
+                    <a href="/profile/{{ $post->user->user_id }}">
                         {!! getAvatar($post->user_id) !!}
                     </a>
                     <div class="flex-1 font-semibold capitalize">
-                        <a href="#" class="text-black dark:text-gray-100"> {{ $post->user->user_fullname }} </a>
+                        <a href="/profile/{{ $post->user->user_id }}" class="text-black dark:text-gray-100"> {{ $post->user->user_fullname }} </a>
                         <div class="text-gray-700 flex items-center space-x-2">
 
                             @php

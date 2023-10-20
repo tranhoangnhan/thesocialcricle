@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Clients\Posts;
+namespace App\Livewire\Clients\Profile;
 
 use App\Models\PostsModel;
 use App\Models\UsersModel;
@@ -9,22 +9,23 @@ use App\Models\PostReaction;
 use App\Models\PostsComment;
 use App\Events\Clients\Notification\User;
 use App\Models\NotificationModel;
-
-class LoadPostController extends Component
+use Illuminate\Support\Facades\DB;
+class Posts extends Component
 {
     public $totalRecords;
     public $loadAmount = 3;
     public $postReaction;
     public $statusLike;
     public $posts;
+    public $user_id; // Sẽ lưu trữ ID của trang cá nhân
 
     public $ContentComment = [];
     public $loadComment = [];
-    public function mount()
+    public function mount($user_id)
     {
-        
-        $this->totalRecords = PostsModel::where('is_hidden', '0')->count();
-        $this->loadComment = PostsModel::where('is_hidden', '0')->pluck('post_id')->toArray();
+        $this->user_id = $user_id;
+        $this->totalRecords = PostsModel::where('user_id', $user_id)->count();
+        $this->loadComment = PostsModel::where('user_id', $user_id)->pluck('post_id')->toArray();
         foreach ($this->loadComment as $key => $value) {
             $this->loadComment[$value] = 3;
             $this->ContentComment[$value] = '';
@@ -36,7 +37,7 @@ class LoadPostController extends Component
         $currentCount = count($this->posts);
 
         if ($currentCount >= $this->totalRecords) {
-            $newPosts = PostsModel::where('is_hidden', '0')
+            $newPosts = PostsModel::where('user_id', $this->user_id)
                 ->where('privacy', 'public')
                 ->skip($currentCount)
                 ->take(3)
@@ -158,7 +159,7 @@ class LoadPostController extends Component
     public function render()
     {
 
-        $this->posts = PostsModel::where('is_hidden', '0')->where('privacy', 'public')
+        $this->posts = PostsModel::where('user_id', $this->user_id)->where('privacy', 'public')
             ->limit($this->loadAmount)
             ->get();
         $posts = $this->posts;
@@ -179,7 +180,7 @@ class LoadPostController extends Component
                 ->count();
         }
 
-        return view('livewire.clients.posts.load-post-controller')
+        return view('livewire.clients.profile.posts')
             ->with(['posts' => $posts]);
     }
 }
