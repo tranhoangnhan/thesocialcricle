@@ -77,7 +77,7 @@
                     </div>
                 </div>
 
-                @livewire('Clients.LoadPostController')
+                @livewire('Clients.Posts.LoadPostController')
 
               
 
