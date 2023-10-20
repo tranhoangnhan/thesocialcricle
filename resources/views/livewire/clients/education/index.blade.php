@@ -7,7 +7,7 @@
              <div class="absolute bg-yellow-100 font-semibold px-2.5 py-1 rounded-full text-yellow-500 text-xs top-2.5 left-2.5">
                 Có phí
              </div>
-             <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt="">
+             <img src="{{asset('clients/assets/images/icon-play.svg')}}" class="w-12 h-12 uk-position-center" alt="">
         </a>
         <div class="flex-1 space-y-2"> 
              
@@ -21,7 +21,8 @@
                     <div class="md:block hidden">·</div>
                     <div> <i class="icon-feather-users mr-2"></i> 120 Đã tham gia</div>
                 </div>
-                <a href="#" class="md:flex items-center justify-center h-9 px-8 rounded-md border hidden bg-gray-100">Hủy tham gia </a>
+                <a wire:click.prevent='enroll({{$course->course_id}})' class="md:flex items-center justify-center h-9 px-8 rounded-md border hidden bg-gray-100">Tham gia </a>
+              
             </div>
 
             <div class="absolute top-1 right-0 md:inline hidden">

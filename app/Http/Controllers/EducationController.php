@@ -8,9 +8,10 @@ use App\Models\CoursesModel;
 class EducationController extends Controller
 {
     public function index()
-    {
+    {  
         
-        return view('clients.education.index');
+        
+        return view('clients.education.index',['courses'=>CoursesModel::where('status',0)->get()]);
     }
     public function courses_intro($slug)
     {   
