@@ -1,6 +1,7 @@
 # DỰ ÁN MẠNG XÃ HỘI GIÁO DỤC THE SOCIAL CRICLE
 # NHỚ GIẢI NÉN FILE VENDOR, ĐỔI TÊN FILE FILEENVNE THÀNH .ENV
-
+# Vendor.zip anh em giải nén ra thành thư mục vender
+# 'fileenvne' anh em đổi thành .env
 # ĐĂNG NHẬP GIT
 - git config --global user.name "TÊN"
 - git config --global user.email "mail"
