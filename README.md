@@ -1,4 +1,5 @@
 # DỰ ÁN MẠNG XÃ HỘI GIÁO DỤC THE SOCIAL CRICLE
+# NHỚ GIẢI NÉN FILE VENDOR, ĐỔI TÊN FILE FILEENVNE THÀNH .ENV
 
 # ĐĂNG NHẬP GIT
 - git config --global user.name "TÊN"
