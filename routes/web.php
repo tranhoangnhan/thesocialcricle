@@ -46,7 +46,6 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/courses/{slug}', [EducationController::class, 'courses_intro'])->name('courses_intro');
     Route::get('/courses/video', [EducationController::class, 'courses_video'])->name('courses_video');
     Route::get('/profile/{id}', [ProfileController::class, 'showInfo'])->name('profile_render');
-    Route::post('/upanh', [ProfileController::class, 'upanh'])->name('profile_about');
 
 
 });
