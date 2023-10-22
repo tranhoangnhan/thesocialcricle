@@ -53,7 +53,14 @@ Route::get('/forgotpassword', [AuthController::class, 'forgot'])->name('forgotpa
 Route::get('/check', function () {
     dd(request());
 });
-Route::get('/test', [PostController::class, 'index']);
+Route::get('/test', function () {
+    return view('test');
+});
+Route::get('/test2', function () {
+    return view('test2');
+});
+Route::post('/upload', [GoogleDriveController::class, 'index'])->name('upload');
+
 
 
 

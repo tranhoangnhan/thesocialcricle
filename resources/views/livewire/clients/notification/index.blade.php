@@ -18,42 +18,40 @@
                 </div>
             </div>
             <ul id="notification-list">
-                @if (!is_null($notifications))
-                    @foreach ($notifications as $noti)
-                        <li class="notification-{{ $noti->seen }}">
-                            <a href="#">
-                                <div class="drop_avatar"> <img
-                                        src="{{ asset('clients/assets/images/avatars/avatar-2.jpg') }}" alt="">
-                                </div>
-                                <div class="drop_text">
-                                    <p>
-                                        {{ $noti->message }}
-                                    </p>
-                                    <time> @php
-                                        $createdAt = $noti->created_at;
-                                        $now = now();
-                                        $diffInSeconds = $now->diffInSeconds($createdAt);
-                                        $diffInMinutes = $now->diffInMinutes($createdAt);
-                                        $diffInHours = $now->diffInHours($createdAt);
-                                        $diffInDays = $now->diffInDays($createdAt);
-                                    @endphp
+                @foreach ($notifications as $noti)
+                    <li class="notification-{{ $noti->seen }}">
+                        <a href="#">
+                            <div class="drop_avatar"> <img
+                                    src="{{ asset('clients/assets/images/avatars/avatar-2.jpg') }}" alt="">
+                            </div>
+                            <div class="drop_text">
+                                <p>
+                                    {{ $noti->message }}
+                                </p>
+                                <time> @php
+                                    $createdAt = $noti->created_at;
+                                    $now = now();
+                                    $diffInSeconds = $now->diffInSeconds($createdAt);
+                                    $diffInMinutes = $now->diffInMinutes($createdAt);
+                                    $diffInHours = $now->diffInHours($createdAt);
+                                    $diffInDays = $now->diffInDays($createdAt);
+                                @endphp
 
-                                        {{-- Hiển thị thời gian --}}
-                                        @if ($diffInSeconds < 60)
-                                            {{ $diffInSeconds }} giây trước
-                                        @elseif ($diffInMinutes < 60)
-                                            {{ $diffInMinutes }} phút trước
-                                        @elseif ($diffInHours < 24)
-                                            {{ $diffInHours }} giờ trước
-                                        @else
-                                            {{ $diffInDays }} ngày trước
-                                        @endif
-                                    </time>
-                                </div>
-                            </a>
-                        </li>
-                    @endforeach
-                @endif
+                                    {{-- Hiển thị thời gian --}}
+                                    @if ($diffInSeconds < 60)
+                                        {{ $diffInSeconds }} giây trước
+                                    @elseif ($diffInMinutes < 60)
+                                        {{ $diffInMinutes }} phút trước
+                                    @elseif ($diffInHours < 24)
+                                        {{ $diffInHours }} giờ trước
+                                    @else
+                                        {{ $diffInDays }} ngày trước
+                                    @endif
+                                </time>
+                            </div>
+                        </a>
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>

@@ -29,14 +29,12 @@
                         <div class="line">
                             <input wire:model="course_name" class="line__input" id="course_name" name="course_name"
                                 type="text" value="" autocomplete="off">
-                            @if (is_null($course_name))
-                                <span for="username" class="line__placeholder"> Tên khóa học </span>
-                            @endif
+                            <span for="username" class="line__placeholder"> Tên khóa học </span>
                         </div>
 
                         <div>
                             <label for="" class="font-semibold text-base">Danh mục</label>
-                            <select id="" name="category" class="shadow-none selectpicker with-border"
+                            <select id="category" name="category" class="shadow-none selectpicker with-border"
                                 wire:model="category">
                                 <option value="1">HTML</option>
                                 <option value="2">CSS</option>
@@ -71,7 +69,8 @@
                     </div>
 
                 </div>
-            @elseif($step == 2)
+            @endif
+            @if ($step == 2)
                 <div class="max-w-2xl m-auto shadow-md rounded-md bg-white lg:mt-20">
 
                     <!-- form header -->
@@ -82,21 +81,17 @@
                     <!-- form body -->
                     <div class="p-10 space-y-7">
                         <input wire:model="banner" class="form-control" name="banner" type="file">
-
                     </div>
 
                     <!-- form footer -->
-                    <div class="flex justify-content-between border-gray-100 p-8">
-                        <button wire:click="back" type="button" class="button lg:w-1/3">
-                            Quay lại
-                        </button>
+                    <div class="flex justify-content-center border-gray-100 p-8">
                         <button wire:click="next" type="button" class="button lg:w-1/3">
                             Tiếp tục
                         </button>
                     </div>
-
                 </div>
-            @else
+            @endif
+            @if ($step == 3)
                 <div class="max-w-2xl m-auto shadow-md rounded-md bg-white lg:mt-20">
 
                     <!-- form header -->
@@ -106,53 +101,40 @@
 
                     <!-- form body -->
                     <div class="p-10 space-y-7">
-                        <div class="mb-3 container-input">
-                            <label for="exampleFormControlInput1" class="form-label">Yêu cầu:</label>
-                            <input type="text" class="form-control"
-                                placeholder="Kiến thức cần có để tham gia khóa học">
-                            <button class="btn mx-2" id="addInput1">+</button>
+                        <div>
+
+                            <div class="mb-3 container-input">
+                                <label class="form-label">Yêu
+                                    cầu:</label>
+                                @foreach ($skills as $key => $skill)
+                                    <input type="text" class="form-control" wire:model="skills.{{ $key }}"
+                                        placeholder="Kiến thức cần có để tham gia khóa học">
+                                @endforeach
+                            </div>
+
+                            <button class="btn mx-2" wire:click="addSkill">+</button>
                         </div>
+
                         <div class="mb-3 container-input">
                             <label for="exampleFormControlInput1" class="form-label">Nội dung khóa học:</label>
-                            <input type="text" class="form-control" placeholder="Kiến thức học được">
-                            <button class="btn mx-2" id="addInput2">+</button>
+                            @foreach ($contents as $key => $content)
+                            <input type="text" class="form-control" wire:model="contents.{{ $key }}"
+                                placeholder="Kiến thức đạt được khi tham gia khóa học">
+                        @endforeach
+                        <button class="btn mx-2" wire:click="addContent">+</button>
                         </div>
                     </div>
-                      <!-- form footer -->
-                    <div class="flex justify-content-between border-gray-100 p-8">
-                        <button wire:click="back" type="button" class="button lg:w-1/3">
-                            Quay lại
-                        </button>
-                        <button wire:click="Create" type="button" class="button lg:w-1/3">
+                    <!-- form footer -->
+                    <div class="flex justify-content-center border-gray-100 p-8">
+                        <button wire:click="create" type="button" class="button lg:w-1/3">
                             Đăng kí
                         </button>
                     </div>
                 </div>
-
-
+            @endif
         </div>
-        @endif
+
 
     </div>
 </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.1.js" crossorigin="anonymous"></script>
-<script>
-    // Sử dụng jQuery để thêm trường nhập liệu khi bấm nút "+"
-    $(document).ready(function() {
-        $("#addInput1").click(function() {
-            const newInput = $("<input/>", {
-                type: "text",
-                class: "form-control",
-            });
-            newInput.insertBefore(this);
-        });
-        $("#addInput2").click(function() {
-            const newInput = $("<input/>", {
-                type: "text",
-                class: "form-control",
-            });
-            newInput.insertBefore(this);
-        });
-    });
-</script>
