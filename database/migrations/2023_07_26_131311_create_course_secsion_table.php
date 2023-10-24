@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('course_section', function (Blueprint $table) {
             $table->bigIncrements('section_id');
             $table->string('section_name',255);
+            $table->bigInteger('course_id');
             $table->string('slug',255);
             $table->timestamps();
         });

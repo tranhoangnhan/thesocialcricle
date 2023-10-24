@@ -11,7 +11,7 @@ class CourseSectionModel extends Model
     protected $table = 'course_section';
     protected $fillable = [
         'course_id',
-        'secsion_name',
-        'secsion_slug',
+        'section_name',
+        'slug',
     ];
 }

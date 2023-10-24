@@ -20,7 +20,8 @@ return new class extends Migration
             $table->enum('in_wall',['0','1'])->default('0');
             // $table->integer('wall_id');
             $table->string('post_type', 32)->nullable();
-            // $table->integer('colored_pattern')->default('0');
+            $table->integer('colored_pattern')->default('0');
+
             $table->string('privacy');
             $table->longtext('text')->nullable();
             $table->enum('comment_disable',['0','1'])->default('0');
