@@ -9,7 +9,7 @@ class EducationController extends Controller
 {
     public function index()
     {
-        return view('clients.education.index',['courses'=>CoursesModel::where('status',0)->get()]);
+        return view('clients.education.index',['courses'=>CoursesModel::where('payment',0)->get()]);
     }
     public function create()
     {

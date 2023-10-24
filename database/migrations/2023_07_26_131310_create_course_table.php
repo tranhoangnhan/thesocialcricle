@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('course', function (Blueprint $table) {
             $table->bigIncrements('course_id');
             $table->string('course_name',255);
-            $table->integer('instructor_id');
-            $table->string('category',255);
+            $table->integer('category_id',255);
             $table->string('payment',255);
             $table->text('require_skill');
             $table->text('learn_skill');
