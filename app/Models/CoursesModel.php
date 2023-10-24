@@ -11,13 +11,14 @@ class CoursesModel extends Model
    protected $primaryKey = 'course_id';
     protected $fillable = [
          'course_id',
+         'payment',
+         'required_skill',
+         'learn_skill',
          'course_name',
          'description',
          'banner',
-         'start_date',
-        'end_date',
-         'course_duration',
-         'intructor_id',
+         'category_id',
+         'instructor_id',
          'created_at',
          'updated_at',
          'slug',
