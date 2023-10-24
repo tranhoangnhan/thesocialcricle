@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('require_skill');
             $table->text('learn_skill');
             $table->text('description');
+            $table->enum('status',['0','1'])->default('0');
+            
             $table->string('banner');
             $table->string('slug');
             $table->timestamps();

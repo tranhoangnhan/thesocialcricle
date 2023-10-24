@@ -27,4 +27,8 @@ class EducationController extends Controller
     {
         return view('clients.education.video');
     }
+    public function courses_register()
+    {
+        return view('clients.education.register');
+    }
 }

@@ -13,14 +13,18 @@ use App\Livewire\Counter;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Clients\Auth\Login;
 use App\Livewire\Clients\HomeController as HomeC;
-use App\Livewire\Clients\PostController as Post;
+use App\Livewire\Clients\Posts\PostController as Post;
 use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShowAddFriendsController;
 use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\EducationController;
+
 use App\Livewire\Clients\Education\Create;
+
+
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +50,8 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/courses', [EducationController::class, 'index'])->name('Courses');
     Route::get('/courses/{slug}', [EducationController::class, 'courses_intro'])->name('courses_intro');
     Route::get('/courses/video', [EducationController::class, 'courses_video'])->name('courses_video');
+    Route::get('/profile/{id}', [ProfileController::class, 'showInfo'])->name('profile_render');
+
 });
 route::get('/create-course', [EducationController::class, 'create'])->name('create-course');
 Route::get('/reset-password/{key}', [AuthController::class,'reset_password'])->name('reset_password');
@@ -60,6 +66,7 @@ Route::get('/test2', function () {
     return view('test2');
 });
 Route::post('/upload', [GoogleDriveController::class, 'index'])->name('upload');
+
 
 
 
