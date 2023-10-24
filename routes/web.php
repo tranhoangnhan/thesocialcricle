@@ -42,6 +42,7 @@ Route::middleware('checkuser')->group(function () {
     Route::post('/search', [SearchController::class, 'index'])->name('search');
     Route::get('/friends',[ShowAddFriendsController::class,'render'])->name('friends');
     Route::post('/create-post', [Post::class, 'createPostIndex'])->name('createPostIndex');
+    Route::get('/create-course', [EducationController::class, 'courses_register'])->name('courses_register');
     Route::get('/courses', [EducationController::class, 'index'])->name('Courses');
     Route::get('/courses/{slug}', [EducationController::class, 'courses_intro'])->name('courses_intro');
     Route::get('/courses/video', [EducationController::class, 'courses_video'])->name('courses_video');

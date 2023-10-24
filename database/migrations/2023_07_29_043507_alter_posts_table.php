@@ -16,10 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->index();
             // $table->foreign('user_id')->references('user_id')->on('users');
 
-            $table->unsignedBigInteger('group_id')->index();
+            $table->unsignedBigInteger('group_id')->index()->nullable();
             // $table->foreign('group_id')->references('group_id')->on('groups');
 
-            $table->unsignedBigInteger('colored_pattern')->index();
+            $table->unsignedBigInteger('colored_pattern')->index()->nullable();
             // $table->foreign('colored_pattern')->references('pattern_id')->on('posts_colored_patterns');
         });
     }

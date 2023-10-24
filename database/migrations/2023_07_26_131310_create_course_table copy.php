@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('course', function (Blueprint $table) {
             $table->bigIncrements('course_id');
+            $table->bigInteger('category_id');
+            $table->enum('payment',['0','1'])->default('0');
             $table->string('course_name',255);
-            // $table->integer('instructor_id');
-            $table->timestamp('start_date')->nullable();
-            $table->timestamp('end_date')->nullable();
+            $table->string('slug',255);
+            $table->string('required_skill',255);
+            $table->string('learn_skill',255);
             $table->text('description');
             $table->enum('status',['0','1'])->default('0');
-            
             $table->string('banner');
             $table->timestamps();
         });
