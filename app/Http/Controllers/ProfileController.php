@@ -17,7 +17,7 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
- 
+
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -67,7 +67,7 @@ class ProfileController extends Controller
         return view('clients.profile.index', [
             'info' => $this->info_user,
             'posts' => $this->post_user,
-            
+
         ]);
     }
 }

@@ -47,7 +47,6 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/courses/video', [EducationController::class, 'courses_video'])->name('courses_video');
     Route::get('/profile/{id}', [ProfileController::class, 'showInfo'])->name('profile_render');
 
-
 });
 
 // Route::get('/test', function(){
@@ -102,8 +101,8 @@ Auth::routes();
 //             </div>
 //         </div>
 //     </div>
-  
-    
+
+
 // </div>
 
 // </div>
