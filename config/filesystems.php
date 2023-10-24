@@ -55,6 +55,15 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => 'hoangnhan.ddns.net',
+            'username' => 'Administrator',
+            'password' => '1901@Nhan',
+            'port' => 21,
+            'root' => '/mayao',
+        ],
+
 
     ],
 

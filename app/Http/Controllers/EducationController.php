@@ -8,16 +8,18 @@ use App\Models\CoursesModel;
 class EducationController extends Controller
 {
     public function index()
-    {  
-        
-        
-        return view('clients.education.index',['courses'=>CoursesModel::where('status',0)->get()]);
+    {
+        return view('clients.education.index',['courses'=>CoursesModel::where('payment',0)->get()]);
+    }
+    public function create()
+    {
+        return view('clients.education.create');
     }
     public function courses_intro($slug)
-    {   
+    {
 
         $course = CoursesModel::where('slug',"$slug")->first();
-       
+
 
         return view('clients.education.intro',['course'=>$course]);
     }

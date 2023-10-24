@@ -8,38 +8,30 @@ use App\Models\NotificationModel;
 class Index extends Component
 {
     public $notifications;
-    public $count; // Change 'notification' to 'notifications' to store an array of notifications
+    public $count;
+
     public function mount()
     {
-        $this->markAsRead();
+        $this->notifications = NotificationModel::where('to_user_id', auth()->user()->user_id)
+            ->orderBy('id', 'desc')
+            ->limit(10)
+            ->get();
+        $this->count = NotificationModel::where('to_user_id', auth()->user()->user_id)->where('seen', '0')->count();
     }
     public function markAsRead()
     {
-        $user = auth()->user();
-
-        if ($user) {
-            $this->notifications = NotificationModel::where('to_user_id', $user->user_id)->orderBy('seen', 'asc')->get();
-
-            foreach ($this->notifications as $notification) {
-                $notification->update(['seen' => 1]);
-            }
-        }
+        NotificationModel::where('to_user_id', auth()->user()->user_id)->update(['seen' => '1']);
+        $this->count = 0;
+        $this->notifications = NotificationModel::where('to_user_id', auth()->user()->user_id)
+            ->orderBy('id', 'desc')
+            ->limit(10)
+            ->get();
+        return view('livewire.clients.notification.index')->with(['notifications' => $this->notifications, 'count' => $this->count]);
     }
+
 
     public function render()
     {
-        $user = auth()->user();
-
-        if ($user) {
-            $this->notifications = NotificationModel::where('to_user_id', $user->user_id)
-            ->orderBy('id', 'desc') // Sau đó sắp xếp theo cột "time" theo thứ tự tăng dần
-            ->limit(10) // Giới hạn kết quả cho 10 bản ghi
-            ->get();
-        } else {
-            $this->notifications = collect(); // Create an empty collection
-        }
-
-        $this->count = NotificationModel::where('to_user_id', $user->user_id)->where('seen', '0')->count();
         return view('livewire.clients.notification.index')->with(['notifications' => $this->notifications, 'count' => $this->count]);
     }
 }
