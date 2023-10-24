@@ -30,12 +30,12 @@
 
                                 @foreach($friend as $friend)
                                     <div class="flex items-center space-x-4 rounded-md -mx-2 p-2 hover:bg-gray-50">
-                                        <a href="timeline-page.html" href="timeline-page.html"iv class="w-12 h-12 flex-shrink-0 overflow-hidden rounded-full relative">
+                                        <a href="/profile/ {{$friend->user_id}}" href="timeline-page.html"iv class="w-12 h-12 flex-shrink-0 overflow-hidden rounded-full relative">
 {{--                                            <img src="assets/images/avatars/avatar-1.jpg" class="absolute w-full h-full inset-0 " alt="">--}}
                                             {!!getAvatar($friend->user_id)!!}
                                         </a>
                                         <div class="flex-1">
-                                            <a href="timeline-page.html" class="text-base font-semibold capitalize"> {{$friend->user_fullname}} </a>
+                                            <a href="/profile/ {{$friend->user_id}}" class="text-base font-semibold capitalize"> {{$friend->user_fullname}} </a>
                                         </div>
                                         @livewire('Clients.Friends.AddFriend', ['friendData' => $friend], key($friend->user_id))
 
@@ -59,11 +59,11 @@
                             <!-- post header-->
                             <div class="flex justify-between items-center lg:p-4 p-2.5">
                                 <div class="flex flex-1 items-center space-x-4">
-                                    <a href="#">
+                                    <a href="/profile/{{$post->user->user_id}}">
                                         <img src="{{asset($post->user->user_avatar)}}" class="bg-gray-200 border border-white rounded-full w-10 h-10">
                                     </a>
                                     <div class="flex-1 font-semibold capitalize">
-                                        <a href="#" class="text-black dark:text-gray-100"> {{$post->user->user_fullname}} </a>
+                                        <a href="/profile/{{$post->user->user_id}}" class="text-black dark:text-gray-100"> {{$post->user->user_fullname}} </a>
                                         <div class="text-gray-700 flex items-center space-x-2">
 
                                             @php

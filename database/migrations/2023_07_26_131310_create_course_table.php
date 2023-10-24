@@ -18,6 +18,8 @@ return new class extends Migration
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->text('description');
+            $table->enum('status',['0','1'])->default('0');
+            
             $table->string('banner');
             $table->timestamps();
         });

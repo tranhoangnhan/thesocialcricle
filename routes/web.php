@@ -13,7 +13,7 @@ use App\Livewire\Counter;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Clients\Auth\Login;
 use App\Livewire\Clients\HomeController as HomeC;
-use App\Livewire\Clients\PostController as Post;
+use App\Livewire\Clients\Posts\PostController as Post;
 use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShowAddFriendsController;
@@ -46,6 +46,7 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/courses/{slug}', [EducationController::class, 'courses_intro'])->name('courses_intro');
     Route::get('/courses/video', [EducationController::class, 'courses_video'])->name('courses_video');
     Route::get('/profile/{id}', [ProfileController::class, 'showInfo'])->name('profile_render');
+
 });
 
 // Route::get('/test', function(){

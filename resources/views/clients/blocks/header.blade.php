@@ -277,7 +277,8 @@
                     </a>
                     <div uk-drop="mode: click;offset:5" class="header_dropdown profile_dropdown">
 
-                        <a href="/profile/{{auth()->user()->user_id}}" class="user">
+                        <a href="/profile/{{ auth()->user()->user_id }}" class="user">
+
                             <div class="user_avatar">
                                 {{-- <img src="https://img.thuthuatphanmem.vn/uploads/2018/09/19/avatar-facebook-chat-4_105604005.jpg"
                                     style="width:35px" alt=""> --}}
