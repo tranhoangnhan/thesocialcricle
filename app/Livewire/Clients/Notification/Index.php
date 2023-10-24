@@ -15,16 +15,15 @@ class Index extends Component
     }
     public function markAsRead()
     {
-        $user = auth()->user();
-
-        if ($user) {
-            $this->notifications = NotificationModel::where('to_user_id', $user->user_id)->orderBy('seen', 'asc')->get();
-
-            foreach ($this->notifications as $notification) {
-                $notification->update(['seen' => 1]);
-            }
-        }
+        NotificationModel::where('to_user_id', auth()->user()->user_id)->update(['seen' => '1']);
+        $this->count = 0;
+        $this->notifications = NotificationModel::where('to_user_id', auth()->user()->user_id)
+            ->orderBy('id', 'desc')
+            ->limit(10)
+            ->get();
+        return view('livewire.clients.notification.index')->with(['notifications' => $this->notifications, 'count' => $this->count]);
     }
+
 
     public function render()
     {
