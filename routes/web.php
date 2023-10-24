@@ -20,6 +20,7 @@ use App\Http\Controllers\ShowAddFriendsController;
 use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\EducationController;
+use App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +45,7 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/courses', [EducationController::class, 'index'])->name('Courses');
     Route::get('/courses/{slug}', [EducationController::class, 'courses_intro'])->name('courses_intro');
     Route::get('/courses/video', [EducationController::class, 'courses_video'])->name('courses_video');
+    Route::get('/profile/{id}', [ProfileController::class, 'showInfo'])->name('profile_render');
 });
 
 // Route::get('/test', function(){
@@ -98,8 +100,8 @@ Auth::routes();
 //             </div>
 //         </div>
 //     </div>
-  
-    
+
+
 // </div>
 
 // </div>

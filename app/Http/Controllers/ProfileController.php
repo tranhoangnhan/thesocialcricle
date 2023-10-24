@@ -8,12 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-
+use App\Models\UsersModel;
+use App\Models\PostsModel;
 class ProfileController extends Controller
 {
+    public $info_user;
+    public $post_user;
     /**
      * Display the user's profile form.
      */
+
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -56,5 +60,14 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+    public function showInfo($id) {
+        $this->info_user = UsersModel::find($id);
+        $this->post_user = PostsModel::where('user_id', $id)->get();
+        return view('clients.profile.index', [
+            'info' => $this->info_user,
+            'posts' => $this->post_user,
+
+        ]);
     }
 }
