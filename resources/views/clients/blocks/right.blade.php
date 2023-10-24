@@ -481,6 +481,6 @@
 </div>
 
 <!-- Craete post modal -->
-@livewire('clients.post-controller')
+@livewire('clients.posts.post-controller')
 
 </div>
