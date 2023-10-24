@@ -55,7 +55,7 @@
                         <button class="btn mx-2" wire:click="addLearn">+</button>
                     </div>
                 </div>
-                <div class="space-y-2">
+                <div class="space-y-2 mb-4">
                     <label for="" class="font-semibold text-base">Tinh phí</label>
                     <div> Nếu bật tính phí người dùng phải trả tiền mới có thể tham gia
                         khóa
@@ -76,7 +76,7 @@
         <div class="mb-3 container-input">
             <label for="exampleFormControlInput1" class="form-label">Nội dung khóa học:</label>
             @foreach ($contents as $key => $content)
-                <input type="text" class="form-control" wire:model="contents.{{ $key }}"
+                <input type="text" class="form-control mb-3" wire:model="contents.{{ $key }}"
                     placeholder="Kiến thức đạt được khi tham gia khóa học">
             @endforeach
             <button class="btn mx-2" wire:click="addContent">+</button>
