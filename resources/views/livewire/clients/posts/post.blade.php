@@ -103,7 +103,7 @@
                         <div>
                             {{ $post->reaction_like_count }}
                             @if (isset($post->reaction_count) && $post->reaction_count > 0)
-                                <i class="uil-heart text-red-500">Đã thích</i>
+                            
                             @else
                                 <i class="uil-heart text-red-500">Thích</i>
                             @endif
@@ -252,24 +252,24 @@
 
         </div>
     @endforeach
-    
+
         <div class="card lg:mx-0 uk-animation-slide-bottom-small">
 
         </div>
     @if($loadAmount >= $totalRecords)
         <div class="flex justify-center mt-6 "  >
-            <button wire:click="loadMore()" 
+            <button wire:click="loadMore()"
                 class="taithem bg-white dark:bg-gray-900 font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
                 Bạn có muốn xem thêm bài viết?</button>
         </div>
     @else
     <div class="flex justify-center mt-6 "  >
-            <button wire:click="loadMore()" 
+            <button wire:click="loadMore()"
                 class="taithem bg-white dark:bg-gray-900 font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
                 Tải thêm bài viết</button>
         </div>
     @endif
- 
+
 </div>
 <script>
     const lastRecords = document.querySelectorAll('.taithem')

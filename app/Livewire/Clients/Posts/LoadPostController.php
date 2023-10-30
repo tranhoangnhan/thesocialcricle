@@ -22,7 +22,7 @@ class LoadPostController extends Component
     public $loadComment = [];
     public function mount()
     {
-        
+
         $this->totalRecords = PostsModel::where('is_hidden', '0')->count();
         $this->loadComment = PostsModel::where('is_hidden', '0')->pluck('post_id')->toArray();
         foreach ($this->loadComment as $key => $value) {
@@ -157,7 +157,6 @@ class LoadPostController extends Component
 
     public function render()
     {
-
         $this->posts = PostsModel::where('is_hidden', '0')->where('privacy', 'public')
             ->limit($this->loadAmount)
             ->get();

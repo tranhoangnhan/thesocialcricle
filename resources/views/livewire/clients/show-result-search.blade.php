@@ -39,7 +39,7 @@
                                         </div>
                                         @livewire('Clients.Friends.AddFriend', ['friendData' => $friend], key($friend->user_id))
 
-                                     
+
                                     </div>
                                 @endforeach
                             </div>
