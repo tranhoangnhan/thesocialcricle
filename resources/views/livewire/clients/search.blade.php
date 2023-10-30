@@ -2,48 +2,34 @@
 
     <div class="header-search-icon" uk-toggle="target: #wrapper ; cls: show-searchbox"> </div>
     <div class="header_search"><i class="uil-search-alt"></i>
-        <form action="{{url('search')}}" method="post">
+        <form action="{{ url('search') }}" method="post" style="position: relative">
             @csrf
-            <input wire:model.live="search" name="query" value="" type="text" class="form-control"
-                   placeholder="Tìm kiếm bạn bè, video, và nhiều hơn nữa,..." autocomplete="off">
+            <input wire:model.live="search" name="query" value="" type="text" class="form-control "
+                placeholder="Tìm kiếm bạn bè, video, và nhiều hơn nữa,..." autocomplete="off">
         </form>
-        <div uk-drop="mode: click" class="header_search_dropdown">
-            <ul>
-                @if ($search == "")
-                    <li>
-                        <a href="#">
-                            <div class="list-name"> Nhập từ khoá để tìm kiếm </div>
-                        </a>
-                    </li>
-                @else
-                    @if($post->isEmpty()||$friend->isEmpty())
-                        <li>
-                            <a href="#">
-                                <div class="list-name"> Không tìm thấy kết quả </div>
+        <ul style="position: absolute">
+            @if ($search == null)
+                <li></li>
+            @else
+                @if (sizeof($friend) > 0)
+                    <li class="p-3 mt-2" style="width: 30rem; background-color:  #fff">
+                        @foreach ($friend as $friend)
+                            <a wire:navigate href="/profile/{{ $friend->user_id }}">
+                                <div class="list-name"> {{ $friend->user_fullname }} </div>
                             </a>
-                        </li>
-                    @else
-                        @if(sizeof($friend) > 0)
-                            @foreach($friend as $friend)
-                                <li  wire:ignore>
-                                    <a href="#">
-                                        <div class="list-name"> {{$friend->user_fullname}} </div>
-                                    </a>
-                                </li>
-                            @endforeach
-                        @endif
-                        @if(sizeof($post) > 0)
-                            @foreach($post as $post)
-                                <li  wire:ignore>
-                                    <a href="#">
-                                        <div class="list-name"> {{$post->text}} </div>
-                                    </a>
-                                </li>
-                            @endforeach
-                        @endif
-                    @endif
+                        @endforeach
+                    </li>
                 @endif
-            </ul>
-        </div>
+                @if (sizeof($post) > 0)
+                    <li class="p-2 mt-2" style="width: 30rem; background-color:  #fff">
+                        @foreach ($post as $post)
+                            <a href="#">
+                                <div class="list-name"> {{ $post->text }} </div>
+                            </a>
+                        @endforeach
+                    </li>
+                @endif
+            @endif
+        </ul>
     </div>
 </div>

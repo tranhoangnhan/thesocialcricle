@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('category_id');
             $table->string('category_name',255);
             $table->string('slug',255);
+            $table->bigInteger('course_id');
             $table->timestamps();
         });
     }

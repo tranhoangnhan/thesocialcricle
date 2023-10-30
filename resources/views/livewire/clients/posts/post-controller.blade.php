@@ -1,5 +1,5 @@
-<div >
-    <div  id="create-post-modal" class="create-post is-story" uk-modal>
+<div>
+    <div id="create-post-modal" class="create-post is-story" uk-modal>
         <div
             class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical rounded-lg p-0 lg:w-5/12 relative shadow-2xl uk-animation-slide-bottom-small">
 
@@ -10,15 +10,13 @@
                     uk-tooltip="title: Close ; pos: bottom ;offset:7"></button>
             </div>
             <div class="flex flex-1 items-start space-x-4 p-5">
-                
+
                 {!! getAvatar(auth()->user()->user_id) !!}
                 <div class="flex-1 pt-2">
-                    <form   action="/create-post" method="post">
+                    <form action="/create-post" method="post">
                         @csrf
-                        <textarea
-                            class="uk-textare text-black shadow-none focus:shadow-none text-xl font-medium resize-none"
-                            rows="5" id="content-input" placeholder=" {{auth()->user()->user_fullname}}, bạn muốn đăng gì?" 
-                            name="content"></textarea>
+                        <textarea class="uk-textare text-black shadow-none focus:shadow-none text-xl font-medium resize-none" rows="5"
+                            id="content-input" placeholder=" {{ auth()->user()->user_fullname }}, bạn muốn đăng gì?" name="content"></textarea>
                 </div>
 
             </div>
@@ -40,8 +38,8 @@
                                 d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z">
                             </path>
                         </svg>
-                        <svg class="text-green-600 h-9 p-1.5 rounded-full bg-green-100 w-9 cursor-pointer" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="text-green-600 h-9 p-1.5 rounded-full bg-green-100 w-9 cursor-pointer"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z">
                             </path>
@@ -89,37 +87,35 @@
                 </div>
             </div>
             <div class="flex items-center w-full justify-between border-t p-3">
-               
-                <select name="privacy" id="privacy" class="form-select" aria-label="Default select example"  >
-                    <option value="me">Chỉ mình tôi</option>
-                    <option value="public" selected>Mọi ngời</option>
-                    <option value="friends">Bạn bè </option>
 
+                <select name="privacy" id="privacy" class="form-select" aria-label="Default select example">
+                    <option value="me">Chỉ mình tôi</option>
+                    <option value="public" selected>Mọi người</option>
+                    <option value="friends">Bạn bè </option>
                 </select>
 
                 <div class="flex space-x-2">
                     <a href="#"
                         class="bg-red-100 flex font-medium h-9 items-center justify-center px-5 rounded-md text-red-600 text-sm">
-                        <svg class="h-5 pr-1 rounded-full text-red-500 w-6 fill-current" id="veiw-more" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                            aria-hidden="false" style="">
+                        <svg class="h-5 pr-1 rounded-full text-red-500 w-6 fill-current" id="veiw-more"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg" aria-hidden="false" style="">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z">
                             </path>
                         </svg>
                         Live </a>
-                    <button  type="submit" disabled id="submit-button" 
+                    <button type="submit" disabled id="submit-button"
                         class="bg-blue-600 flex h-9 items-center justify-center rounded-md text-white px-5 font-medium">
                         Share </button>
-                      
+
                     </form>
 
                 </div>
-                
+
 
             </div>
-            
+
         </div>
 
     </div>
-  

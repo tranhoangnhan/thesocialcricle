@@ -1,36 +1,37 @@
 @livewire('clients.notification.index')
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script>
-    Pusher.logToConsole = false;
-
     var pusher = new Pusher('150f6fc3c93d4b5e8aec', {
         cluster: 'ap1'
     });
     var currentUserId = '{{ auth()->check() ? auth()->user()->user_id : null }}';
     var channel = pusher.subscribe('Notification');
+    // ... (your existing code)
+
     channel.bind('PostLike', function(data) {
         var notificationList = document.getElementById('notification-list');
         var newListItemHTML = `
-        <a href="#">
-            <div class="drop_avatar">
-                <img src="${data.user.avatar}" alt="">
+        <li class="notification-0 dropdown-item p-4">
+            <div class="drop_avatar d-flex justify-content-center">
+                <img src="${data.user.avatar}" alt=""
+                class="w-8 h-8 rounded-full">
+                <p class="text-sm m-1">${data.message}</p>
             </div>
             <div class="drop_text">
-                <p>${data.message}</p>
-                <time>Vừa xong</time>
+                <time class="text-xs mx-4">
+                    Vừa xong
+                </time>
             </div>
-        </a>
-    `;
+        </li>`;
+
         if (currentUserId == data.user_id) {
-            // Tạo một mục <li> mới và chèn HTML vào nó
-            var newListItem = document.createElement('li');
-            newListItem.classList.add('notification-0');
-            newListItem.insertAdjacentHTML('afterbegin', newListItemHTML);
+            var newListItem = document.createElement('li'); // Create a new list item element
+            newListItem.innerHTML = newListItemHTML; // Set the innerHTML of the new list item
 
-            // Lấy ra phần tử đầu tiên của danh sách (nếu có)
-            var firstListItem = notificationList.firstChild;
+            var listItems = notificationList.getElementsByTagName('li');
+            var firstListItem = listItems[0]; // Selects the first <li> element
 
-            // Sử dụng phương thức insertBefore để chèn newListItem vào trước firstListItem
+            // Insert the new list item element before the first list item
             notificationList.insertBefore(newListItem, firstListItem);
 
             // Update the UI to display the new count
@@ -40,8 +41,8 @@
                 countElement.innerText = count + 1;
             }
         }
-        // Tạo một mục <li> mới cho thông báo
-    });
+    })
+    // ... (rest of your styles and scripts)
 </script>
 <style>
     .notification-0 {

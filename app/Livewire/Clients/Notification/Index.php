@@ -9,10 +9,7 @@ class Index extends Component
 {
     public $notifications;
     public $count; // Change 'notification' to 'notifications' to store an array of notifications
-    public function mount()
-    {
-        $this->markAsRead();
-    }
+
     public function markAsRead()
     {
         NotificationModel::where('to_user_id', auth()->user()->user_id)->update(['seen' => '1']);
