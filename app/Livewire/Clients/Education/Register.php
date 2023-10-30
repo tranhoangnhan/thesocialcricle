@@ -50,6 +50,10 @@ class Register extends Component
                 'slug'=>str::slug($content),
             ]);
         }
+return redirect()->route('courses_register_content',['slug'=>$education->slug]);
+
+// Sau khi chuyển hướng và trong component mới
+
     }
 
     public function render()
