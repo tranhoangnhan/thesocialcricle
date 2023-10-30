@@ -47,7 +47,6 @@ class Content extends Component
                     'material_url' => 'https://hoangnhan.ddns.net/cdn/'.$this->path,
                     'material_type' => 'video',
                     'material_status' => 'active',
-                    'uploader_at' => auth()->user()->user_id,
                 ]);
            
         }
