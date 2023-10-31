@@ -12,7 +12,6 @@ class CourseMaterialModel extends Model
     protected $primaryKey = 'material_id';
     protected $fillable = [
         'material_id',
-        'section_id',
         'material_name',
         'material_type',
         'material_url',
@@ -20,6 +19,7 @@ class CourseMaterialModel extends Model
         'uploader_at',
         'created_at',
         'updated_at',
-        'course_id'
+        'course_id',
+        'section_id'
     ];
 }

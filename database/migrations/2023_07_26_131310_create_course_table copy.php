@@ -17,8 +17,8 @@ return new class extends Migration
             $table->enum('payment',['0','1'])->default('0');
             $table->string('course_name',255);
             $table->string('slug',255);
-            $table->string('required_skill',255);
-            $table->string('learn_skill',255);
+            $table->text('required_skill',255);
+            $table->text('learn_skill',255);
             $table->text('description');
             $table->enum('status',['0','1'])->default('0');
             $table->string('banner');

@@ -48,9 +48,8 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/create-course/{slug}', [EducationController::class, 'courses_register_content'])->name('courses_register_content');
     Route::get('/courses', [EducationController::class, 'index'])->name('Courses');
     Route::get('/courses/{slug}', [EducationController::class, 'courses_intro'])->name('courses_intro');
-    Route::get('/courses/video', [EducationController::class, 'courses_video'])->name('courses_video');
     Route::get('/profile/{id}', [ProfileController::class, 'showInfo'])->name('profile_render');
-    Route::get('video', [VideoController::class, 'index'])->name('video');
+    Route::get('/courses/{slug}/enroll', [VideoController::class, 'index'])->name('video');
 });
 
 // Route::get('/test', function(){

@@ -8,8 +8,8 @@
                 <div class="lg:w-3/4">
 
                     <div class="embed-video rounded">
-                        <iframe src="{{$videos->material_url}}" frameborder="0"
-                            uk-video="automute: true" allowfullscreen uk-responsive></iframe>
+                        <iframe width="1280" height="720" src="{{$videos->material_url}}" allowfullscreen></iframe>
+                      
                     </div>
 
                     <div class="py-5 space-y-4">
