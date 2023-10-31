@@ -15,7 +15,7 @@
                             <div class="space-y-3">
                                 <h5 class="uppercase text-sm font-medium text-gray-400"> WEB DEVELOPMENT </h5>
                                 <h1 class="font-semibold text-3xl">{{$course->course_name}}</h1>
-                                <p class=""> {{$course->description}} </p>
+                                
                 
                                 <ul class="flex  gap-4">
                                     <li class="flex items-center">
@@ -64,209 +64,50 @@
                                 <!-- course description -->
                                 <div class="space-y-5">
                                     <div>
-                                        <h3 class="font-semibold mb-2 text-xl"> Description </h3>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                                            tincidunt ut
-                                            laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim laoreet dolore magna
-                                            aliquam erat
-                                            volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit
-                                            lobortis
-                                            nisl ut aliquip ex ea commodo consequat
-                                        </p>
+                                        <h3 class="font-semibold mb-2 text-xl"> Mô tả </h3>
+                                        <p class=""> {{$course->description}} </p>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold mb-2 text-xl"> What You’ll Learn </h3>
+                                        <h3 class="font-semibold mb-2 text-xl"> Bạn sẽ học được gì </h3>
                                         <ul class="grid md:grid-cols-2">
-                                            <li> <i class="uil-check text-xl font-bold mr-2"></i>Setting up the environment</li>
-                                            <li> <i class="uil-check text-xl font-bold mr-2"></i>Advanced HTML Practices</li>
-                                            <li> <i class="uil-check text-xl font-bold mr-2"></i>Build a portfolio website</li>
-                                            <li> <i class="uil-check text-xl font-bold mr-2"></i>Responsive Designs</li>
-                                            <li> <i class="uil-check text-xl font-bold mr-2"></i>Understand HTML Programming</li>
-                                            <li> <i class="uil-check text-xl font-bold mr-2"></i>Code HTML</li>
-                                            <li> <i class="uil-check text-xl font-bold mr-2"></i>Start building beautiful websites</li>
+                                            @foreach (json_decode($course->learn_skill) as $skill)
+                                            <li> <i class="uil-check text-xl font-bold mr-2"></i>{{$skill}}</li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-xl mb-2"> Requirements</h3>
+                                        <h3 class="font-semibold text-xl mb-2"> Yêu cầu </h3>
                                         <ul class="list-disc ml-5">
-                                            <li>Any computer will work: Windows, macOS or Linux</li>
-                                            <li>Basic programming HTML and CSS.</li>
-                                            <li>Basic/Minimal understanding of JavaScript</li>
+                                            @foreach (json_decode($course->required_skill) as $required)
+                                            <li> {{$required}}</li>
+                                            @endforeach
                                         </ul>
                                     </div>
-                                    <div>
-                                        <h3 class="font-semibold mb-2 text-xl"> Here is exactly what we cover in this course: </h3>
-                                        <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                                            tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim laoreet
-                                            dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-                                            ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat</p>
-                                        <p> consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-                                            magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci</p>
-                                        <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                                            tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-                                            nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-                                            Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod
-                                            mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                                            sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut
-                                            wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut
-                                            aliquip ex ea commodo consequat.</p>
-                                    </div>
+                                    
                                 </div>
                 
                                 <!-- course Curriculum -->
-                                <h3 class="mb-8 mt-20 font-semibold text-xl" id="curriculum"> Course Curriculum </h3>
+                                <h3 class="mb-8 mt-20 font-semibold text-xl" id="curriculum"> Chương trình giảng dạy </h3>
+                                
                                 <ul class="uk-accordion space-y-3" uk-accordion>
-                                    <li class="card hover:shadow-md px-6 py-4 rounded-md uk-open">
-                                        <a class="uk-accordion-title font-semibold text-base" href="#"> Html Introduction </a>
-                                        <div class="uk-accordion-content mt-3 -mx-6" aria-hidden="false">
+                                @foreach ($sections as $section)
+    <li class="card hover:shadow-md px-6 py-4 rounded-md uk-open">
+        <a class="uk-accordion-title font-semibold text-base" href="#"> {{$section->section_name}} </a>
+        <div class="uk-accordion-content mt-3 -mx-6" aria-hidden="false">
+            <ul class="course-curriculum-list font-semibold space-y-1">
+                @foreach ($section->material as $video)
+                    <li class="hover:bg-gray-100 px-6 py-2.5 flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                        </svg> {{$video->material_name}} <span class="text-sm ml-auto"> {{$video->duration}} min </span>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </li>
+@endforeach
+
                 
-                                            <ul class="course-curriculum-list font-semibold space-y-1">
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg> Introduction <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg> What is HTML <span class="text-sm ml-auto"> 14 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    What is a Web page? <span class="text-sm ml-auto"> 32 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    Your First Web Page <a href="#trailer-modal" class="bg-purple-100 border font-semibold ml-2 px-2 py-1 rounded-full text-purple-500 text-xs" uk-toggle> Preview </a>
-                                                    <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    Brain Streak <span class="text-sm ml-auto"> 14 min </span>
-                                                </li>
-                                            </ul>
-                
-                                        </div>
-                                    </li>
-                
-                                    <li class="card hover:shadow-md px-6 py-4 rounded-md">
-                                        <a class="uk-accordion-title text-md font-semibold text-base" href="#"> Your First webpage </a>
-                                        <div class="uk-accordion-content mt-3 -mx-6" hidden="" aria-hidden="true">
-                
-                                            <ul class="course-curriculum-list font-semibold space-y-1">
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg> Headings <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg> Paragraphs <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    Emphasis and Strong Tag <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    Brain Streak  <a href="#trailer-modal" class="bg-purple-100 border font-semibold ml-2 px-2 py-1 rounded-full text-purple-500 text-xs" uk-toggle> Preview </a>
-                                                    <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    Live Preview Feature <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                            </ul>
-                
-                                        </div>
-                                    </li>
-                
-                                    <li class="card hover:shadow-md px-6 py-4 rounded-md">
-                                        <a class="uk-accordion-title font-semibold text-base" href="#"> Your First webpage </a>
-                                        <div class="uk-accordion-content mt-3 -mx-6" hidden="" aria-hidden="true">
-                
-                                            <ul class="course-curriculum-list font-semibold space-y-1">
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg> The paragraph tag <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg> The break tag <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    Headings in HTML <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    Bold, Italics Underline  <a href="#trailer-modal" class="bg-purple-100 border font-semibold ml-2 px-2 py-1 rounded-full text-purple-500 text-xs" uk-toggle> Preview </a>
-                                                    <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                            </ul>
-                
-                                        </div>
-                                    </li>
-                
-                                    <li class="card hover:shadow-md px-6 py-4 rounded-md">
-                                        <a class="uk-accordion-title font-semibold text-base" href="#"> Your First webpage </a>
-                                        <div class="uk-accordion-content mt-3 -mx-6" hidden="" aria-hidden="true">
-                
-                                            <ul class="course-curriculum-list font-semibold space-y-1">
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg> Something to Ponder <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg> Tables <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    HTML Entities <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    HTML Iframes  <a href="#trailer-modal" class="bg-purple-100 border font-semibold ml-2 px-2 py-1 rounded-full text-purple-500 text-xs" uk-toggle> Preview </a>
-                                                    <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                                <li class="hover:bg-gray-100 px-6 py-2.5 flex">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
-                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                                                    </svg>
-                                                    Some important things
-                                                    <span class="text-sm ml-auto"> 23 min </span>
-                                                </li>
-                                            </ul>
-                
-                                        </div>
-                                    </li>
                 
                                 </ul>
                 
