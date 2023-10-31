@@ -21,6 +21,8 @@ use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VideoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,7 +48,7 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/courses/{slug}', [EducationController::class, 'courses_intro'])->name('courses_intro');
     Route::get('/courses/video', [EducationController::class, 'courses_video'])->name('courses_video');
     Route::get('/profile/{id}', [ProfileController::class, 'showInfo'])->name('profile_render');
-
+    Route::get('video', [VideoController::class, 'index'])->name('video');
 });
 
 // Route::get('/test', function(){

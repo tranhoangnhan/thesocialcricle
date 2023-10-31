@@ -17,7 +17,10 @@ return new class extends Migration
             $table->string('material_name');
             $table->enum('material_type',['lecture', 'reading', 'video', 'other']);
             $table->string('material_url');
-            $table->timestamp('uploader_at')->nullable();
+            $table->bigIncrements('user_id')->nullable();
+            $table->bigIncrements('course_id');
+            $table->bigIncrements('section_id');
+            $table->string('view');
             $table->timestamps();
         });
     }
