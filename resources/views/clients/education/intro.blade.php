@@ -93,13 +93,18 @@
                                 @foreach ($sections as $section)
     <li class="card hover:shadow-md px-6 py-4 rounded-md uk-open">
         <a class="uk-accordion-title font-semibold text-base" href="#"> {{$section->section_name}} </a>
+        
         <div class="uk-accordion-content mt-3 -mx-6" aria-hidden="false">
             <ul class="course-curriculum-list font-semibold space-y-1">
                 @foreach ($section->material as $video)
                     <li class="hover:bg-gray-100 px-6 py-2.5 flex">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
-                        </svg> {{$video->material_name}} <span class="text-sm ml-auto"> {{$video->duration}} min </span>
+                        </svg> {{$video->material_name}}
+                        <a href="#trailer-modal" class="bg-purple-100 border font-semibold ml-2 px-2 py-1 rounded-full text-purple-500 text-xs" uk-toggle> Preview </a>
+
+                        <span class="text-sm ml-auto"> {{$video->duration}} min </span>
+
                     </li>
                 @endforeach
             </ul>
@@ -112,7 +117,7 @@
                                 </ul>
                 
                                 <!-- video demo model -->
-                                <div id="trailer-modal" uk-modal="" class="uk-modal">
+                                {{-- <div id="trailer-modal" uk-modal="" class="uk-modal">
                                     <div class="uk-modal-dialog">
                                         <button class="uk-modal-close-default mt-2 mr-1 uk-icon uk-close" type="button" uk-close=""><svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" data-svg="close-icon"><line fill="none" stroke="#000" stroke-width="1.1" x1="1" y1="1" x2="13" y2="13"></line><line fill="none" stroke="#000" stroke-width="1.1" x1="13" y1="1" x2="1" y2="13"></line></svg></button>
                                         <div class="uk-modal-header">
@@ -120,7 +125,7 @@
                                         </div>
                 
                                         <div class="embed-video rounded">
-                                            <iframe src="https://www.youtube.com/embed/nOCXXHGMezU?enablejsapi=1" frameborder="0"
+                                            <iframe width="1280" height="720" src="https://hoangnhan.ddns.net/cdn/courses/nguyeexn-van-nghi-lua-ga/luaf-gaf-sow-cawps/zzokC4lVnclmDBUUDaHjAboPKjQ1aXXzjLmdRWld.mp4" title="1. Giới Thiệu khóa học C++" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                                 uk-video="automute: true" allowfullscreen uk-responsive></iframe>
                                         </div>
 
@@ -135,126 +140,10 @@
                                         </div>
                                     </div>
                                 </div>
-                
+                 --}}
                                 <!-- course Faq -->
                 
-                                <h3 class="mb-8 mt-20 font-semibold text-xl" id="faq"> Course Faq </h3>
-                                <ul class="uk-accordion space-y-3" uk-accordion>
-                                    <li class="card hover:shadow-md px-6 py-4 rounded-md uk-open">
-                                        <a class="uk-accordion-title font-semibold text-base" href="#"> Html Introduction </a>
-                                        <div class="uk-accordion-content mt-3" aria-hidden="false">
-                                            <p> The primary goal of this quick start guide is to introduce you to
-                                                Unreal
-                                                Engine 4`s (UE4) development environment. By the end of this guide,
-                                                you`ll
-                                                know how to set up and develop C++ Projects in UE4. This guide shows
-                                                you
-                                                how
-                                                to create a new Unreal Engine project, add a new C++ class to it,
-                                                compile
-                                                the project, and add an instance of a new class to your level. By
-                                                the
-                                                time
-                                                you reach the end of this guide, you`ll be able to see your
-                                                programmed
-                                                Actor
-                                                floating above a table in the level. </p>
-                                        </div>
-                                    </li>
-                                    <li class="card hover:shadow-md px-6 py-4 rounded-md">
-                                        <a class="uk-accordion-title font-semibold text-base" href="#"> Your First webpage</a>
-                                        <div class="uk-accordion-content mt-3" hidden="" aria-hidden="true">
-                                            <p> The primary goal of this quick start guide is to introduce you to
-                                                Unreal
-                                                Engine 4`s (UE4) development environment. By the end of this guide,
-                                                you`ll
-                                                know how to set up and develop C++ Projects in UE4. This guide shows
-                                                you
-                                                how
-                                                to create a new Unreal Engine project, add a new C++ class to it,
-                                                compile
-                                                the project, and add an instance of a new class to your level. By
-                                                the
-                                                time
-                                                you reach the end of this guide, you`ll be able to see your
-                                                programmed
-                                                Actor
-                                                floating above a table in the level. </p>
-                                        </div>
-                                    </li>
-                                    <li class="card hover:shadow-md px-6 py-4 rounded-md">
-                                        <a class="uk-accordion-title font-semibold text-base" href="#"> Some Special Tags </a>
-                                        <div class="uk-accordion-content mt-3" hidden="" aria-hidden="true">
-                                            <p> The primary goal of this quick start guide is to introduce you to
-                                                Unreal
-                                                Engine 4`s (UE4) development environment. By the end of this guide,
-                                                you`ll
-                                                know how to set up and develop C++ Projects in UE4. This guide shows
-                                                you
-                                                how
-                                                to create a new Unreal Engine project, add a new C++ class to it,
-                                                compile
-                                                the project, and add an instance of a new class to your level. By
-                                                the
-                                                time
-                                                you reach the end of this guide, you`ll be able to see your
-                                                programmed
-                                                Actor
-                                                floating above a table in the level. </p>
-                                        </div>
-                                    </li>
-                                    <li class="card hover:shadow-md px-6 py-4 rounded-md"> 
-                                        <a class="uk-accordion-title font-semibold text-base" href="#"> Html Introduction </a>
-                                        <div class="uk-accordion-content mt-3" hidden="" aria-hidden="true">
-                                            <p> The primary goal of this quick start guide is to introduce you to
-                                                Unreal
-                                                Engine 4`s (UE4) development environment. By the end of this guide,
-                                                you`ll
-                                                know how to set up and develop C++ Projects in UE4. This guide shows
-                                                you
-                                                how
-                                                to create a new Unreal Engine project, add a new C++ class to it,
-                                                compile
-                                                the project, and add an instance of a new class to your level. By
-                                                the
-                                                time
-                                                you reach the end of this guide, you`ll be able to see your
-                                                programmed
-                                                Actor
-                                                floating above a table in the level. </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                
-                                <!-- course Announcement -->
-                
-                                <h3 class="mb-8 mt-20 font-semibold text-xl" id="announcement"> Announcement </h3>
-                
-                                <div class="flex items-center gap-x-4 mb-5">
-                                    <img src="assets/images/avatars/avatar-4.jpg" alt="" class="rounded-full shadow w-12 h-12">
-                                    <div>
-                                        <h4 class="-mb-1 text-base"> Stella Johnson</h4>
-                                        <span class="text-sm"> Instructor <span class="text-gray-500"> 1 year ago </span> </span>
-                                    </div>
-                                </div>
-                
-                                <h4 class="leading-8 text-xl"> Nam liber tempor cum soluta nobis eleifend option congue imperdiet
-                                    doming id quod mazim placerat facer possim assum.</h4>
-                                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                                    tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis
-                                    nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Nam
-                                    liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim
-                                    placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-                                    nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad
-                                    minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea
-                                    commodo consequat.</p>
-                
-                                <!-- course Reviews -->
+                            
                 
                                 <div class="flex space-x-5 my-8" id="reviews">
                                     <div class="lg:w-1/4 w-full">
