@@ -89,7 +89,7 @@
 <div class="uk-accordion-content mt-3 -mx-6" aria-hidden="false">
 <ul class="course-curriculum-list font-semibold space-y-1">
     @foreach ($sectionVideos[$section->section_id] as $video)
-    @if($this->slug_video == $video->material_id)
+    @if($this->slug_video == $video->slug)
     <a wire:navigate href="/courses/{{$this->course->slug}}/enroll/{{$video->slug}}" class="text-dark" >
     <li class="hover:bg-gray-100 px-3 py-2.5 flex" style="background-color: rgb(161, 158, 158, 0.3);" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
