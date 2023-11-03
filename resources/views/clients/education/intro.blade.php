@@ -15,7 +15,7 @@
                             <div class="space-y-3">
                                 <h5 class="uppercase text-sm font-medium text-gray-400"> WEB DEVELOPMENT </h5>
                                 <h1 class="font-semibold text-3xl">{{$course->course_name}}</h1>
-                                
+                                <a href="/courses/{{$course->slug}}/enroll/{{$first_video}}">Xem khóa học</a>
                 
                                 <ul class="flex  gap-4">
                                     <li class="flex items-center">

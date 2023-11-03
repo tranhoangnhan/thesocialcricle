@@ -257,14 +257,14 @@
 
         </div>
     @if($loadAmount >= $totalRecords)
-        <div class="flex justify-center mt-6 "  >
-            <button wire:click="loadMore()" 
+        <div class="flex justify-center mt-6 " >
+            <button wire:click="loadMore()"   wire:model='loadMore' 
                 class="taithem bg-white dark:bg-gray-900 font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
                 Bạn có muốn xem thêm bài viết?</button>
         </div>
     @else
     <div class="flex justify-center mt-6 "  >
-            <button wire:click="loadMore()" 
+            <button wire:click="loadMore()" wire:model='loadMore' 
                 class="taithem bg-white dark:bg-gray-900 font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
                 Tải thêm bài viết</button>
         </div>

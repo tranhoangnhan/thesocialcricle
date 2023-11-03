@@ -19,7 +19,7 @@
                 <div class="flex space-x-3 items-center text-sm md:pt-3 font-medium">
                     <div> <i class="icon-feather-sliders mr-2"></i> Advance level </div>
                     <div class="md:block hidden">·</div>
-                    <div> <i class="icon-feather-users mr-2"></i> 120 Đã tham gia</div>
+                    <div> <i class="icon-feather-users mr-2"></i> {{$course->count_enroll}} Đã tham gia</div>
                 </div>
                 <a wire:click.prevent='enroll({{$course->course_id}})' class="md:flex items-center justify-center h-9 px-8 rounded-md border hidden bg-gray-100">Tham gia </a>
               

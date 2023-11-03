@@ -9,7 +9,7 @@ use App\Models\PostReaction;
 use App\Models\PostsComment;
 use App\Events\Clients\Notification\User;
 use App\Models\NotificationModel;
-
+use App\Models\FriendsModel;
 class LoadPostController extends Component
 {
     public $totalRecords;
@@ -17,6 +17,7 @@ class LoadPostController extends Component
     public $postReaction;
     public $statusLike;
     public $posts;
+    public $randomOrder = false;
 
     public $ContentComment = [];
     public $loadComment = [];
@@ -157,9 +158,25 @@ class LoadPostController extends Component
 
     public function render()
     {
-        $this->posts = PostsModel::where('is_hidden', '0')->where('privacy', 'public')
-            ->limit($this->loadAmount)
-            ->get();
+        $userId =  auth()->user()->id;
+
+        $friends = FriendsModel::where(function($query) use ($userId) {
+            $query->where('user_one_id', $userId)
+                  ->orWhere('user_two_id', $userId);
+        })->where('status', 1)->get();
+        $friendPosts = PostsModel::whereIn('user_id', $friends)
+        ->where('privacy', 'friend') // Điều kiện cho bài viết bạn bè
+        ->limit($this->loadAmount) // Số lượng bài viết trên mỗi trang
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    // Lấy danh sách bài viết mọi người (công khai)
+    $publicPosts = PostsModel::where('privacy', 'public')
+        ->limit($this->loadAmount) // Số lượng bài viết trên mỗi trang
+        ->orderBy('created_at', 'desc')
+        ->get();
+        $this->posts =  $friendPosts->concat($publicPosts);
+
         $posts = $this->posts;
 
         // Lấy danh sách người đăng dựa trên user_id của từng bài viết

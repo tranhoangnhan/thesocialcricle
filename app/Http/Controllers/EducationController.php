@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CourseSectionModel;
 use App\Models\CoursesModel;
 use App\Models\CourseMaterialModel;
-
+use App\Models\VideoModel;
 
 use App\Models\CourseCategoryModel;
 class EducationController extends Controller
@@ -20,15 +20,17 @@ public $slug;
     }
     public function courses_intro($slug)
     {   
-
+        
         $course = CoursesModel::where('slug',"$slug")->first();
+        $first_video = VideoModel::where('course_id', $course->course_id)->first();
+        $enroll_first = $first_video->slug;
         
         $course_section = CourseSectionModel::where('course_section.course_id', $course->course_id)
     ->get();
     foreach($course_section as $section){
         $section->material = CourseMaterialModel::where('section_id', $section->section_id)->get();
     }
-        return view('clients.education.intro',['course'=>$course, 'sections'=>$course_section]);
+        return view('clients.education.intro',['course'=>$course, 'sections'=>$course_section, 'first_video'=>$enroll_first]);
     }
     
     public function courses_video()
