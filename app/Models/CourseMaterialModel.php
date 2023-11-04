@@ -21,7 +21,7 @@ class CourseMaterialModel extends Model
         'updated_at',
         'course_id',
         'section_id',
-        'review'
+        'review',
         'slug',
     ];
 }

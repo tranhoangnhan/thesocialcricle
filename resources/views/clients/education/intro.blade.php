@@ -7,56 +7,9 @@
 
 
                 <div class="lg:flex lg:space-x-10">
-                      
-                    <div class="lg:w-3/4 md:p-3 p-2"> 
-                       
-                        <div>
-                        
-                            <div class="space-y-3">
-                                <h5 class="uppercase text-sm font-medium text-gray-400"> WEB DEVELOPMENT </h5>
-                                <h1 class="font-semibold text-3xl">{{$course->course_name}}</h1>
-                                <a href="/courses/{{$course->slug}}/enroll/{{$first_video}}">Xem khóa học</a>
-                
-                                <ul class="flex  gap-4">
-                                    <li class="flex items-center">
-                                        <span class="bg-yellow-500 text-white mr-1.5 px-2 rounded font-semibold"> 4.9 </span>
-                                        <div class="flex justify-center items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-orange-400">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 text-gray-400">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                            </svg>
-                                        </div>
-                                    </li>
-                                    <li> <i class="icon-feather-users"></i> 1200 Enerolled </li>
-                                </ul>
-                                <ul class="flex items-center text-gray-500 text-sm">
-                                    <li> Tạo bởi <a href="/profile/{{$course->instructor_id}}" class="font-bold"> {{$course->instructor_id}}</a> </li>
-                                    <span class="middot mx-3 text-2xl">·</span>
-                                    <li> Last updated 10/2019</li>
-                                </ul>
-                               
-                            </div>
 
-                            <nav class="responsive-nav border-b md:mx-0 -mx-4 mt-4 text-4xl" uk-sticky="offset:45; cls-active:bg-gray-50">
-                                <ul class="space-x-3" uk-scrollspy-nav="closest: li; scroll: true">
-                                    <li><a href="#Overview" uk-scroll>Overview</a></liclass=>
-                                    <li><a href="#curriculum" uk-scroll>Curriculum</a></li>
-                                    <li><a href="#faq" uk-scroll>FAQ</a></li>
-                                    <li><a href="#announcement">Announcement</a></li>
-                                    <li><a href="#reviews">Reviews</a></li>
-                                </ul>
-                            </nav>
+
+
 
 
                 <div class="lg:w-3/4 md:p-3 p-2">
@@ -64,7 +17,7 @@
                         <div class="space-y-3">
                             <h5 class="uppercase text-sm font-medium text-gray-400"> MÔ TẢ KHÓA HỌC </h5>
                             <h1 class="font-semibold text-3xl">{{ $course->course_name }}</h1>
-                            @livewire('clients.education.intro', ['course' => $course])
+                            @livewire('clients.education.intro', ['course' => $course,'first_video'=>$first_video])
                         </div>
                         <nav class="responsive-nav border-b md:mx-0 -mx-4 mt-4 text-4xl"
                             uk-sticky="offset:45; cls-active:bg-gray-50">
@@ -73,7 +26,7 @@
                                 <li><a href="#reviews">BÌNH LUẬN</a></li>
                             </ul>
                         </nav>
-
+                       
                         <div class="lg:mt-9 mt-5">
                             <div id="Overview">
                                 <div class="space-y-5">

@@ -9,6 +9,7 @@ use App\Models\CoursesModel;
 class Intro extends Component
 {
     public $course;
+    public $first_video;
     public function enroll($id)
     {
         $enrollment = EnrollmentModel::where('user_id', auth()->user()->user_id)
