@@ -19,6 +19,7 @@ class Index extends Component
     
     public function mount()
     {
+
         $this->slug = request()->route('slug');
         $this->course = CoursesModel::where('slug', $this->slug)->first();
          $id = $this->course->course_id;
@@ -50,9 +51,9 @@ class Index extends Component
         return redirect()->route('Courses');
     }
     }
-
     public function render()
     {
+
         
 
         return view('livewire.clients.video.index', [

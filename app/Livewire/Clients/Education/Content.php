@@ -30,6 +30,7 @@ class Content extends Component
     }
  
     public function create(){
+
         $id = $this->course->course_id;
         $Course = CoursesModel::where('course_id', $id)->first();
     
@@ -65,7 +66,7 @@ class Content extends Component
         $course = CoursesModel::where('slug', $slug)->first();
         $this->nameCourse = $course;
         $this->section = CourseSectionModel::where('course_id', $course->course_id)->get();
-        
+
         return view('livewire.clients.education.content', ['Section' => $this->section, 'nameCourse' => $this->nameCourse, 'slug' => $slug]);
     }
 }

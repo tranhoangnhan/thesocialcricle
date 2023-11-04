@@ -2,16 +2,13 @@
 
 namespace App\Livewire\Clients\Education;
 
-use App\Models\CourseCategoryModel;
 use Livewire\Component;
-use App\Models\CoursesModel;
-use Illuminate\Support\Str;
 use App\Models\EnrollmentModel;
+use App\Models\CoursesModel;
 
-class Index extends Component
+class Intro extends Component
 {
     public $course;
-
     public function enroll($id)
     {
         $enrollment = EnrollmentModel::where('user_id', auth()->user()->user_id)
@@ -27,7 +24,6 @@ class Index extends Component
             ]);
         }
     }
-
     private function fetchEnrollmentsForUser()
     {
         $enrollments = EnrollmentModel::where('user_id', auth()->user()->user_id)
@@ -38,18 +34,10 @@ class Index extends Component
 
     public function render()
     {
-        $courses = CoursesModel::join('course_category', 'course_category.category_id', '=', 'course.category_id')
-        ->join('users', 'users.user_id', '=', 'course.instructor_id')
-        ->join('enrollment', 'enrollment.course_id', '=', 'course.course_id')
-        ->where('enrollment.user_id', auth()->user()->user_id)
-            ->select('course.*', 'course_category.category_name','users.user_fullname')
-            ->get();
         $userEnrollments = $this->fetchEnrollmentsForUser();
-        foreach ($courses as $course) {
-            $course->enroller = in_array($course->course_id, $userEnrollments);
-            $course->enroll = EnrollmentModel::where('course_id', $course->course_id)->count();
-        }
-        return view('livewire.clients.education.index', ['courses' => $courses]);
-
+        $enroller = in_array($this->course->course_id, $userEnrollments);
+        $enroll = EnrollmentModel::where('course_id', $this->course->course_id)->count();
+        $time = date('d/m/y', strtotime($this->course->created_at));
+        return view('livewire.clients.education.intro', ['enroll' => $enroll, 'enroller' => $enroller, 'time' => $time]);
     }
 }
