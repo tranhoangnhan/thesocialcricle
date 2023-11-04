@@ -20,6 +20,7 @@ class CourseMaterialModel extends Model
         'created_at',
         'updated_at',
         'course_id',
-        'section_id'
+        'section_id',
+        'review'
     ];
 }

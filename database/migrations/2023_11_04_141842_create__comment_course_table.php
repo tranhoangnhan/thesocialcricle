@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('course_category', function (Blueprint $table) {
-            $table->bigIncrements('category_id');
-            $table->string('category_name',255);
-            $table->string('slug',255);
+        Schema::create('comment_course', function (Blueprint $table) {
+            $table->id();
+            $table->string('comment');
             $table->bigInteger('course_id');
+            $table->bigInteger('user_id');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('course_category');
+        Schema::dropIfExists('_comment_course');
     }
 };
