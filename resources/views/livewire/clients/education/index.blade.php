@@ -17,7 +17,7 @@
 
            <div class="flex items-center justify-between">
                 <div class="flex space-x-3 items-center text-sm md:pt-3 font-medium">
-                    <div> <i class="icon-feather-users mr-2"></i> {{$course->enroll}} tham gia</div>
+
                 </div>
                 @if ($course->enroller==true)
                 <a wire:click.prevent='enroll({{$course->course_id}})' class="md:flex items-center justify-center h-9 px-8 rounded-md border hidden bg-gray-100">Hủy Tham gia </a>

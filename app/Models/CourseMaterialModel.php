@@ -22,5 +22,6 @@ class CourseMaterialModel extends Model
         'course_id',
         'section_id',
         'review'
+        'slug',
     ];
 }

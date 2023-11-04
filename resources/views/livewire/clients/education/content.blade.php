@@ -4,6 +4,7 @@
             <div class="space-y-3">
                 <h5 class="uppercase text-sm font-medium text-gray-400">
                     <div class="line">
+
                         <input wire:model="course_name" class="line__input" disabled id="course_name" name="course_name" type="text"
                             value="" autocomplete="off">
                         <span for="username" class="line__placeholder"> {{$nameCourse->course_name}} </span>
@@ -33,8 +34,9 @@
                 <label for="exampleFormControlInput1" class="form-label">Video:</label>
                 <input type="file" multiple name="file" id="file-input" class="form-control mb-3" wire:model="videos" />
                 @if($videos)
-                        @foreach($videos as $video)
-                                <video src="{{ $video->temporaryUrl() }}" class="w-40 h-40 py-4" controls> </video>
+                        @foreach($videos as $key => $video)
+                        <input type="text" wire:model="videoTitles.{{ $key }}" placeholder="Tiêu đề video">
+                        <video src="{{ $video->temporaryUrl() }}" class="w-100 h-40 py-4" controls> </video>
                         @endforeach
                 @endif
                 @error('videos.*') <span class="error">{{ $message }}</span> @enderror

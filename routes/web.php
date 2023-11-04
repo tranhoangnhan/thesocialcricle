@@ -50,6 +50,8 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/courses/{slug}', [EducationController::class, 'courses_intro'])->name('courses_intro');
     Route::get('/profile/{id}', [ProfileController::class, 'showInfo'])->name('profile_render');
     Route::get('/courses/{slug}/enroll', [VideoController::class, 'index'])->name('video');
+    Route::get('/courses/{slug}/enroll/{video}', [VideoController::class, 'index'])->name('video');
+
 });
 
 // Route::get('/test', function(){

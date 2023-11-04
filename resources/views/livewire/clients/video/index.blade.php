@@ -18,12 +18,12 @@
                             <h1 class="text-2xl font-semibold line-clamp-1"> {{$videos->material_name}} </h1>
 
                         </div>
-
+                       
                         <div class="md:flex items-center justify-between">
                             <a href="#" class="flex items-center space-x-3">
                                 <img src="assets/images/avatars/avatar-2.jpg" alt="" class="w-10 rounded-full">
                                 <div class="">
-                                    <div class="text-base font-semibold"> {{$videos->course_name}} </div>
+                                    <div class="text-base font-semibold"> {{$this->course->course_name}} </div>
                                     <div class="text-xs"> {{$videos->created_at}} </div>
                                 </div>
                             </a>
@@ -31,7 +31,7 @@
                                 <p> {{$videos->view}} </p>
                             </div>
                         </div>
-
+                 
                         <hr>
                         <div class="text-lg font-semibold pt-2"> Comments ( 5210 )</div>
 
@@ -79,23 +79,44 @@
                 <!-- sidebar -->
                 <div class="lg:w-1/4 w-full">
 
-                   <h3 class="text-xl font-bold mb-2">Video liên quan</h3>
-                   @foreach ($related as $video)
-                   <div class="py-2 relative">
-                       <a href="video-watch.html" class="w-full h-32 overflow-hidden rounded-lg relative shadow-sm flex-shrink-0 block">
-                        <iframe src="{{$video->material_url}}" frameborder="0"
-                            uk-video="automute: true" uk-responsive></iframe>
-                       </a>
-                       <div class="flex-1 pt-3 relative">
-                           <a href="video-watch.html" class="line-clamp-2 font-semibold"> {{$video->metarial_name}}  </a>
-                           <div class="flex space-x-2 items-center text-sm pt-1">
-                               <div> {{$video->created_at}}</div>
-                               <div>·</div>
-                               <div> {{$video->view}} lượt xem</div>
-                           </div>
-                       </div>
-                    </div>
-                   @endforeach
+                   <h3 class="mb-8 mt-20 font-semibold text-xl" id="curriculum"> Chương trình giảng dạy {{$this->course->course_name}} </h3>
+                   <ul class="uk-accordion space-y-3" uk-accordion>
+                   @foreach ($sections as $section)
+                   <li class="card hover:shadow-md px-6 py-4 rounded-md uk-open">
+                    <a class="uk-accordion-title font-semibold text-base" href="#"> {{$section->section_name}} </a>
+           
+
+<div class="uk-accordion-content mt-3 -mx-6" aria-hidden="false">
+<ul class="course-curriculum-list font-semibold space-y-1">
+    @foreach ($sectionVideos[$section->section_id] as $video)
+    @if($this->slug_video == $video->slug)
+    <a wire:navigate href="/courses/{{$this->course->slug}}/enroll/{{$video->slug}}" class="text-dark" >
+    <li class="hover:bg-gray-100 px-3 py-2.5 flex" style="background-color: rgb(161, 158, 158, 0.3);" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+            </svg> {{$video->material_name}}
+
+
+        </li></a>
+    @else
+    <a wire:navigate href="/courses/{{$this->course->slug}}/enroll/{{$video->slug}}" class="text-dark" >
+        <li class="hover:bg-gray-100 px-3 py-2.5 flex">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 mr-2">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                </svg> {{$video->material_name}}
+    
+    
+            </li></a>
+    @endif
+    @endforeach
+</ul>
+</div>
+</li>
+@endforeach
+
+
+
+                   
 
 
                 </div>
@@ -105,4 +126,5 @@
 
         </div>
     </div>
+    
 </div>

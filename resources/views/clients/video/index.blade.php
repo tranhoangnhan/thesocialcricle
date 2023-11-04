@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 
-@livewire('clients.video.index',['course'=>$course])
+@livewire('clients.video.index',['course'=>$course,'videos'=>$video])
 
 @endsection
 @section('js')

@@ -50,5 +50,6 @@ class Index extends Component
             $course->enroll = EnrollmentModel::where('course_id', $course->course_id)->count();
         }
         return view('livewire.clients.education.index', ['courses' => $courses]);
+
     }
 }
