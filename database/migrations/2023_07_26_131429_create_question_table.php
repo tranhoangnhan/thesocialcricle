@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('question_id');
             // $table->integer('quiz_id');
             $table->text('question_content');
-            $table->text('correct_awswer');
+            $table->text('correct_awswer')->nullable();
             $table->timestamps();
         });
     }
