@@ -1,0 +1,29 @@
+// ================ Multi-step css =================
+.wrapper{
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background-color: #f2f2f2;
+}
+.thank_content{
+  margin-top: 10rem;
+}
+.check_mark_img{
+  img{
+    width: 20rem;
+    height: auto;
+  }
+}
+.sub_title{
+  span{
+    color: #090909;
+    font-size: 1.25rem;
+  }
+}
+.title{
+  h3{
+    color: #1b1b1b;
+    font-size: 2.625rem;
+  }
+}

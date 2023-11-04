@@ -24,9 +24,10 @@
                             <ul class="space-x-3" uk-scrollspy-nav="closest: li; scroll: true">
                                 <li><a href="#Overview" uk-scroll>TỔNG QUAN</a></liclass=>
                                 <li><a href="#reviews">BÌNH LUẬN</a></li>
+                                <li><a href="/quiz">LÀM BÀI TẬP</a></li>
                             </ul>
                         </nav>
-                       
+
                         <div class="lg:mt-9 mt-5">
                             <div id="Overview">
                                 <div class="space-y-5">
