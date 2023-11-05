@@ -46,8 +46,7 @@
                     </div>
 
                     <div class="mb-3 container-input">
-                        <label for="exampleFormControlInput1" class="form-label">Nội dung khóa
-                            học:</label>
+                        <label for="exampleFormControlInput1" class="form-label">Lợi ích khi tham gia khóa học</label>
                         @foreach ($learns as $key => $learns)
                             <input type="text" class="form-control mb-3" wire:model="learns.{{ $key }}"
                                 placeholder="Kiến thức đạt được khi tham gia khóa học">
