@@ -25,9 +25,11 @@
                                 <li><a href="#Overview" uk-scroll>TỔNG QUAN</a></liclass=>
                                 <li><a href="#reviews">BÌNH LUẬN</a></li>
                                 <li><a href="/quiz">LÀM BÀI TẬP</a></li>
-                            </ul>
-                        </nav>
 
+                            </ul>
+
+                        </nav>
+                        <a href="/courses/{{$course->slug}}/createquiz"><li>TẠO QUIZ</li></a>
                         <div class="lg:mt-9 mt-5">
                             <div id="Overview">
                                 <div class="space-y-5">

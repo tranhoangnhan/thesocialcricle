@@ -4,8 +4,8 @@
 @endsection
 @section('content')
 <div class="main_content">
-
-        <livewire:clients.quiz.create-quiz/>
+        @livewire('clients.quiz.create-quiz', ['course' => $course])
+{{--        <livewire:clients.quiz.create-quiz/>--}}
 
 </div>
 @endsection

@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="{{asset('clients/assets-quiz/css/style.css')}}">
     </header>
     <div>
-        <livewire:clients.quiz.quiz/>
+        @livewire('clients.quiz.quiz', ['course' => $course])
     </div>
 @endsection
 @section('js')

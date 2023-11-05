@@ -1,8 +1,27 @@
-
 <div>
+    <div class="container">
         <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <form action="" wire:submit.prevent="createquiz">
+                        @csrf
+                        <label class="form-label" for="CreateTask-Task-Name">Tạo Quiz</label>
+                        <input wire:model="quiz_name" type="text" class="form-control" placeholder="Nhập tên quiz"
+                               id="CreateTask-Task-Name">
+                        <br>
+                        <input wire:model="quiz_descript" type="text" class="form-control" placeholder="Nhập nội dung quiz"
+                               id="CreateTask-Task-Name">
+                        <br>
+                        <button class="btn btn-primary mb-3" type="submit">Tạo quiz</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
             {{--        pop-up-add--}}
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div wire:ignore.self class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -42,7 +61,7 @@
                                     <textarea wire:model="awswer_content4" class="form-control" placeholder="Nhập câu trả lời" id="exampleFormControlTextarea1" rows="1"></textarea>
                                 </div>
                                 <br>
-                                <input wire:model="quiz_id" type="hidden" name="quiz_id" value="{{$this->quiz_id = 1}}">
+                                <input wire:model="quiz_id" type="hidden" name="quiz_id" placeholder="{{$this->quiz_id}}" value="{{$this->quiz_id}}">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                     <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Thêm câu hỏi</button>
@@ -93,10 +112,10 @@
                                     <textarea wire:model="awswer_content4" class="form-control" placeholder="Nhập câu trả lời" id="exampleFormControlTextarea1" rows="1"></textarea>
                                 </div>
                                 <br>
-                                <input wire:model="quiz_id" type="hidden" name="quiz_id" value="{{$this->quiz_id = 1}}">
+                                <input wire:model="quiz_id" type="hidden" name="quiz_id" value="{{$this->quiz_id}}">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Thêm câu hỏi</button>
+                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sửa câu hỏi</button>
                                 </div>
                             </form>
                         </div>
@@ -104,8 +123,9 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
         </div>
-        <div class="container">
-            <div class="row" style="margin-left: 30px">
+    <div class="container">
+            @foreach($quiz as $quiz)
+            <div class="row mb-2">
                 <div class="col-lg-12">
                     <div id="addproduct-accordion" class="custom-accordion">
                         <div class="card">
@@ -113,18 +133,18 @@
                                aria-expanded="true" aria-controls="addproduct-productinfo-collapse">
                                 <div class="p-4">
 
-                                    Quiz: 1
-                                    <span style="float: right" class="mr-2"><button type="button" wire:click="" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm câu hỏi</button></span>
+                                    Quiz: {{$quiz->quiz_name}}
+
+                                    <span style="float: right" class="mr-2"><button type="button" wire:click.prevent="store({{$quiz->quiz_id}})" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm câu hỏi</button></span>
                                 </div>
                             </a>
-
                             <div id="addproduct-productinfo-collapse" class="collapse show"
                                  data-bs-parent="#addproduct-accordion">
                                 <div class="p-4 border-top">
                                     <form method="POST" action="">
                                         @csrf
                                         <div class="card-body">
-                                            @foreach($question as $question)
+                                            @foreach($quiz->question as $question)
                                                 <div class="card mb-3 ">
                                                     <div class="card-header">Câu {{ $loop->iteration }}: {{ $question->question_content}}
                                                         <span style="float: right" class=""><button type="button" wire:click="delete({{ $question->question_id }})" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete"><i class="fa fa-close"></i>Xoá</button></span>
@@ -163,12 +183,12 @@
                                             </div>
                                             <div class="row mb-4">
                                                 <div class="col text-end">
-                                                    <a href="#" class="btn btn-danger"> <i class="bx bx-x me-1"></i> Xoá quiz </a>
+                                                    <button type="button" wire:click="deletequiz({{ $quiz->quiz_id }})" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmQuizDelete">Xoá quiz</button>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row-->
                                         </div>
                                     </form>
-                                    <!-- Modal -->
+                                    <!-- Modal add -->
                                     <div wire:ignore.self class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -189,13 +209,34 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Modal delete-quiz -->
+                                    <div wire:ignore.self class="modal fade" id="confirmQuizDelete" tabindex="-1" role="dialog" aria-labelledby="Modaldeletequiz" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Cảnh báo hành động</h5>
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true close-btn">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Bạn có chắc chắn muốn xoá không?</p>
+                                                    <p>(Điều này sẽ xoá câu hỏi cùng các câu trả lời)</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary close-btn" data-bs-dismiss="modal">Không</button>
+                                                    <button type="button" wire:click.prevent="deletequizconfirm()" class="btn btn-danger close-modal" data-bs-dismiss="modal">Có, tôi muốn xoá</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- end row -->
-        </div>
+            @endforeach
+    </div>
 </div>
 

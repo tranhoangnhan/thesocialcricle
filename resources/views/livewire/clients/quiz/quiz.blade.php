@@ -42,7 +42,7 @@
 {{--                            <div class="row pt-5 mt-4 form_items">--}}
 {{--                                @foreach($question->answer as $answer)--}}
 {{--                                    <div class="col-6">--}}
-{{--                                        <input class="form-check-input" name="choice" wire:change.prevent="result({{$question->question_id}}, '{{$answer->awswer_id}}', '{{$answer->is_correct}}')" type="radio" value="{{$answer->is_correct}}">--}}
+{{--                                        <input class="form-check-input" name="choice{{$question->question_id}}" wire:change.prevent="result({{$question->question_id}}, '{{$answer->awswer_id}}', '{{$answer->is_correct}}')" type="radio"   value="{{$answer->is_correct}}">--}}
 {{--                                        <p>{{$answer->awswer_content}}</p>--}}
 {{--                                    </div>--}}
 {{--                                @endforeach--}}

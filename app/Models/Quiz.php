@@ -12,6 +12,7 @@ class Quiz extends Model
     protected $table='quiz';
     use HasFactory;
     protected $primaryKey = 'quiz_id';
+    public $timestamps = false;
 
     public function course()
     {
