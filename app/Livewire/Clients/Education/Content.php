@@ -55,6 +55,7 @@ class Content extends Component
                 'material_url' => 'https://hoangnhan.ddns.net/cdn/'.$this->path,
                 'material_type' => 'video',
                 'material_status' => 'active',
+                'review' => '1'
             ]);
         }
         return redirect()->route('courses_register_content', ['slug' => $Course->slug]);
