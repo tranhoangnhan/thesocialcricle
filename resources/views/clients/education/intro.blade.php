@@ -5,31 +5,23 @@
     <div class="main_content">
         <div class="mcontainer">
 
-
-                <div class="lg:flex lg:space-x-10">
-
-
-
-
+            <div class="lg:flex lg:space-x-10">
 
                 <div class="lg:w-3/4 md:p-3 p-2">
                     <div>
                         <div class="space-y-3">
                             <h5 class="uppercase text-sm font-medium text-gray-400"> MÔ TẢ KHÓA HỌC </h5>
                             <h1 class="font-semibold text-3xl">{{ $course->course_name }}</h1>
-                            @livewire('clients.education.intro', ['course' => $course,'first_video'=>$first_video])
+                            @livewire('clients.education.intro', ['course' => $course,'first_video' => $first_video])
                         </div>
                         <nav class="responsive-nav border-b md:mx-0 -mx-4 mt-4 text-4xl"
                             uk-sticky="offset:45; cls-active:bg-gray-50">
                             <ul class="space-x-3" uk-scrollspy-nav="closest: li; scroll: true">
                                 <li><a href="#Overview" uk-scroll>TỔNG QUAN</a></liclass=>
                                 <li><a href="#reviews">BÌNH LUẬN</a></li>
-                                <li><a href="/quiz">LÀM BÀI TẬP</a></li>
-
                             </ul>
-
                         </nav>
-                        <a href="/courses/{{$course->slug}}/createquiz"><li>TẠO QUIZ</li></a>
+
                         <div class="lg:mt-9 mt-5">
                             <div id="Overview">
                                 <div class="space-y-5">
@@ -77,9 +69,37 @@
                                                             </svg> <a
                                                                 href="/courses/{{ $video->material_id }}/enroll">{{ $video->material_name }}</a>
                                                             @if ($video->review == 0)
-                                                                <a href="#trailer-modal"
-                                                                    class="bg-purple-100 border font-semibold ml-2 px-2 py-1 rounded-full text-purple-500 text-xs"
-                                                                    uk-toggle> Xem trước </a>
+                                                            <a href="#trailer-modal_{{$video->material_id}}"
+                                                                class="bg-purple-100 border font-semibold ml-2 px-2 py-1 rounded-full text-purple-500 text-xs"
+                                                                uk-toggle> Xem trước </a>
+                                                                @foreach ($review as $trailer)
+                                                                <div id="trailer-modal_{{$trailer->material_id}}" uk-modal="" class="uk-modal">
+                                                                    <div class="uk-modal-dialog">
+                                                                        <button class="uk-modal-close-default mt-2 mr-1 uk-icon uk-close" type="button"
+                                                                            uk-close=""><svg width="14" height="14" viewBox="0 0 14 14"
+                                                                                xmlns="http://www.w3.org/2000/svg" data-svg="close-icon">
+                                                                                <line fill="none" stroke="#000" stroke-width="1.1" x1="1"
+                                                                                    y1="1" x2="13" y2="13"></line>
+                                                                                <line fill="none" stroke="#000" stroke-width="1.1" x1="13"
+                                                                                    y1="1" x2="1" y2="13"></line>
+                                                                            </svg></button>
+                                                                        <div class="uk-modal-header">
+                                                                            <h4> {{$trailer->material_name}} </h4>
+                                                                        </div>
+
+                                                                        <div class="embed-video rounded">
+                                                                            <video id="player" playsinline controls data-poster="/path/to/poster.jpg">
+                                                                                <source src="{{ $trailer->material_url }}" type="video/mp4">
+                                                                                
+                                                                                <!-- Captions are optional -->
+                                                                                <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default />
+                                                                              </video>
+                                                                           
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
                                                             @endif
                                                         </li>
                                                     @endforeach
@@ -93,32 +113,12 @@
                                 </ul>
 
                                 <!-- video demo model -->
-                                <div id="trailer-modal" uk-modal="" class="uk-modal">
-                                    <div class="uk-modal-dialog">
-                                        <button class="uk-modal-close-default mt-2 mr-1 uk-icon uk-close" type="button"
-                                            uk-close=""><svg width="14" height="14" viewBox="0 0 14 14"
-                                                xmlns="http://www.w3.org/2000/svg" data-svg="close-icon">
-                                                <line fill="none" stroke="#000" stroke-width="1.1" x1="1"
-                                                    y1="1" x2="13" y2="13"></line>
-                                                <line fill="none" stroke="#000" stroke-width="1.1" x1="13"
-                                                    y1="1" x2="1" y2="13"></line>
-                                            </svg></button>
-                                        <div class="uk-modal-header">
-                                            <h4> Trailer hóa học </h4>
-                                        </div>
 
-                                        <div class="embed-video rounded">
-                                            <video id="videoElement" height="auto" class="m-auto" controls>
-                                                <source src="{{ $review->material_url }}" type="video/mp4">
-                                            </video>
-                                        </div>
-
-                                    </div>
-                                </div>
                             </div>
                             <!-- course description -->
                             <div id="reviews">
-                                @livewire('clients.education.comments', ['course' => $course])
+                                @livewire('clients.education.comments', ['course' => $course
+                                ])
                             </div>
                         </div>
                     </div>
@@ -158,14 +158,20 @@
     </div>
 @endsection
 @section('js')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var modal = document.getElementById('trailer-modal');
-            var video = document.getElementById('videoElement');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var modals = document.querySelectorAll('[id^="trailer-modal_"]');
 
-            UIkit.util.on(modal, 'hidden', function() {
-                video.pause(); // Pause the video when the modal is closed
-            });
+        modals.forEach(function(modal) {
+            var video = modal.querySelector('video');
+
+            if (video) {
+                UIkit.util.on(modal, 'hidden', function() {
+                    video.pause(); // Tắt video khi modal được đóng
+                });
+            }
         });
-    </script>
+    });
+</script>
+
 @endsection
