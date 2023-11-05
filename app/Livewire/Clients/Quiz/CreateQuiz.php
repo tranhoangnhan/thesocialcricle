@@ -6,13 +6,20 @@ use App\Models\Answer;
 use App\Models\Questions;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\Quiz;
 
 class CreateQuiz extends Component
 {
     use WithPagination;
 
+    public $course;
+
+    public $quiz_name = '';
+    public $quiz_descript = '';
+    public $deletequizId = '';
+
     public $question_content = '';
-    public $quiz_id ;
+    public $quiz_id = '';
     public $question_id = '';
     public $awswer_content1 = '';
     public $awswer_content2 = '';
@@ -33,6 +40,15 @@ class CreateQuiz extends Component
     public $answer_content_update = '';
     public $choice = '';
 
+    public function createquiz(){
+        $quiz = Quiz::create([
+            'quiz_name' => $this->quiz_name,
+            'description' => $this->quiz_descript,
+            'course_id' => $this->course->course_id,
+        ]);
+        $quiz->save();
+    }
+
     public function storeQuestion(){
 //        thêm câu hỏi
         $question = Questions::create([
@@ -50,12 +66,7 @@ class CreateQuiz extends Component
                 'is_correct' => $this->is_correct1,
                 'question_id' => $this->question_id,
         ]);
-//        if ($this->is_correct1 == 1){
-//            $answer_correct = Questions::where('question_id', $this->question_id);
-//            $answer_correct->update([
-//                'correct_awswer' => "1",
-//            ]);
-//        }
+//
         if ($this->is_correct1 == 1){
             $questionToUpdate = Questions::find($this->question_id);
             $questionToUpdate->update([
@@ -68,6 +79,7 @@ class CreateQuiz extends Component
             'is_correct' => $this->is_correct2,
             'question_id' => $this->question_id,
         ]);
+
         if ($this->is_correct2 == 1){
             $questionToUpdate = Questions::find($this->question_id);
             $questionToUpdate->update([
@@ -80,6 +92,7 @@ class CreateQuiz extends Component
             'is_correct' => $this->is_correct3,
             'question_id' => $this->question_id,
         ]);
+
         if ($this->is_correct3 == 1){
             $questionToUpdate = Questions::find($this->question_id);
             $questionToUpdate->update([
@@ -92,6 +105,7 @@ class CreateQuiz extends Component
             'is_correct' => $this->is_correct4,
             'question_id' => $this->question_id,
         ]);
+
         if ($this->is_correct4 == 1){
             $questionToUpdate = Questions::find($this->question_id);
             $questionToUpdate->update([
@@ -100,6 +114,19 @@ class CreateQuiz extends Component
         }
         $answer->save();
         }
+
+    public function store($id){
+        $this->quiz_id = $id;
+    }
+    public function deletequiz($id){
+        $this->deletequizId = $id;
+    }
+    public function deletequizconfirm()
+    {
+        $delete = Quiz::find($this->deletequizId);
+        $delete->delete();
+        $this->reset('deletequizId');
+    }
 
     public function delete($id){
         $this->deleteId = $id;
@@ -122,8 +149,9 @@ class CreateQuiz extends Component
     public function render()
     {
         return view('livewire.clients.quiz.create-quiz', [
-            'question' => Questions::where('quiz_id', 1)->paginate(10),
+            'question' => Questions::where('quiz_id', $this->quiz_id)->paginate(10),
             'updateId' => Questions::where('quiz_id', $this->updateId)->get(),
+            'quiz' => Quiz::where('course_id', $this->course->course_id)->get(),
         ]);
     }
 }

@@ -12,10 +12,21 @@ use Livewire\Component;
 
 class Quiz extends Component
 {
-    public $quiz_id = 1;
+
+    public $slug;
+    public $quiz_id;
+    public $quiz_name;
     public $get_result = [];
     public $list_choice = [];
     public $mark = '';
+
+    public $course;
+
+    public function mount(){
+        $this->slug = request()->route('quiz');
+        $this->quiz_name = \App\Models\Quiz::where('quiz_name', $this->slug)->first();
+        $this->quiz_id = $this->quiz_name->quiz_id;
+    }
 
     public function result($get_question, $get_answer, $get_choice){
         $this->get_result[$get_question] = $get_answer;
@@ -29,13 +40,13 @@ class Quiz extends Component
     public function caculated(){
         foreach ($this->get_result as $questionId => $answerId){
             $choice =Answer::where('question_id', $questionId)->where('awswer_id', $answerId)->first();
-            $question = Questions::where('question_id', $questionId)->where('quiz_id', 1)->first();
+            $question = Questions::where('question_id', $questionId)->where('quiz_id', $this->quiz_id)->first();
             quiz_summary::create([
                 'question_id' => $questionId,
                 'question_choice_id' => $this->list_choice[$questionId],
                 'user_id' => Auth::id(),
                 'score' => $choice->is_correct,
-                'quiz_id' => 1
+                'quiz_id' => $this->quiz_id
             ]);
         }
         $count = count($this->get_result);
@@ -54,15 +65,11 @@ class Quiz extends Component
             'user_id' => Auth::id(),
             'score-percent' => $percented,
             'mark' => $this->mark,
-            'quiz_id' => 1
+            'quiz_id' => $this->quiz_id
         ]);
         $result_id = quiz_result::latest()->first()->result_id;
-        return redirect()->route('quiz-thankyou',[
-            'result' => $result->count(),
-            'get_correct' => $get_correct,
-            'result_id' => $result_id
-        ]);
     }
+
 
     public function render()
     {

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->bigInteger('section_id');
             $table->string('view')->nullable();
-           $table->enum('review',['0', '1']);
+            $table->enum('review',['0', '1']);
 
 
             $table->timestamps();
