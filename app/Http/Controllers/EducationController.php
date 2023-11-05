@@ -38,6 +38,7 @@ class EducationController extends Controller
     public function courses_intro($slug)
 
     {
+       
         $course = CoursesModel::join('users', 'users.user_id', '=', 'course.instructor_id')
         ->where('slug', "$slug")
         ->select('course.*', 'users.user_fullname')
@@ -51,8 +52,8 @@ class EducationController extends Controller
         }
         foreach ($course_section as $section) {
             foreach ($section->material as $material) {
-                if ($material->review == 0) {
-                    $review = $material;
+                if($material->review == 0){
+                    $review[]=$material;
                 }
             }
         }
