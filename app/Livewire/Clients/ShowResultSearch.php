@@ -104,7 +104,8 @@ class ShowResultSearch extends Component
     {
         $friend = [];
         if(strlen($this->search >= 1)){
-            $friend = User::where('user_fullname', 'LIKE', "%{$this->search}%")->limit(5)->get();
+            $friend = User::where('user_fullname', 'LIKE', "%{$this->search}%")
+            ->limit(5)->get();
         }
         $posts = PostsModel::where('text','LIKE',"%{$this->search}%")
             ->limit($this->loadAmount)

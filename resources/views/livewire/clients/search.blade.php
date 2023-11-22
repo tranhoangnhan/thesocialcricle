@@ -11,24 +11,36 @@
             @if ($search == null)
                 <li></li>
             @else
+            <div class="mt-3">
                 @if (sizeof($friend) > 0)
-                    <li class="p-3 mt-2" style="width: 30rem; background-color:  #fff">
-                        @foreach ($friend as $friend)
-                            <a wire:navigate href="/profile/{{ $friend->user_id }}">
-                                <div class="list-name"> {{ $friend->user_fullname }} </div>
-                            </a>
-                        @endforeach
-                    </li>
-                @endif
-                @if (sizeof($post) > 0)
-                    <li class="p-2 mt-2" style="width: 30rem; background-color:  #fff">
-                        @foreach ($post as $post)
-                            <a href="#">
-                                <div class="list-name"> {{ $post->text }} </div>
-                            </a>
-                        @endforeach
-                    </li>
-                @endif
+                <li class="p-3" style="width: 30rem; background-color:  #fff">
+                    @foreach ($friend as $friend)
+                        <a wire:navigate href="/profile/{{ $friend->user_id }}">
+                            <div class="list-name p-3"> {{ $friend->user_fullname }} </div>
+                        </a>
+                    @endforeach
+                </li>
+            @endif
+            @if (sizeof($post) > 0)
+                <li class="p-2" style="width: 30rem; background-color:  #fff">
+                    @foreach ($post as $post)
+                        <a href="#">
+                            <div class="list-name p-3"> {{ $post->text }} </div>
+                        </a>
+                    @endforeach
+                </li>
+            @endif
+            @if (sizeof($course) > 0)
+            <li class="p-2" style="width: 30rem; background-color:  #fff">
+                @foreach ($course as $course)
+                    <a href="/courses/{{$course->slug}}">
+                        <div class="list-name p-3"> {{ $course->course_name }} </div>
+                    </a>
+                @endforeach
+            </li>
+        @endif
+            </div>
+
             @endif
         </ul>
     </div>

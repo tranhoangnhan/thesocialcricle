@@ -1,83 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" >
 
 <head>
+
     <meta charset="utf-8" />
-    <title>Dashboard | Velzon - Admin & Dashboard Template</title>
+    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon-16x16.png') }}">
 
     <!-- jsvectormap css -->
-    <link href="{{ asset('admin/assets/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
+    @yield('css')
+    <link href="{{ asset('assets/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet"/>
 
     <!--Swiper slider css-->
-    <link href="{{ asset('admin/assets/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet"/>
 
     <!-- Layout config Js -->
-    <script src="{{ asset('admin/assets/js/layout.js') }}"></script>
+    <script src="{{ asset('assets/js/layout.js') }}"></script>
     <!-- Bootstrap Css -->
-    <link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet"/>
     <!-- Icons Css -->
-    <link href="{{ asset('admin/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet"/>
     <!-- App Css-->
-    <link href="{{ asset('admin/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet"/>
     <!-- custom Css-->
-    <link href="{{ asset('admin/assets/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
-
-    @yield('customcss')
+    <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet" />
     @livewireStyles()
+
 </head>
 
 <body>
 
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        @include('admin.block.header')
 
-<div id="wrapper">
+        @include('admin.block.LeftSidebar')
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
 
-    <!-- Header -->
-    @include('admin.blocks.header')
+                    @yield('content')
 
-    <!-- sidebar -->
-    @include('admin.blocks.sidebar')
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
 
-    <!-- Main Contents -->
-    @yield('content')
+        </div>
+    </div>
+    <!-- END layout-wrapper -->
 
-</div>
+    <!--start back-to-top-->
+    <!--start back-to-top-->
+    <!--end back-to-top-->
 
-{{--@include('clients.blocks.right')--}}
+    <!--preloader-->
+
+    <!--end back-to-top-->
 
 
+    <!-- JAVASCRIPT -->
+    @yield('js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/node-waves/waves.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/feather-icons/feather.min.js') }}"></script>
 
-{{--admin javascript--}}
-<script src="{{ asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{asset('admin/assets/libs/simplebar/simplebar.min.js')}}"></script>
-<script src="{{asset('admin/assets/images/svg/crypto-icons/waves.svg')}}"></script>
-<script src="{{asset('admin/assets/libs/feather-icons/feather.min.js')}}"></script>
-<script src="{{asset('admin/assets/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
-<script src="{{asset('admin/assets/js/plugins.js')}}"></script>
+    <!-- apexcharts -->
+    <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
+    <!--Swiper slider js-->
+    <script src="{{ asset('assets/libs/swiper/swiper-bundle.min.js') }}"></script>
+    <!-- Dashboard init -->
+    <script src="{{ asset('assets/js/pages/dashboard-ecommerce.init.js') }}"></script>
 
-<!-- apexcharts -->
-<script src="{{asset('admin/assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+    @livewireScripts()
 
-<!-- Vector map-->
-<script src="{{asset('admin/assets/libs/jsvectormap/js/jsvectormap.min.js')}}"></script>
-<script src="{{asset('admin/assets/libs/jsvectormap/maps/world-merc.js')}}"></script>
-
-<!--Swiper slider js-->
-<script src="{{asset('admin/assets/libs/swiper/swiper-bundle.min.js')}}"></script>
-
-<!-- Dashboard init -->
-<script src="{{asset('admin/assets/js/pages/dashboard-ecommerce.init.js')}}"></script>
-
-<!-- App js -->
-<script src="{{asset('admin/assets/js/app.js')}}"></script>
-
-@yield('js')
-@livewireScripts()
 </body>
-
 
 </html>

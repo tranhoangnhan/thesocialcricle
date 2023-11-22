@@ -43,14 +43,9 @@
                     </a>
                     <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden text-base border border-gray-100 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
                         uk-drop="mode: click;pos: bottom-right;animation: uk-animation-slide-bottom-small">
+                        @if (auth()->user()->user_id==$post->user_id)
 
                         <ul class="space-y-1">
-                            <li>
-                                <a href="#"
-                                    class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
-                                    <i class="uil-share-alt mr-1"></i> Share
-                                </a>
-                            </li>
                             <li>
                                 <a href="#"
                                     class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
@@ -64,12 +59,6 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#"
-                                    class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
-                                    <i class="uil-favorite mr-1"></i> Add favorites
-                                </a>
-                            </li>
-                            <li>
                                 <hr class="-mx-2 my-2 dark:border-gray-800">
                             </li>
                             <li>
@@ -79,13 +68,33 @@
                                 </a>
                             </li>
                         </ul>
+                        @else
+                        <ul class="space-y-1">
+                            <li>
+                                <a href="#"
+                                    class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                    <i class="uil-share-alt mr-1"></i> Share
+                                </a>
+                            </li>
+                            <li>
+                                <form wire:submit.prevent="createReport('{{ $post->post_id }}', 'post')">
+                                    <button type="submit" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                        <i class="uil-favorite mr-1"></i> Báo cáo
+                                    </button>
+                                </form>
+                            </li>
+                            <li>
+                                <hr class="-mx-2 my-2 dark:border-gray-800">
+                            </li>
+                        </ul>
+                        @endif
 
                     </div>
                 </div>
             </div>
 
             <div uk-lightbox>
-                <p class="p-2">{{ $post->text }}</p>
+                <p class="p-2 mx-4">{{ $post->text }}</p>
             </div>
 
 
@@ -252,24 +261,24 @@
 
         </div>
     @endforeach
-    
+
         <div class="card lg:mx-0 uk-animation-slide-bottom-small">
 
         </div>
     @if($loadAmount >= $totalRecords)
         <div class="flex justify-center mt-6 " >
-            <button wire:click="loadMore()"   wire:model='loadMore' 
+            <button wire:click="loadMore()"   wire:model='loadMore'
                 class="taithem bg-white dark:bg-gray-900 font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
                 Bạn có muốn xem thêm bài viết?</button>
         </div>
     @else
     <div class="flex justify-center mt-6 "  >
-            <button wire:click="loadMore()" wire:model='loadMore' 
+            <button wire:click="loadMore()" wire:model='loadMore'
                 class="taithem bg-white dark:bg-gray-900 font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
                 Tải thêm bài viết</button>
         </div>
     @endif
- 
+
 </div>
 <script>
     const lastRecords = document.querySelectorAll('.taithem')

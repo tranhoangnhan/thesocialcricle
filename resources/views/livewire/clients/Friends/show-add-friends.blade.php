@@ -3,7 +3,7 @@
         <ul class="uk-slider-items uk-child-width-1-4@m uk-child-width-1-3@s uk-grid-small uk-grid">
 
     @foreach ($listFriends as $friend)
-    
+
       <li>
         <div class="card">
             <div class="card-media h-28">
@@ -13,7 +13,8 @@
                 <div class="absolute bg-red-100 font-semibold px-2.5 py-1 rounded-lg text-red-500 text-xs top-2.5 left-2.5"> Lời mời kết bạn </div>
             </div>
             <div class="card-body">
-                <a href="timeline-group.html" class="font-semibold text-lg truncate"> {{$friend->user_fullname}} </a>
+                <a href="timeline-group.html" class="font-semibold text-lg truncate"> {{$friend->nameUserOne}} </a>
+                <br>
                 @php
                 $createdAt = $friend->timeAddFriend;
                 $now = now();
@@ -39,7 +40,7 @@
                         <img alt="Image placeholder" src={{asset('clients/assets/images/avatars/avatar-5.jpg')}} class="border-2 border-white rounded-full w-7">
                     </div>
                     <div class="flex-1 leading-5 text-sm">
-                        <div> <strong>Johnson</strong> and 5 freind are members </div>
+                        <div> <strong>{{$friend->nameUserOne}}</strong> and 5 freind are members </div>
                     </div>
                 </div>
 
@@ -48,7 +49,7 @@
                         Chấp nhận
                     </a>
                     <a wire:click.prevent = "removeFriends({{$friend->user_one_id}})" class="bg-gray-200 flex flex-1 h-8 items-center justify-center rounded-md capitalize">
-                        Cút
+                    Từ chối
                     </a>
                 </div>
 

@@ -3,11 +3,8 @@
 
 @endsection
 @section('content')
-    <div class="main-content">
-        <div class="page-content">
+
             @livewire('admin.users.admin-user')
-        </div>
-    </div>
 @endsection
 @section('js')
     <!-- form wizard init -->
