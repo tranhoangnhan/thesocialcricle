@@ -22,7 +22,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VideoController;
-
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ControlEducationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,9 +51,19 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/courses/{slug}', [EducationController::class, 'courses_intro'])->name('courses_intro');
     Route::get('/profile/{id}', [ProfileController::class, 'showInfo'])->name('profile_render');
     Route::get('/courses/{slug}/enroll', [VideoController::class, 'index'])->name('video');
+    Route::post('/courses/{slug}/checkout', [CheckoutController::class,'payment_vnpay__'])->name('payment_vnpay');
+    Route::get('/courses/{slug}/checkout/callback', [CheckoutController::class,'insert_db'])->name('payment_vnpaay');
+
     Route::get('/courses/{slug}/enroll/{video}', [VideoController::class, 'index'])->name('video');
     Route::get('/courses/{slug}/createquiz', [\App\Http\Controllers\CreateQuizController::class, 'index'])->name('create-quiz');
     Route::get('/courses/{slug}/{quiz}/quiz', [\App\Http\Controllers\QuizController::class, 'index'])->name('test-quiz');
+    Route::get('/courses/{slug}/control', [ControlEducationController::class, 'index'])->name('control-index');
+    Route::get('/courses/{slug}/control/video', [ControlEducationController::class, 'video'])->name('control-video');
+    Route::get('/courses/{slug}/control/revenue', [ControlEducationController::class, 'revenue'])->name('control-revenue');
+    Route::get('/courses/{slug}/control/member', [ControlEducationController::class, 'member'])->name('control-member');
+
+    Route::get('/courses/{slug}/control/video/edit', [ControlEducationController::class, 'video_edit'])->name('control-video-edit');
+
     Route::post('/createquestion',[\App\Livewire\Clients\Quiz\CreateQuiz::class, 'storeQuestion'])->name('store-question');
     Route::post('/updatequestion',[\App\Livewire\Clients\Quiz\CreateQuiz::class, 'updateQuestion'])->name('update-question');
 //    Route::get('/createquiz', [\App\Http\Controllers\CreateQuizController::class, 'index'])->name('index-createquiz');

@@ -23,5 +23,6 @@ class CourseMaterialModel extends Model
         'section_id',
         'review',
         'slug',
+        'potision',
     ];
 }

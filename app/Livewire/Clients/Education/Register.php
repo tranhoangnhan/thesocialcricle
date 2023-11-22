@@ -38,7 +38,6 @@ class Register extends Component
             'category_id'=>$this->category,
             'payment'=>$this->payment,
             'description'=>$this->description,
-            'banner'=>'banner',
             'instructor_id'=>auth()->user()->user_id,
             'required_skill'=>json_encode($this->skills),
             'learn_skill'=>json_encode($this->learns),
