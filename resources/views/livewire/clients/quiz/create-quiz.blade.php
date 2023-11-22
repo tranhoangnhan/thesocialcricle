@@ -8,9 +8,11 @@
                         <label class="form-label" for="CreateTask-Task-Name">Tạo Quiz</label>
                         <input wire:model="quiz_name" type="text" class="form-control" placeholder="Nhập tên quiz"
                                id="CreateTask-Task-Name">
+                        @error('quiz_name') <span class="error">{{ $message }}</span> @enderror <br>
                         <br>
                         <input wire:model="quiz_descript" type="text" class="form-control" placeholder="Nhập nội dung quiz"
                                id="CreateTask-Task-Name">
+                        @error('quiz_descript') <span class="error">{{ $message }}</span> @enderror <br>
                         <br>
                         <button class="btn btn-primary mb-3" type="submit">Tạo quiz</button>
                     </form>
@@ -42,29 +44,34 @@
                                 {{--            //Câu trả lời--}}
                                 <div class="form-group ml-5">
                                     <input style="width: 13px; height: 13px" type="checkbox" wire:model="is_correct1" value="1">
-                                    <label for="exampleFormControlTextarea1">A:</label>
+                                    <label for="exampleFormControlTextarea1"></label>
                                     <textarea wire:model="awswer_content1" class="form-control" placeholder="Nhập câu trả lời" id="exampleFormControlTextarea1" rows="1"></textarea>
                                 </div>
                                 <div class="form-group ml-5">
                                     <input style="width: 13px; height: 13px" type="checkbox" wire:model="is_correct2" value="1">
-                                    <label for="exampleFormControlTextarea1">B:</label>
+                                    <label for="exampleFormControlTextarea1"></label>
                                     <textarea wire:model="awswer_content2" class="form-control" placeholder="Nhập câu trả lời" id="exampleFormControlTextarea1" rows="1"></textarea>
                                 </div>
                                 <div class="form-group ml-5">
                                     <input style="width: 13px; height: 13px" type="checkbox" wire:model="is_correct3" value="1">
-                                    <label for="exampleFormControlTextarea1">C:</label>
+                                    <label for="exampleFormControlTextarea1"></label>
                                     <textarea wire:model="awswer_content3" class="form-control" placeholder="Nhập câu trả lời" id="exampleFormControlTextarea1" rows="1"></textarea>
                                 </div>
                                 <div class="form-group ml-5">
                                     <input style="width: 13px; height: 13px" type="checkbox" wire:model="is_correct4" value="1">
-                                    <label for="exampleFormControlTextarea1">D:</label>
+                                    <label for="exampleFormControlTextarea1"></label>
                                     <textarea wire:model="awswer_content4" class="form-control" placeholder="Nhập câu trả lời" id="exampleFormControlTextarea1" rows="1"></textarea>
                                 </div>
                                 <br>
                                 <input wire:model="quiz_id" type="hidden" name="quiz_id" placeholder="{{$this->quiz_id}}" value="{{$this->quiz_id}}">
+                                @error('question_content') <span class="error">{{ $message }}</span> @enderror <br>
+                                @error('awswer_content1') <span class="error">{{ $message }}</span> @enderror <br>
+                                @error('awswer_content2') <span class="error">{{ $message }}</span> @enderror <br>
+                                @error('awswer_content3') <span class="error">{{ $message }}</span> @enderror <br>
+                                @error('awswer_content4') <span class="error">{{ $message }}</span> @enderror <br>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Thêm câu hỏi</button>
+                                    <button type="submit" class="btn btn-primary"> Thêm câu hỏi</button>
                                 </div>
                             </form>
                         </div>
@@ -82,37 +89,31 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form wire:submit="storeQuestion">
+                            <form method="POST" action="{{ route('update-question') }}">
                                 @csrf
                                 {{--            Câu hỏi--}}
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Câu hỏi:</label>
-                                    <input wire:model="question_content" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nhập câu hỏi" value="{{$question_content_update}}">
+                                    <input name="question_name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nhập câu hỏi" value="{{$question_content_update}}">
                                 </div>
                                 <br>
                                 {{--            //Câu trả lời--}}
-                                <div class="form-group ml-5">
-                                    <input style="width: 13px; height: 13px" type="checkbox" wire:model="is_correct1" value="1">
-                                    <label for="exampleFormControlTextarea1">A:</label>
-                                    <textarea value="{{$answer_content_update}}" wire:model="awswer_content1" class="form-control" placeholder="Nhập câu trả lời" id="exampleFormControlTextarea1" rows="1"></textarea>
-                                </div>
-                                <div class="form-group ml-5">
-                                    <input style="width: 13px; height: 13px" type="checkbox" wire:model="is_correct2" value="1">
-                                    <label for="exampleFormControlTextarea1">B:</label>
-                                    <textarea wire:model="awswer_content2" class="form-control" placeholder="Nhập câu trả lời" id="exampleFormControlTextarea1" rows="1"></textarea>
-                                </div>
-                                <div class="form-group ml-5">
-                                    <input style="width: 13px; height: 13px" type="checkbox" wire:model="is_correct3" value="1">
-                                    <label for="exampleFormControlTextarea1">C:</label>
-                                    <textarea wire:model="awswer_content3" class="form-control" placeholder="Nhập câu trả lời" id="exampleFormControlTextarea1" rows="1"></textarea>
-                                </div>
-                                <div class="form-group ml-5">
-                                    <input style="width: 13px; height: 13px" type="checkbox" wire:model="is_correct4" value="1">
-                                    <label for="exampleFormControlTextarea1">D:</label>
-                                    <textarea wire:model="awswer_content4" class="form-control" placeholder="Nhập câu trả lời" id="exampleFormControlTextarea1" rows="1"></textarea>
-                                </div>
+                                @if(sizeof(array($question_update)) >= 1)
+                                    @foreach($question_update as $question)
+                                        <input type="hidden" name="quiz_id" value="{{$question->quiz_id}}">
+                                        <input type="hidden" name="question_id" value="{{$updateId}}">
+                                        @foreach($question->answer as $answer)
+                                            <div class="form-group ml-5">
+                                                <input style="width: 13px; height: 13px" type="hidden" name="choice[]" value="0">
+                                                <input style="width: 13px; height: 13px" type="hidden" name="answerId[]" value="{{$answer->awswer_id}}">
+                                                <input style="width: 13px; height: 13px" type="checkbox" name="choice[]" value="1">
+                                                <label for="exampleFormControlTextarea1"></label>
+                                                <textarea class="form-control" name="answer[]" placeholder="{{$answer->awswer_content}}" id="exampleFormControlTextarea1" rows="1">{{$answer->awswer_content}}</textarea>
+                                            </div>
+                                        @endforeach
+                                    @endforeach
+                                @endif
                                 <br>
-                                <input wire:model="quiz_id" type="hidden" name="quiz_id" value="{{$this->quiz_id}}">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                     <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sửa câu hỏi</button>
@@ -170,17 +171,19 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-                                            <div class="form-group d-flex justify-content-center text-center m-auto align-items-center mt-3">
-                                                <nav aria-label="Page navigation example">
-                                                    <ul class="pagination">
-                                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                                        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
-                                                        <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
-                                                        <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
-                                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
+
+                                                    <div class="form-group d-flex justify-content-center text-center m-auto align-items-center mt-3">
+                                                        <nav aria-label="Page navigation example">
+                                                            <ul class="pagination">
+                                                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                                                <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+                                                                <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                                                                <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+                                                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+
                                             <div class="row mb-4">
                                                 <div class="col text-end">
                                                     <button type="button" wire:click="deletequiz({{ $quiz->quiz_id }})" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmQuizDelete">Xoá quiz</button>

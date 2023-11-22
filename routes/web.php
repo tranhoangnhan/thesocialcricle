@@ -53,10 +53,13 @@ Route::middleware('checkuser')->group(function () {
     Route::get('/courses/{slug}/enroll/{video}', [VideoController::class, 'index'])->name('video');
     Route::get('/courses/{slug}/createquiz', [\App\Http\Controllers\CreateQuizController::class, 'index'])->name('create-quiz');
     Route::get('/courses/{slug}/{quiz}/quiz', [\App\Http\Controllers\QuizController::class, 'index'])->name('test-quiz');
-    Route::get('/createquiz', [\App\Http\Controllers\CreateQuizController::class, 'index'])->name('index-createquiz');
     Route::post('/createquestion',[\App\Livewire\Clients\Quiz\CreateQuiz::class, 'storeQuestion'])->name('store-question');
-    Route::get('/quiz', [\App\Http\Controllers\QuizController::class, 'index'])->name('index-quiz');
-    Route::get('/quiz-thankyou/{result}/{get_correct}', [\App\Http\Controllers\QuizthankyouController::class, 'index'])->name('quiz-thankyou');
+    Route::post('/updatequestion',[\App\Livewire\Clients\Quiz\CreateQuiz::class, 'updateQuestion'])->name('update-question');
+//    Route::get('/createquiz', [\App\Http\Controllers\CreateQuizController::class, 'index'])->name('index-createquiz');
+//    Route::get('/quiz', [\App\Http\Controllers\QuizController::class, 'index'])->name('index-quiz');
+    Route::get('/quiz-thankyou', [\App\Http\Controllers\QuizthankyouController::class, 'index'])->name('thankyou');
+    Route::get('/quiz-thankyou/{result}/{get_correct}/{count}', [\App\Livewire\Clients\Quiz\QuizThankyou::class, 'mount'])->name('quiz-thankyou');
+    Route::get('/admin/user', [\App\Http\Controllers\AdminUserController::class, 'index'])->name('admin-user.index');
 });
 
 // Route::get('/test', function(){

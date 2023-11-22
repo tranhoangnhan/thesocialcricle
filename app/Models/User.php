@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 
 class User extends Authenticatable
 {
+    protected $guarded = [];
+    protected $table = 'users';
+    public $timestamps;
     use HasApiTokens, HasFactory, Notifiable;
     protected $primaryKey = 'user_id';
     /**
@@ -19,12 +22,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'access_token',
-    ];
+//    protected $fillable = [
+//        'name',
+//        'email',
+//        'password',
+//        'access_token',
+//    ];
 
     /**
      * The attributes that should be hidden for serialization.

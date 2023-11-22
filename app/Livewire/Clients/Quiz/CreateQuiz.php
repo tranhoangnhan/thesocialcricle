@@ -4,6 +4,7 @@ namespace App\Livewire\Clients\Quiz;
 
 use App\Models\Answer;
 use App\Models\Questions;
+use Illuminate\Http\Request;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Quiz;
@@ -14,7 +15,9 @@ class CreateQuiz extends Component
 
     public $course;
 
+    #[Validate('required|min:6')]
     public $quiz_name = '';
+    #[Validate('required|min:6')]
     public $quiz_descript = '';
     public $deletequizId = '';
 
@@ -35,12 +38,35 @@ class CreateQuiz extends Component
     public $alt_is_correct4 = 'D';
     public $deleteId = '';
 
-    public $updateId = '';
+    public $updateId;
     public $question_content_update = '';
     public $answer_content_update = '';
     public $choice = '';
+    public $update_questionId;
+
+    protected $rules = [
+
+    ];
+
+    protected $messages = [
+        'quiz_name.required' => '* Vui lòng điền vào chỗ trống',
+        'quiz_name.min' => '* Nhập ít nhất 6 kí tự',
+        'quiz_descript.required' => '* Vui lòng điền vào chỗ trống',
+        'quiz_descript.min' => '* Nhập ít nhất 6 kí tự',
+        'question_content.required' => '* Vui lòng điền vào chỗ trống',
+        'question_content.min' => '* Nhập ít nhất 6 kí tự',
+        'awswer_content1.min' => '* Nhập ít nhất 6 kí tự',
+        'awswer_content2.min' => '* Nhập ít nhất 6 kí tự',
+        'awswer_content3.min' => '* Nhập ít nhất 6 kí tự',
+        'awswer_content4.min' => '* Nhập ít nhất 6 kí tự',
+    ];
 
     public function createquiz(){
+        $this->validate([
+            'quiz_name' => 'required|min:6',
+            'quiz_descript' => 'required|min:6',
+        ]);
+
         $quiz = Quiz::create([
             'quiz_name' => $this->quiz_name,
             'description' => $this->quiz_descript,
@@ -50,6 +76,14 @@ class CreateQuiz extends Component
     }
 
     public function storeQuestion(){
+        $this->validate([
+            'question_content' => 'required|min:6',
+            'awswer_content1' => 'min:6',
+            'awswer_content2' => 'min:6',
+            'awswer_content3' => 'min:6',
+            'awswer_content4' => 'min:6',
+        ]);
+
 //        thêm câu hỏi
         $question = Questions::create([
             'question_content' => $this->question_content,
@@ -146,11 +180,39 @@ class CreateQuiz extends Component
         $this->question_content_update = $question_content;
     }
 
+    public function updateQuestion(Request $request){
+        $question = Questions::where('quiz_id',$request->quiz_id)->where('question_id', $request->question_id)
+            ->update([
+                'question_content' => $request->question_name,
+            ]);
+            $answer1 = Answer::where('question_id',$request->question_id)->where('awswer_id',$request->answerId[0])
+            ->update([
+                'awswer_content' => $request->answer[1],
+                'is_correct' => $request->choice[1],
+            ]);
+            $answer2 = Answer::where('question_id',$request->question_id)->where('awswer_id',$request->answerId[1])
+            ->update([
+                'awswer_content' => $request->answer[2],
+                'is_correct' => $request->choice[2],
+            ]);
+            $answer3 = Answer::where('question_id',$request->question_id)->where('awswer_id',$request->answerId[2])
+            ->update([
+                'awswer_content' => $request->answer[3],
+                'is_correct' => $request->choice[3],
+            ]);
+            $answer4 = Answer::where('question_id',$request->question_id)->where('awswer_id',$request->answerId[3])
+            ->update([
+                'awswer_content' => $request->answer[0],
+                'is_correct' => $request->choice[0],
+            ]);
+        return back();
+    }
+
     public function render()
     {
         return view('livewire.clients.quiz.create-quiz', [
             'question' => Questions::where('quiz_id', $this->quiz_id)->paginate(10),
-            'updateId' => Questions::where('quiz_id', $this->updateId)->get(),
+            'question_update' => Questions::where('question_id', $this->updateId)->get(),
             'quiz' => Quiz::where('course_id', $this->course->course_id)->get(),
         ]);
     }
