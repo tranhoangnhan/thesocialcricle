@@ -7,11 +7,14 @@ use App\Models\Questions;
 use App\Models\quiz_result;
 use App\Models\quiz_summary;
 use App\Models\result_test;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Quiz extends Component
 {
+    use WithPagination;
 
     public $slug;
     public $quiz_id;
@@ -50,12 +53,13 @@ class Quiz extends Component
             ]);
         }
         $count = count($this->get_result);
-        $result = quiz_summary::where('quiz_id', 1)->where('user_id', Auth::id())->orderBy('created_at', 'desc')
+        $result = quiz_summary::where('quiz_id', $this->quiz_id)->where('user_id', Auth::id())->orderBy('created_at', 'desc')
             ->take($count)
             ->get();
-        $get_correct = $result->filter(fn ($get_answer) => $get_answer->score == 1)->count();
+        $get_correct = $result->filter(fn ($get_answer) => $get_answer->question_choice_id == 1)->count();
         $percent = ($get_correct / $result->count())*100;
         $percented = ceil($percent);
+        $result_id = quiz_result::latest()->first()->result_id;
         if($percented >= 50){
             $this->mark = 'Đạt';
         }else{
@@ -67,14 +71,14 @@ class Quiz extends Component
             'mark' => $this->mark,
             'quiz_id' => $this->quiz_id
         ]);
-        $result_id = quiz_result::latest()->first()->result_id;
+        return redirect()->route('quiz-thankyou', [$result_id, $get_correct, $result->count()]);
     }
 
 
     public function render()
     {
         return view('livewire.clients.quiz.quiz',[
-            'question' => Questions::where('quiz_id', $this->quiz_id)->get(),
+            'question' => Questions::where('quiz_id', $this->quiz_id)->paginate(10),
         ]);
     }
 }

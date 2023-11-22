@@ -17,5 +17,6 @@
     </div>
 @endsection
 @section('js')
+    <script src="https://cdn.lordicon.com/lordicon-1.2.0.js"></script>
     <script src="{{asset('clients/assets-thankyou/js/bootstrap.min.css')}}"></script>
 @endsection
