@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('result_id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('quiz_id');
-            $table->text('question_content');
             $table->integer('score-percent');
             $table->string('mark', 10);
             $table->timestamps();
