@@ -167,13 +167,11 @@ class LoadPostController extends Component
         $friendPosts = PostsModel::whereIn('user_id', $friends)
         ->where('privacy', 'friend') // Điều kiện cho bài viết bạn bè
         ->limit($this->loadAmount) // Số lượng bài viết trên mỗi trang
-        ->orderBy('created_at', 'desc')
         ->get();
 
     // Lấy danh sách bài viết mọi người (công khai)
     $publicPosts = PostsModel::where('privacy', 'public')
         ->limit($this->loadAmount) // Số lượng bài viết trên mỗi trang
-        ->orderBy('created_at', 'desc')
         ->get();
         $this->posts =  $friendPosts->concat($publicPosts);
 

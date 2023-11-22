@@ -21,7 +21,9 @@ return new class extends Migration
             $table->text('learn_skill',255);
             $table->text('description');
             $table->enum('status',['0','1'])->default('0');
-            $table->string('banner');
+            $table->string('banner')->default('https://websitehoctructuyen.com/wp-content/uploads/2019/05/ed-tech1553237040995.png');
+            $table->bigInteger('amount')->nullable();
+
             $table->timestamps();
         });
     }

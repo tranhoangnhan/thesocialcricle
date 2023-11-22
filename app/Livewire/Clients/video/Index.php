@@ -35,7 +35,7 @@ class Index extends Component
     
         foreach ($sections as $section) {
             // Lấy danh sách video cho từng section
-            $sectionVideos[$section->section_id] = VideoModel::where('section_id', $section->section_id)->get();
+            $sectionVideos[$section->section_id] = VideoModel::where('section_id', $section->section_id)->orderBy('potision','asc')->get();
         }
       // Gán danh sách section và video vào các thuộc tính của Livewire
     $this->sections = $sections;

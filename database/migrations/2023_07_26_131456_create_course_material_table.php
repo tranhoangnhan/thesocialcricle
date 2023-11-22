@@ -22,6 +22,7 @@ return new class extends Migration
             $table->bigInteger('section_id');
             $table->string('view')->nullable();
             $table->enum('review',['0', '1']);
+            $table->bigInteger('potision')->nullable();
 
 
             $table->timestamps();

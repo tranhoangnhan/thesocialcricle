@@ -61,7 +61,7 @@ return [
         'username' => env('FTP_USERNAME'),
         'password' => env('FTP_PASSWORD'),
         'port'     => 21, // Điều này có thể thay đổi tùy vào cấu hình FTP của bạn
-        'root'     => '/', // Thư mục gốc trên máy chủ FTP
+        'root'     => '/hatishop.hoangnhan.tech', // Thư mục gốc trên máy chủ FTP
             ],
 
     ],

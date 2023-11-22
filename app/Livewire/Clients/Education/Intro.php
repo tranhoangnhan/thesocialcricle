@@ -36,9 +36,10 @@ class Intro extends Component
     public function render()
     {
         $userEnrollments = $this->fetchEnrollmentsForUser();
+        $checkCourse = $this->course->payment;
         $enroller = in_array($this->course->course_id, $userEnrollments);
         $enroll = EnrollmentModel::where('course_id', $this->course->course_id)->count();
         $time = date('d/m/y', strtotime($this->course->created_at));
-        return view('livewire.clients.education.intro', ['enroll' => $enroll, 'enroller' => $enroller, 'time' => $time]);
+        return view('livewire.clients.education.intro', ['enroll' => $enroll, 'enroller' => $enroller, 'time' => $time, 'checkCourse' => $checkCourse]);
     }
 }
