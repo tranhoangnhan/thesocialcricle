@@ -1,6 +1,6 @@
 # DỰ ÁN MẠNG XÃ HỘI GIÁO DỤC THE SOCIAL CRICLE
 # NHỚ GIẢI NÉN FILE VENDOR, ĐỔI TÊN FILE FILEENVNE THÀNH .ENV 
-# Vendor.zip anh em giải nén ra thành thư mục vender (vendor vô thẳng là file nếu giải nén ra vô vendor xong có thư mục vendor nưa thì kéo nó ra)
+# Vendor: anh em chạy lệnh ở terminal là composer install
 # 'fileenvne' anh em đổi thành .env
 # ĐĂNG NHẬP GIT
 - git config --global user.name "TÊN"
