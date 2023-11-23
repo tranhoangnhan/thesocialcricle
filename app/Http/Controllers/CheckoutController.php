@@ -130,7 +130,7 @@ $returnData = array('code' => '00'
             [
                 'vnp_TxnRef' => request()->vnp_TxnRef,
                 'vnp_OrderInfo' => request()->vnp_OrderInfo,
-                'vnp_Amount' => request()->vnp_Amount,
+                'vnp_Amount' => request()->vnp_Amount / 100,
                 'vnp_ResponseCode' => request()->vnp_ResponseCode,
                 'user_id' => auth()->user()->user_id,
                 'course_id' => CoursesModel::where('slug', request()->slug)->first()->course_id
