@@ -41,7 +41,7 @@ class Register extends Component
             'instructor_id'=>auth()->user()->user_id,
             'required_skill'=>json_encode($this->skills),
             'learn_skill'=>json_encode($this->learns),
-            'status '=>'1',
+            'status'=>'1',
         ]);
         foreach($this->contents as $content){
             $secsion=CourseSectionModel::create([
