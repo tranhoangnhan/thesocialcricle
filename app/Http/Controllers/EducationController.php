@@ -25,7 +25,11 @@ class EducationController extends Controller
                 $query->select('course_id')
                     ->from('enrollment')
                     ->whereRaw('enrollment.course_id = course.course_id')
-                    ->where('enrollment.user_id', auth()->user()->user_id);
+                    ->where('enrollment.user_id', auth()->user()->user_id)
+                
+
+                    ;
+                    
             })
             ->select('course.*', 'course_category.category_name', 'users.user_fullname')
             ->get();

@@ -7,7 +7,7 @@ use App\Models\CoursesModel;
 use Illuminate\Support\Str;
 use App\Models\CourseCategoryModel;
 use App\Models\CourseSectionModel;
-
+use App\Models\EnrollmentModel;
 class Register extends Component
 {
     public $course_name;
@@ -41,6 +41,7 @@ class Register extends Component
             'instructor_id'=>auth()->user()->user_id,
             'required_skill'=>json_encode($this->skills),
             'learn_skill'=>json_encode($this->learns),
+            'status '=>'1',
         ]);
         foreach($this->contents as $content){
             $secsion=CourseSectionModel::create([
@@ -49,6 +50,10 @@ class Register extends Component
                 'slug'=>str::slug($content),
             ]);
         }
+        EnrollmentModel::create([
+            'course_id'=>$education->course_id,
+            'user_id'=>auth()->user()->user_id,
+        ]);
 return redirect()->route('courses_register_content',['slug'=>$education->slug]);
 
 // Sau khi chuyển hướng và trong component mới

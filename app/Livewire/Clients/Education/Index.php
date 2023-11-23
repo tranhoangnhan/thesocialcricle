@@ -42,6 +42,7 @@ class Index extends Component
         ->join('users', 'users.user_id', '=', 'course.instructor_id')
         ->join('enrollment', 'enrollment.course_id', '=', 'course.course_id')
         ->where('enrollment.user_id', auth()->user()->user_id)
+        ->where('course.status', '1')
             ->select('course.*', 'course_category.category_name','users.user_fullname')
             ->get();
         $userEnrollments = $this->fetchEnrollmentsForUser();

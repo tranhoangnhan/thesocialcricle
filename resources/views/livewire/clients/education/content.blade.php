@@ -2,6 +2,12 @@
     <div class="main_content">
         <div class="mcontainer">
             <div class="space-y-3">
+                <div class="d-flex justify-content-center mb-3">
+                    <a href="{{route('control-index',['slug'=>$course->slug])}}"  class="button lg:w-1/3"> 
+                        Truy cập trang quản trị
+                    </a>
+                    
+                </div>
                 <h5 class="uppercase text-sm font-medium text-gray-400">
                     <div class="line">
 
@@ -25,11 +31,7 @@
 
                 </h6>
             </div>
-            <div class="mb-3 container-input">
-               <label for="">Banner</label>
-                <input type="file" name="file" id="file-input" class="form-control mb-3" wire:model="" />
-            
-            </div>
+         
             <div class="mb-3 container-input">
                 <label for="exampleFormControlInput1" class="form-label">Video:</label>
                 <input type="file" multiple name="file" id="file-input" class="form-control mb-3" wire:model="videos" />
@@ -46,10 +48,11 @@
 
             <div class="d-flex justify-content-center mb-3">
                 <button wire:click="create" type="button" class="button lg:w-1/3">
-                    Bước kế tiếp
+                    Tải lên video
                 </button>
+                
             </div>
-            
+       
         </div>
     </div>
 
