@@ -59,18 +59,18 @@ class Quiz extends Component
         $get_correct = $result->filter(fn ($get_answer) => $get_answer->question_choice_id == 1)->count();
         $percent = ($get_correct / $result->count())*100;
         $percented = ceil($percent);
-        $result_id = quiz_result::latest()->first()->result_id;
         if($percented >= 50){
             $this->mark = 'Đạt';
         }else{
             $this->mark = 'Không đạt';
         }
         quiz_result::create([
-            'user_id' => Auth::id(),
+            'user_id' => Auth::user()->user_id,
             'score-percent' => $percented,
             'mark' => $this->mark,
             'quiz_id' => $this->quiz_id
         ]);
+        $result_id = quiz_result::latest()->first()->result_id;
         return redirect()->route('quiz-thankyou', [$result_id, $get_correct, $result->count()]);
     }
 
