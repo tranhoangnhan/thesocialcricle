@@ -18,11 +18,11 @@ class Search extends Component
     {
         $friendId = (int) $friendId;
         $friendFullName = $this->getFriendFullName($friendId);
-
         $data = [
             'friendId' => $friendId,
             'friendFullName' => $friendFullName,
         ];
+
         if (!collect($this->tags)->contains('friendId', $friendId)) {
             $this->tags[] = $data;
             $this->resetSearch();
@@ -51,9 +51,9 @@ class Search extends Component
 
         if ($friend) {
             if (auth()->user()->user_id == $friend->user_one_id) {
-                return getName($friend->userTwo->user_id);
+                return getNameC($friend->userTwo->user_id);
             } elseif (auth()->user()->user_id == $friend->user_two_id) {
-                return getName($friend->userOne->user_id);
+                return getNameC($friend->userOne->user_id);
             }
         }
 
@@ -74,15 +74,14 @@ class Search extends Component
                 $query->where('user_one_id', auth()->user()->user_id)
                     ->orWhere('user_two_id', auth()->user()->user_id);
             })
-            ->where(function ($query) {
-                $query->whereHas('userOne', function ($query) {
-                    $query->where('user_fullname', 'like', '%' . $this->search . '%');
+                ->where(function ($query) {
+                    $query->whereHas('userOne', function ($query) {
+                        $query->where('user_fullname', 'like', '%' . $this->search . '%');
+                    })
+                        ->orWhereHas('userTwo', function ($query) {
+                            $query->where('user_fullname', 'like', '%' . $this->search . '%');
+                        });
                 })
-                ->whereHas('userTwo', function ($query) {
-                    $query->where('user_fullname', 'like', '%' . $this->search . '%');
-                });
-            })
-
                 ->where('status', '1')
                 ->get();
             $this->showFind = true;

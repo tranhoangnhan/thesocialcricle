@@ -18,6 +18,8 @@ return new class extends Migration
             $table->enum('seen',['0','1'])->default('0');
             $table->enum('typing',['0','1'])->default('0');
             $table->enum('deleted',['0','1'])->default('0');
+            $table->integer('role')->nullable();
+            $table->integer('kick')->nullable();
             $table->timestamps();
         });
     }

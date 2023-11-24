@@ -16,33 +16,48 @@
             @if (!is_null($notifications))
                 @foreach ($notifications as $noti)
                     <li class="notification-{{ $noti->seen }} dropdown-item p-4">
-                            <div class="drop_avatar d-flex justify-content-center">
-                                <img src="{{ asset('clients/assets/images/avatars/avatar-2.jpg') }}" alt=""
-                                class="w-8 h-8 rounded-full">
-                                <p class="text-sm m-1">{{ $noti->message }}</p>
-                            </div>
-                            <div class="drop_text">
-                                <time class="text-xs mx-4">
-                                    @php
-                                        $createdAt = $noti->created_at;
-                                        $now = now();
-                                        $diffInSeconds = $now->diffInSeconds($createdAt);
-                                        $diffInMinutes = $now->diffInMinutes($createdAt);
-                                        $diffInHours = $now->diffInHours($createdAt);
-                                        $diffInDays = $now->diffInDays($createdAt);
-                                    @endphp
+                        <div class="drop_avatar d-flex justify-content-center align-items-center" onclick="window.location.href = '{{$noti->node_url}}';">
 
-                                    @if ($diffInSeconds < 60)
-                                        {{ $diffInSeconds }} giây trước
-                                    @elseif ($diffInMinutes < 60)
-                                        {{ $diffInMinutes }} phút trước
-                                    @elseif ($diffInHours < 24)
-                                        {{ $diffInHours }} giờ trước
-                                    @else
-                                        {{ $diffInDays }} ngày trước
-                                    @endif
-                                </time>
-                            </div>
+                                {!! getAvatar(
+                                    $noti->to_user_id,
+                                    null,
+                                    'border-radius:10px;font-size:30px!important;font-family: Arial, Helvetica, sans-serif;
+                                    background: #2a64e2f5;
+                                    font-size: 16px;
+                                    color: #fff;
+                                    text-align: center;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;',
+                                    'w-8 h-8 rounded-full',
+                                ) !!}
+
+                                <p class="text-sm m-1">{{ $noti->message }}</p>
+
+
+                        </div>
+                        <div class="drop_text">
+                            <time class="text-xs mx-4">
+                                @php
+                                    $createdAt = $noti->created_at;
+                                    $now = now();
+                                    $diffInSeconds = $now->diffInSeconds($createdAt);
+                                    $diffInMinutes = $now->diffInMinutes($createdAt);
+                                    $diffInHours = $now->diffInHours($createdAt);
+                                    $diffInDays = $now->diffInDays($createdAt);
+                                @endphp
+
+                                @if ($diffInSeconds < 60)
+                                    {{ $diffInSeconds }} giây trước
+                                @elseif ($diffInMinutes < 60)
+                                    {{ $diffInMinutes }} phút trước
+                                @elseif ($diffInHours < 24)
+                                    {{ $diffInHours }} giờ trước
+                                @else
+                                    {{ $diffInDays }} ngày trước
+                                @endif
+                            </time>
+                        </div>
                     </li>
                 @endforeach
             @endif

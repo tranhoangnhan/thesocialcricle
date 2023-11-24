@@ -15,14 +15,14 @@ return new class extends Migration
             $table->bigIncrements('post_id');
             $table->enum('user_type', ['user', 'page']);
             $table->enum('in_group',['0', '1'])->default(0);
-            $table->integer('group_id')->nullable(); 
-            $table->integer('user_id')->nullable();    
+            $table->unsignedBigInteger('group_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
 
             $table->enum('group_approved',['0','1'])->default('0');
             $table->enum('in_wall',['0','1'])->default('0');
-            // $table->integer('wall_id');
+            // $table->unsignedBigInteger('wall_id');
             $table->string('post_type', 32)->nullable();
-            $table->integer('colored_pattern')->default('0');
+            $table->unsignedBigInteger('colored_pattern')->default('0');
 
             $table->string('privacy');
             $table->longtext('text')->nullable();

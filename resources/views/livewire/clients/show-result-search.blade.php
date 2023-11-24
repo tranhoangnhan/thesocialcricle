@@ -30,13 +30,13 @@
 
                                 @foreach ($friend as $friend)
                                     <div class="flex items-center space-x-4 rounded-md -mx-2 p-2 hover:bg-gray-50">
-                                        <a href="/profile/ {{ $friend->user_id }}" href="timeline-page.html"iv
+                                        <a href="{{route('profile',['id' => $friends->user_id])}}" href="timeline-page.html"iv
                                             class="w-12 h-12 flex-shrink-0 overflow-hidden rounded-full relative">
                                             {{--                                            <img src="assets/images/avatars/avatar-1.jpg" class="absolute w-full h-full inset-0 " alt=""> --}}
                                             {!! getAvatar($friend->user_id) !!}
                                         </a>
                                         <div class="flex-1">
-                                            <a href="/profile/ {{ $friend->user_id }}"
+                                            <a href="{{route('profile',['id' => $friends->user_id])}}"
                                                 class="text-base font-semibold capitalize"> {{ $friend->user_fullname }}
                                             </a>
                                         </div>
@@ -62,12 +62,12 @@
                             <!-- post header-->
                             <div class="flex justify-between items-center lg:p-4 p-2.5">
                                 <div class="flex flex-1 items-center space-x-4">
-                                    <a href="/profile/{{ $post->user->user_id }}">
+                                    <a href="{{route('profile',['id' => $friends->user_id])}}">
                                         <img src="{{ asset($post->user->user_avatar) }}"
                                             class="bg-gray-200 border border-white rounded-full w-10 h-10">
                                     </a>
                                     <div class="flex-1 font-semibold capitalize">
-                                        <a href="/profile/{{ $post->user->user_id }}"
+                                        <a href="{{route('profile',['id' => $friends->user_id])}}"
                                             class="text-black dark:text-gray-100"> {{ $post->user->user_fullname }} </a>
                                         <div class="text-gray-700 flex items-center space-x-2">
 
@@ -241,7 +241,7 @@
                                                 <div
                                                     class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 relative lg:ml-5 ml-2 lg:mr-12  dark:bg-gray-800 dark:text-gray-100">
                                                     <a
-                                                        href="/profile/{{ $comment->user_id }}">{{ $comment->user_fullname }}</a>
+                                                        href="{{route('profile',['id' => $friends->user_id])}}>{{ $comment->user_fullname }}</a>
                                                     <p class="leading-6">{{ $comment->text }} </p>
                                                     <div
                                                         class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 dark:bg-gray-800">

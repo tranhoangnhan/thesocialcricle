@@ -160,6 +160,7 @@ class Posts extends Component
     {
 
         $this->posts = PostsModel::where('user_id', $this->user_id)->where('privacy', 'public')
+            ->orderBy('created_at','DESC')
             ->limit($this->loadAmount)
             ->get();
         $posts = $this->posts;

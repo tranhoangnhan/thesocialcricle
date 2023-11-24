@@ -1,7 +1,6 @@
 <div>
     @foreach ($posts as $post)
-        <div  class="card lg:mx-0 uk-animation-slide-bottom-small @if ($loop->last) last-record @endif "
-            >
+        <div  class="card lg:mx-0 uk-animation-slide-bottom-small @if ($loop->last) last-record @endif ">
 
             <!-- post header-->
             <div class="flex justify-between items-center lg:p-4 p-2.5">
@@ -85,7 +84,7 @@
             </div>
 
             <div uk-lightbox>
-                <p class="p-2">{{ $post->text }}</p>
+                <p class="p-4">{{ $post->text }}</p>
             </div>
 
 
@@ -179,7 +178,7 @@
                             <div>
                                 <div
                                     class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 relative lg:ml-5 ml-2 lg:mr-12  dark:bg-gray-800 dark:text-gray-100">
-                                    <a href="/profile/{{ $comment->user_id }}">{{ $comment->user_fullname }}</a>
+                                    <a href="{{route('profile',['id' =>  $comment->user_id])}}">{{ $comment->user_fullname }}</a>
                                     <p class="leading-6">{{ $comment->text }} </p>
                                     <div
                                         class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 dark:bg-gray-800">
@@ -252,24 +251,24 @@
 
         </div>
     @endforeach
-    
+
         <div class="card lg:mx-0 uk-animation-slide-bottom-small">
 
         </div>
     @if($loadAmount >= $totalRecords)
         <div class="flex justify-center mt-6 "  >
-            <button wire:click="loadMore()" 
+            <button wire:click="loadMore()"
                 class="taithem bg-white dark:bg-gray-900 font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
                 Bạn có muốn xem thêm bài viết?</button>
         </div>
     @else
     <div class="flex justify-center mt-6 "  >
-            <button wire:click="loadMore()" 
+            <button wire:click="loadMore()"
                 class="taithem bg-white dark:bg-gray-900 font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
                 Tải thêm bài viết</button>
         </div>
     @endif
- 
+
 </div>
 <script>
     const lastRecords = document.querySelectorAll('.taithem')

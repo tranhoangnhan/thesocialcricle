@@ -3,7 +3,7 @@
     <a href="{{route('control-index', ['slug' => $course->slug])}}">Truy cập quản trị</a>
 @endif
     <ul class="flex align-items-start text-gray-500 text-sm">
-        <li> Tạo bởi <a href="/profile/{{ $course->instructor_id }}" class="font-bold">
+        <li> Tạo bởi <a href="{{route('profile',['id' => $course->instructor_id])}}" class="font-bold">
                 {{ $course->user_fullname }}</a> </li>
         <span class="middot mx-3 text-2xl">·</span>
         <li>Ngày tạo: {{ $time}}</li>
@@ -23,11 +23,11 @@
         @if($checkCourse==1)
     <button wire:click='enroll({{$course->course_id}})' class="btn btn-primary w-100"> <i class="uil-plus mr-1"></i>Tham gia</button>
         @else
-   
+
         <form action="/courses/{{$course->slug}}/checkout" method="post">
             @csrf
     <button type="submit"  name="redirect" class="btn btn-primary w-100"> <i class="uil-plus mr-1"></i>Đăng ký khóa học với {{$this->course->amount}} VND</button>
-             
+
 </form>
     @endif
     @endif

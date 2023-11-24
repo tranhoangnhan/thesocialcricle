@@ -5,7 +5,7 @@
     $isFriend = $this->areFriends($friendData->user_id);
 @endphp
 @if($friendData->user_id==Auth::user()->user_id)
-<a wire:navigate href="/profile/{{$friendData->user_id}}" class="button primary flex-1 block mr-2">
+<a   href="{{route('profile',['id' => $friendData->user_id])}}" class="button primary flex-1 block mr-2">
     <i class="uil-user mr-1"></i> Trang cá nhân
 </a>
 @elseif ($isFriend === null)

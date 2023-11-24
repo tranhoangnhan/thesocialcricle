@@ -36,6 +36,8 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\AntiXSS::class,
+
         ],
 
         'api' => [
@@ -65,5 +67,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'checkuser' => \App\Http\Middleware\CheckUser::class,
+        'checkadmin' => \App\Http\Middleware\CheckAdmin::class,
+        'antixss' => \App\Http\Middleware\AntiXSS::class,
+        'check.profile' => \App\Http\Middleware\DynamicRoutingMiddleware::class,
+        '2fa' => \PragmaRX\Google2FALaravel\Middleware::class,
     ];
 }

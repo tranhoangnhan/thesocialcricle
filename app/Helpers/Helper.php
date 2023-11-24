@@ -8,7 +8,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 
 class Helper
 {
-    public static function throttle($key, $maxAttempts, $decayTime, $type = "mi")
+    public static function throttle($key, $maxAttempts, $decayTime, $type = "mi",$messages=NULL)
     {
         $key = $key . '_' . request()->ip();
 
@@ -67,8 +67,12 @@ class Helper
             if ($remainingSeconds > 0) {
                 $formattedTime .= ($formattedTime ? ' ' : '') . $remainingSeconds . " giây";
             }
+            if($messages){
+                return "{$messages} {$formattedTime}.";
+            }else{
+                return "Bạn đã nhập sai quá nhiều lần. Vui lòng thử lại sau {$formattedTime}.";
+            }
 
-            return "Bạn đã nhập sai quá nhiều lần. Vui lòng thử lại sau {$formattedTime}.";
         }
 
         RateLimiter::hit($key, $time);
@@ -134,7 +138,7 @@ class Helper
         return $result;
     }
 
-   
+
 
 
 

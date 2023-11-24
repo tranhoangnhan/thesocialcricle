@@ -15,7 +15,7 @@
                 @if (sizeof($friend) > 0)
                 <li class="p-3" style="width: 30rem; background-color:  #fff">
                     @foreach ($friend as $friend)
-                        <a wire:navigate href="/profile/{{ $friend->user_id }}">
+                        <a href="{{route('profile',['id' => $friend->user_id])}}">
                             <div class="list-name p-3"> {{ $friend->user_fullname }} </div>
                         </a>
                     @endforeach

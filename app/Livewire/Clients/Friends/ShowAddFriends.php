@@ -16,7 +16,7 @@ class ShowAddFriends extends Component
       $this->listFriends = FriendsModel::where('user_two_id', auth()->user()->user_id)
       ->where('status', '0')
       ->join('users', 'users.user_id', '=', 'friends.user_one_id')
-      ->select('friends.*', 'friends.created_at as timeAddFriend','users.user_fullname as nameUserOne')
+      ->select('friends.*', 'friends.created_at as timeAddFriend','users.user_fullname as nameUserOne','users.user_id as userID')
       ->get();
         return $this->listFriends;
     }

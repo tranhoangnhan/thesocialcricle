@@ -83,7 +83,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'vi',
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +96,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'vi',
 
     /*
     |--------------------------------------------------------------------------
@@ -165,13 +165,14 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Livewire\LivewireServiceProvider::class,
-
-
+        Carbon\Laravel\ServiceProvider::class,
+        shweshi\OpenGraph\Providers\OpenGraphProvider::class,
+        PragmaRX\Google2FALaravel\ServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -189,7 +190,8 @@ return [
         'Helper'        => App\Helpers\Helper::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Carbon' => Carbon\Carbon::class,
-
+        'OpenGraph' => shweshi\OpenGraph\Facades\OpenGraphFacade::class,
+        'Google2FA' => PragmaRX\Google2FALaravel\Facade::class,
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

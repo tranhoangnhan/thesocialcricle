@@ -12,7 +12,7 @@ class Index extends Component
     public $tags = [];
     public $users = '';
     public $message;
-   
+
     #[On('tags')]
     public function updatedData($data)
     {
@@ -21,12 +21,11 @@ class Index extends Component
     public function fetchUser()
     {
         $this->users = implode(', ', $this->tags);
-        // event(new NewMessageEvent($this->users));
     }
-    #[On('echo:clients-conversations-newmessageevent')]
-    public function test(){
-        $this->message = $this->users;
-    }
+    // #[On('echo:clients-conversations-newmessageevent')]
+    // public function test(){
+    //     $this->message = $this->users;
+    // }
 
     public function render()
     {

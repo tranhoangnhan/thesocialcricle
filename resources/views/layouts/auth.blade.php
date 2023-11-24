@@ -32,6 +32,7 @@
             height: 44px !important;
             box-shadow: none !important;
         }
+
         a {
             text-decoration: none !important;
         }
@@ -85,6 +86,7 @@
         ::-ms-reveal {
             display: none;
         }
+
         #profileImage {
             font-family: Arial, Helvetica, sans-serif;
             width: 35px;
@@ -99,7 +101,8 @@
             align-items: center;
         }
     </style>
-     @livewireStyles()
+    @yield('css')
+    @livewireStyles()
 </head>
 
 <body>
@@ -116,42 +119,46 @@
 
                     <div class="flex items-center lg:justify-between justify-around">
 
-                        <a wire:navigate href="{{ route('home') }}">
-                            <img src="{{ asset('clients/assets/images/logo-dark.png') }}" alt="SOCIALCIRCLE" class="w-40">
+                        <a href="{{ route('home') }}">
+                            <img src="{{ asset('clients/assets/images/logo-dark.png') }}" alt="SOCIALCIRCLE"
+                                class="w-40">
                         </a>
 
                         @auth
-                        <a href="#">
-                            {{-- <img src="https://img.thuthuatphanmem.vn/uploads/2018/09/19/avatar-facebook-chat-4_105604005.jpg" style="width:35px" class="is_avatar" style="width:50px" alt=""> --}}
-                            {!! getAvatar(auth()->user()->user_id) !!}
-                        </a>
-                        <div uk-drop="mode: click;offset:5" class="header_dropdown profile_dropdown">
-
-                            <a href="timeline.html" class="user">
-                                <div class="user_avatar">
-                                    {{-- <img src="https://img.thuthuatphanmem.vn/uploads/2018/09/19/avatar-facebook-chat-4_105604005.jpg" style="width:35px" alt=""> --}}
-                                    {!! getAvatar(auth()->user()->user_id) !!}
-                                </div>
-                                <div class="user_name">
-                                    <div> {{auth()->user()->user_fullname}} </div>
-                                    <span> <?='@'?>{{auth()->user()->user_username}}</span>
-                                </div>
+                            <a href="#">
+                                {{-- <img src="https://img.thuthuatphanmem.vn/uploads/2018/09/19/avatar-facebook-chat-4_105604005.jpg" style="width:35px" class="is_avatar" style="width:50px" alt=""> --}}
+                                {!! getAvatar(auth()->user()->user_id) !!}
                             </a>
-                            <hr>
-                            <a wire:navigate href="{{route('logout')}}">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                                </svg>
-                                Đăng xuất
-                            </a>
+                            <div uk-drop="mode: click;offset:5" class="header_dropdown profile_dropdown">
 
-
-                        </div>
-
-                        @else
-                            <div class="capitalize flex font-semibold hidden lg:block my-2 space-x-3 text-center text-sm">
-                                <a wire:navigate href="{{ route('home') }}" class="py-3 px-4">Đăng nhập</a>
+                                <a href="timeline.html" class="user">
+                                    <div class="user_avatar">
+                                        {{-- <img src="https://img.thuthuatphanmem.vn/uploads/2018/09/19/avatar-facebook-chat-4_105604005.jpg" style="width:35px" alt=""> --}}
+                                        {!! getAvatar(auth()->user()->user_id) !!}
+                                    </div>
+                                    <div class="user_name">
+                                        <div> {{ auth()->user()->user_fullname }} </div>
+                                        <span> <?= '@' ?>{{ auth()->user()->user_username }}</span>
+                                    </div>
+                                </a>
+                                <hr>
+                                <a wire:navigate href="{{ route('logout') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                                        </path>
+                                    </svg>
+                                    Đăng xuất
+                                </a>
                             </div>
+                        @else
+                            @if (Auth::check())
+                                <div
+                                    class="capitalize flex font-semibold hidden lg:block my-2 space-x-3 text-center text-sm">
+                                    <a href="{{ route('home') }}" class="py-3 px-4">Đăng nhập</a>
+                                </div>
+                            @endif
                         @endauth
 
                     </div>
@@ -179,7 +186,7 @@
 
 
 
-        <script>
+        {{-- <script>
             // Feature test
             if ('localStorage' in window) {
                 var nightMode = localStorage.getItem('gmtNightMode');
@@ -222,7 +229,7 @@
                 }
 
             })(window, document);
-        </script>
+        </script> --}}
 
 
         <!-- Javascript
@@ -232,8 +239,8 @@
         <script src="{{ asset('clients/assets/js/tippy.all.min.js') }}"></script>
         <script src="{{ asset('clients/assets/js/uikit.js') }}" defer></script>
         <script src="{{ asset('clients/assets/js/simplebar.js') }}"></script>
-        <script src="{{ asset('clients/assets/js/custom.js?v=00000000000000000000002') }}"></script>
-        <script src="{{ asset('clients/assets/js/bootstrap-select.min.js') }}" data-navigate-track></script>
+        <script src="{{ asset('clients/assets/js/custom.js?v=00000000000000000000003') }}"></script>
+        <script src="{{ asset('clients/assets/js/bootstrap-select.min.js') }}"></script>
         <script type="module" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule="" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

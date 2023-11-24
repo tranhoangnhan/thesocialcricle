@@ -61,7 +61,17 @@ return [
         'null' => [
             'driver' => 'null',
         ],
+        'larasocket' => [
+            'driver' => 'larasocket',
+            'token' => env('LARASOCKET_TOKEN'),
+        ]
 
+    ],
+    'redis' => [
+        'client' => 'predis',
+        'options' => [
+            'cluster' => env('REDIS_CLUSTER', 'redis'),
+        ],
     ],
 
 ];

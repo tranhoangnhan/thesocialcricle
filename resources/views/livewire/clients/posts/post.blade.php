@@ -191,7 +191,7 @@
                             <div>
                                 <div
                                     class="text-gray-700 py-2 px-3 rounded-md bg-gray-100 relative lg:ml-5 ml-2 lg:mr-12  dark:bg-gray-800 dark:text-gray-100">
-                                    <a href="/profile/{{ $comment->user_id }}">{{ $comment->user_fullname }}</a>
+                                    <a href="{{route('profile',['id' =>  $comment->user_id])}}">{{ $comment->user_fullname }}</a>
                                     <p class="leading-6">{{ $comment->text }} </p>
                                     <div
                                         class="absolute w-3 h-3 top-3 -left-1 bg-gray-100 transform rotate-45 dark:bg-gray-800">

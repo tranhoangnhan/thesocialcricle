@@ -14,15 +14,15 @@ class NewMessageEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $data;
+    // public $data;
 
-    public function __construct($data)
-    {
-        $this->data = $data;
-    }
+    // public function __construct($data)
+    // {
+    //     $this->data = $data;
+    // }
 
-    public function broadcastOn()
-    {
-        return new PrivateChannel('clients-conversations-newmessageevent');
-    }
+    // public function broadcastOn()
+    // {
+    //     return new PrivateChannel('clients-conversations-newmessageevent');
+    // }
 }

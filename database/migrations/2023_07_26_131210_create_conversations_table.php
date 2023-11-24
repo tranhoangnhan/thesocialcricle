@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('conversations', function (Blueprint $table) {
             $table->bigIncrements('conversations_id');
-
-            // $table->integer('conversations_message');
+            $table->string('name')->nullable();
+            $table->unsignedBigInteger('conversations_message');
             $table->string('color')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
 
         });

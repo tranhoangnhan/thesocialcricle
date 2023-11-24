@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Clients\Auth;
 
+use App\Models\NotificationModel;
+use App\Models\UsersLogModel;
 use App\Models\UsersModel;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
-
+use App\Events\Clients\Notification\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -55,7 +57,24 @@ class Login extends Component
         'password.string' => 'Vui lòng nhập :attribute phải là chuỗi',
         'password.min' => 'Vui lòng nhập :attribute có ít nhất :min ký tự.',
     ];
+    protected function setLog($user)
+    {
+        UsersLogModel::create([
+            'user_id' => $user->user_id,
+            'ip' => vIpInfo()->ip,
+            'country' => vIpInfo()->country,
+            'country_code' => vIpInfo()->country_code,
+            'city' =>  vIpInfo()->city,
+            'timezone' => vIpInfo()->timezone,
+            'location' => vIpInfo()->location,
+            'latitude' => vIpInfo()->latitude,
+            'longitude' => vIpInfo()->longitude,
+            'browser' => vBrowser(),
+            'os' => vPlatform(),
+            'proxy' => vIpInfo()->proxy,
+        ]);
 
+    }
 
     public function save()
     {
@@ -76,6 +95,18 @@ class Login extends Component
                 'user_last_seen' => now(),
             ]);
             Auth::loginUsingId($user->user_id);
+            $this->setLog($user);
+            NotificationModel::create([
+                'from_user_id' => auth()->user()->user_id,
+                'to_user_id' => auth()->user()->user_id,
+                'action' => 'login_security',
+                'node_type' => 'user',
+                'node_url' => route('setting'),
+                'message' => 'Phát hiện có người đăng nhập vào tài khoản của bạn!',
+                'time' => date('Y-m-d H:i:s'),
+            ]);
+            event(new User('Phát hiện có người đăng nhập vào tài khoản của bạn!', auth()->user(), auth()->user()->user_id));
+
             return $this->redirect(route('home'));
         }
     }
@@ -84,6 +115,6 @@ class Login extends Component
     {
         Auth::logout();
         session()->flush();
-        return redirect(route('/index'));
+        return redirect(route('home'));
     }
 }

@@ -1,957 +1,588 @@
-@extends('layouts.clients')
-@section('css')
-
+@extends($layout)
+@section('customcss')
+    <link rel="stylesheet" href="{{ asset('clients/assets/css/icons.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/calendarify@latest/dist/calendarify.min.css" />
+    <style>
+        ol,
+        ul {
+            padding-left: 0 !important;
+        }
+    </style>
 @endsection
 @section('content')
-<div class="main_content">
-    <div class="mcontainer">
+    <div class="{{ auth()->check() ? 'main_content' : 'container-fluid' }}">
+        <div class="{{ auth()->check() ? 'mcontainer' : 'w-full px-3 py-3 mt-3' }}">
 
-        <!-- Profile cover -->
-        <div class="profile user-profile">
+            <!-- Profile cover -->
+            <div class="profile user-profile">
 
-            <div class="profiles_banner">
-                <img src="https://image-us.eva.vn/upload/1-2020/images/2020-01-12/mxh-1578829941-9-width1200height628-watermark.jpg" alt="">
-                <div class="profile_action absolute bottom-0 right-0 space-x-1.5 p-3 text-sm z-50 hidden lg:flex">
-                  <a href="#" class="flex items-center justify-center h-8 px-3 rounded-md bg-gray-700 bg-opacity-70 text-white space-x-1.5"> 
-                      <ion-icon name="crop-outline" class="text-xl"></ion-icon>
-                      <span> Crop  </span>
-                  </a>
-                  <a href="#" class=""> 
-                      <ion-icon name="create-outline" class="text-xl"></ion-icon>
-                  </a>
-
-                  <a class="flex items-center justify-center h-8 px-3 rounded-md bg-gray-700 bg-opacity-70 text-white space-x-1.5" href="#modal-center" uk-toggle>
-                    <span> Sửa ảnh </span>
-
-                  </a>
-
-                  <div id="modal-center" class="uk-flex-top" uk-modal>
-                      <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-                  
-                  
-                          <div class="js-upload uk-placeholder uk-text-center">
-                            <span uk-icon="icon: cloud-upload"></span>
-                            <span class="uk-text-middle">Tải ảnh lên để thay đổi ảnh bìa</span>
-                            
-
-                            <div uk-form-custom>
-                                <input type="file" name="test" multiple>
-                                <span class="uk-link">Chọn file</span>
-                                
+                <div class="profiles_banner relative">
+                    {!! getCover($data->user_id) !!}
+                    @auth
+                        @if (auth()->user()->user_id == $data->user_id)
+                            <div class="profile_action absolute bottom-0 right-0 space-x-1.5 p-3 text-sm z-50 lg:flex">
+                                <a uk-toggle="target: #viewCoverProfile" uk-dropdown="pos: right-top;mode:click"
+                                    class="cursor-pointer flex items-center justify-center h-8 px-3 rounded-md bg-gray-700 bg-opacity-70 text-white space-x-1.5">
+                                    <ion-icon name="create-outline" class="text-xl"></ion-icon>
+                                    <span class="hidden md:flex"> Sửa ảnh bìa </span>
+                                </a>
                             </div>
-                         
-                        </div>
-                        <button class="uk-modal-close-default" type="button" uk-close></button>
-
-                        
-                        <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
-                        
-                     
-                           
-                                   
-                      </div>
-                      
-                  </div>
-                
-
-
-              </div>
-            </div>
-            <div class="profiles_content">
-
-                <div class="profile_avatar">
-                    <div class="profile_avatar_holder"> 
-                        <img src="https://we25.vn/media2018/Img_News/2023/02/23/2_20230223163204.jpg" alt="">
-                    </div>
-                    <div class="user_status status_online"></div>
-                    <div class="icon_change_photo" hidden> <ion-icon name="camera" class="text-xl"></ion-icon> </div>
+                        @endif
+                    @endauth
                 </div>
-
-                <div class="profile_info">
-                    <h1> {{$info->user_fullname}} </h1>
-                    <p> Family , Food , Fashion , Fourever <a href="#">Edit </a></p>
-                </div>
-
-            </div>
-
-            <div class="flex justify-between lg:border-t border-gray-100 flex-col-reverse lg:flex-row pt-2">
-                <nav class="responsive-nav pl-3">
-                    <ul  uk-switcher="connect: #timeline-tab; animation: uk-animation-fade">
-                        <li><a href="#">Bài viết</a></li>
-                        <li><a href="#">Bạn bè <span>3,243</span> </a></li>
-                        
-                    </ul>
-                </nav>
-
-                <!-- button actions -->
-                <div class="flex items-center space-x-1.5 flex-shrink-0 pr-4 mb-2 justify-center order-1 relative">
-                    
-                    <!-- add story -->
-                    <a href="#" class="flex items-center justify-center h-10 px-5 rounded-md bg-blue-600 text-white space-x-1.5 hover:text-white"  uk-toggle="target: #create-post-modal"> 
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
-                        </svg>
-                        <span> Add Your Story </span>
-                    </a>
-                   
-                    <!-- search icon -->
-                    <a href="#" class="flex items-center justify-center h-10 w-10 rounded-md bg-gray-100" uk-toggle="target: #profile-search;animation: uk-animation-slide-top-small"> 
-                      <ion-icon name="search" class="text-xl"></ion-icon>
-                    </a>
-                    <!-- search dropdown -->
-                    <div class="absolute right-3 bg-white z-10 w-full flex items-center border rounded-md"
-                        id="profile-search" hidden>
-                        <input type="text" placeholder="Search.." class="flex-1">
-                        <ion-icon name="close-outline" class="text-2xl hover:bg-gray-100 p-1 rounded-full mr-2 cursor-pointer" uk-toggle="target: #profile-search;animation: uk-animation-slide-top-small"></ion-icon>
-                    </div>
-                    
-                    <!-- more icon -->
-                    <a href="#" class="flex items-center justify-center h-10 w-10 rounded-md bg-gray-100"> 
-                        <ion-icon name="ellipsis-horizontal" class="text-xl"></ion-icon>
-                    </a>
-                    <!-- more drowpdown -->
-                    <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden border border-gray-100 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"  
-                      uk-drop="mode: click;pos: bottom-right;animation: uk-animation-slide-bottom-small; offset:5">
-                          <ul class="space-y-1">
-                            <li> 
-                                <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
-                                   <ion-icon name="arrow-redo-outline" class="pr-2 text-xl"></ion-icon> Share Profile
-                                </a> 
-                            </li>
-                            <li> 
-                                <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
-                                  <ion-icon name="create-outline" class="pr-2 text-xl"></ion-icon>  Account setting 
-                                </a> 
-                            </li>
-                            <li> 
-                                <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
-                                  <ion-icon name="notifications-off-outline" class="pr-2 text-lg"></ion-icon>   Disable notifications
-                                </a> 
-                            </li> 
-                            <li> 
-                                <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
-                                  <ion-icon name="star-outline"  class="pr-2 text-xl"></ion-icon>  Add favorites 
-                                </a> 
-                            </li>
-                            <li>
-                              <hr class="-mx-2 my-2 dark:border-gray-800">
-                            </li>
-                            <li> 
-                                <a href="#" class="flex items-center px-3 py-2 text-red-500 hover:bg-red-50 hover:text-red-500 rounded-md dark:hover:bg-red-600">
-                                  <ion-icon name="stop-circle-outline" class="pr-2 text-xl"></ion-icon>  Unfriend
-                                </a> 
-                            </li>
-                          </ul>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-        
-        <div class="uk-switcher lg:mt-8 mt-4" id="timeline-tab">
-
-            <!-- Timeline -->
-            <div class="md:flex md:space-x-6 lg:mx-16">
-                <div class="space-y-5 flex-shrink-0 md:w-7/12">
-
-                   <!-- create post  -->
-                   <div class="card lg:mx-0 p-4" uk-toggle="target: #create-post-modal">
-                       <div class="flex space-x-3">
-                           <img src="assets/images/avatars/avatar-2.jpg" class="w-10 h-10 rounded-full">
-                           <input placeholder="What's Your Mind ? Hamse!" class="bg-gray-100 hover:bg-gray-200 flex-1 h-10 px-6 rounded-full"> 
-                       </div>
-                       <div class="grid grid-flow-col pt-3 -mx-1 -mb-1 font-semibold text-sm">
-                            <div class="hover:bg-gray-100 flex items-center p-1.5 rounded-md cursor-pointer"> 
-                                <svg class="bg-blue-100 h-9 mr-2 p-1.5 rounded-full text-blue-600 w-9 -my-0.5 hidden lg:block" data-tippy-placement="top" title="Tooltip" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                Photo/Video 
-                            </div>
-                            <div class="hover:bg-gray-100 flex items-center p-1.5 rounded-md cursor-pointer"> 
-                                <svg class="bg-green-100 h-9 mr-2 p-1.5 rounded-full text-green-600 w-9 -my-0.5 hidden lg:block" uk-tooltip="title: Messages ; pos: bottom ;offset:7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" title="" aria-expanded="false"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
-                                Tag Friend 
-                            </div>
-                            <div class="hover:bg-gray-100 flex items-center p-1.5 rounded-md cursor-pointer"> 
-                                <svg class="bg-red-100 h-9 mr-2 p-1.5 rounded-full text-red-600 w-9 -my-0.5 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                Fealing /Activity 
-                            </div>
-                       </div> 
-                   </div>
-           
-                   
-                   
-                   <livewire:clients.profile.posts :user_id="$info->user_id" />
-
-           
-                   
-               
-
-                </div>
-
-                <!-- Sidebar -->
-                <div class="w-full space-y-6">
-                
-                    <div class="widget card p-5">
-                        <h4 class="text-lg font-semibold"> Giới thiệu </h4>
-                        <ul class="text-gray-600 space-y-3 mt-3">
-                            <li class="flex items-center space-x-2"> 
-                                <ion-icon name="home-sharp" class="rounded-full bg-gray-200 text-xl p-1 mr-3"></ion-icon>
-                                Live In <strong> Cairo , Eygept  </strong>
-                            </li>
-                            <li class="flex items-center space-x-2"> 
-                                <ion-icon name="globe" class="rounded-full bg-gray-200 text-xl p-1 mr-3"></ion-icon>
-                                From <strong> Aden , Yemen  </strong>
-                            </li>
-                            <li class="flex items-center space-x-2"> 
-                                <ion-icon name="heart-sharp" class="rounded-full bg-gray-200 text-xl p-1 mr-3"></ion-icon>
-                                From <strong> Relationship  </strong>
-                            </li>
-                            <li class="flex items-center space-x-2"> 
-                                <ion-icon name="logo-rss" class="rounded-full bg-gray-200 text-xl p-1 mr-3"></ion-icon>
-                                Flowwed By <strong> 3,240 People </strong>
-                            </li>                                
+                <div class="absolute right-0 z-10 uk-card uk-card-body uk-card-default w-48 md:-ml-9 -ml-10"
+                    id="viewCoverProfile" hidden>
+                    <div class="card card-body">
+                        <ul class="list-none p-0 m-0 h-max">
+                            @php
+                                $check = \DB::table('users')
+                                    ->where('user_id', $data->user_id)
+                                    ->count();
+                            @endphp
+                            @if (isset($check))
+                                <li class="cursor-pointer hover:bg-gray-100 hover:rounded-full px-3 text-left">
+                                    Xem ảnh bìa
+                                </li>
+                            @endif
+                            @auth
+                                @if (auth()->user()->user_id == $data->user_id)
+                                    <li class="cursor-pointer hover:bg-gray-100 hover:rounded-full px-3 text-left"
+                                        uk-toggle="target: #change-cover">Thay đổi ảnh bìa</li>
+                                @endif
+                            @endauth
                         </ul>
-                        <div class="gap-3 grid grid-cols-3 mt-4">
-                          <img src="assets/images/avatars/avatar-lg-2.jpg" alt="" class="object-cover rounded-lg col-span-full">
-                          <img src="assets/images/avatars/avatar-2.jpg" alt="" class="rounded-lg">
-                          <img src="assets/images/avatars/avatar-4.jpg" alt="" class="rounded-lg">
-                          <img src="assets/images/avatars/avatar-5.jpg" alt="" class="rounded-lg"> 
-                      </div>
-                      <a href="#" class="button gray mt-3 w-full"> Chỉnh sửa </a>
                     </div>
-                
-                    <div class="widget card p-5 border-t">
-                        <div class="flex items-center justify-between mb-4">
-                            <div>
-                                <h4 class="text-lg font-semibold"> Friends </h4>
-                                <p class="text-sm"> 3,4510 Friends</p>
+                </div>
+                @auth
+                    @if (auth()->user()->user_id == $data->user_id)
+                        <div id="change-cover" uk-modal>
+                            <div class="uk-modal-dialog">
+                                <button class="uk-modal-close-default" type="button" uk-close></button>
+                                <div class="uk-modal-header">
+                                    <h2 class="uk-modal-title text-center">Chọn ảnh bìa</h2>
+                                </div>
+                                <div class="uk-modal-body flex flex-column">
+                                    <button uk-toggle="target: #upload_Cover"
+                                        class="my-2 flex items-center justify-center h-10 px-5 rounded-md bg-blue-400 text-white space-x-1.5 hover:text-white">
+                                        <ion-icon name="add-outline"></ion-icon>
+                                        Tải ảnh lên</button>
+                                    @if (auth()->user()->user_cover)
+                                        <pintura-editor src="{{ auth()->user()->user_cover }}"></pintura-editor>
+                                        <button id="edit_Cover" data-image-src="{{ auth()->user()->user_cover }}"
+                                            class="my-2 flex items-center justify-center h-10 px-5 rounded-md bg-gray-300 text-white space-x-1.5 hover:text-white">
+                                            <ion-icon name="pencil-outline"></ion-icon>
+                                            Chỉnh sửa hình ảnh</button>
+                                    @endif
+                                </div>
                             </div>
-                            <a href="#" class="text-blue-600 ">See all</a>
                         </div>
-                        <div class="grid grid-cols-3 gap-3 text-gray-600 font-semibold">
-                            <a href="#">  
-                                <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2"> 
-                                    <img src="assets/images/avatars/avatar-1.jpg" alt="" class="w-full h-full object-cover absolute">
+                        <div id="upload_Cover" uk-modal>
+                            <div class="uk-modal-dialog">
+                                <button class="uk-modal-close-default" type="button" uk-close></button>
+                                <div class="uk-modal-header">
+                                    <h2 class="uk-modal-title text-center">Tải ảnh bìa lên</h2>
                                 </div>
-                                <div class="text-sm truncate"> Dennis Han </div>
-                            </a>
-                            <a href="#">  
-                                <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2"> 
-                                    <img src="assets/images/avatars/avatar-2.jpg" alt="" class="w-full h-full object-cover absolute">
+                                <div class="uk-modal-body flex flex-column">
+                                    <section wire:ignore>
+                                        <div class="dropzone" id="uploadCoverProfile">
+                                        </div>
+                                        <button id="UuploadCoverProfile"
+                                            class="mt-3 ml-5 flex items-center justify-center h-10 px-5 rounded-md bg-blue-600 text-white space-x-1.5 hover:text-white">
+                                            <span> Đăng ảnh </span>
+                                        </button>
+                                    </section>
                                 </div>
-                                <div class="text-sm truncate"> Erica Jones </div>
-                            </a>
-                            <a href="#">  
-                                <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2"> 
-                                    <img src="assets/images/avatars/avatar-3.jpg" alt="" class="w-full h-full object-cover absolute">
-                                </div>
-                                <div class="text-sm truncate"> Stella Johnson </div>
-                            </a>
-                            <a href="#">  
-                                <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2"> 
-                                    <img src="assets/images/avatars/avatar-4.jpg" alt="" class="w-full h-full object-cover absolute">
-                                </div>
-                                <div class="text-sm truncate"> Alex Dolgove</div>
-                            </a>
-                            <a href="#">  
-                                <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2"> 
-                                    <img src="assets/images/avatars/avatar-5.jpg" alt="" class="w-full h-full object-cover absolute">
-                                </div>
-                                <div class="text-sm truncate"> Jonathan Ali </div>
-                            </a>
-                            <a href="#">  
-                                <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2"> 
-                                    <img src="assets/images/avatars/avatar-6.jpg" alt="" class="w-full h-full object-cover absolute">
-                                </div>
-                                <div class="text-sm truncate"> Erica Han </div>
-                            </a>
-                        </div>
-                      <a href="#" class="button gray mt-3 w-full">  See all </a>
-                    </div>
-
-                    <div class="widget card p-5 border-t">
-                        <div class="flex items-center justify-between mb-2">
-                            <div>
-                                <h4 class="text-lg font-semibold"> Groups </h4>
                             </div>
-                            <a href="#" class="text-blue-600 "> See all</a>
                         </div>
-                        <div>
-                      
-                          <div class="flex items-center space-x-4 rounded-md -mx-2 p-2 hover:bg-gray-50">
-                              <a href="timeline-group.html" class="w-12 h-12 flex-shrink-0 overflow-hidden rounded-full relative">
-                                  <img src="assets/images/group/group-3.jpg" class="absolute w-full h-full inset-0 " alt="">
-                              </a>
-                              <div class="flex-1">
-                                  <a href="timeline-page.html" class="text-base font-semibold capitalize"> Graphic Design  </a>
-                                  <div class="text-sm text-gray-500 mt-0.5"> 345K  Following</div>
-                              </div>
-                              <a href="timeline-page.html" class="flex items-center justify-center h-8 px-3 rounded-md text-sm border font-semibold bg-blue-500 text-white">
-                                  Join
-                              </a>
-                          </div>
-                          <div class="flex items-center space-x-4 rounded-md -mx-2 p-2 hover:bg-gray-50">
-                              <a href="timeline-group.html" class="w-12 h-12 flex-shrink-0 overflow-hidden rounded-full relative">
-                                  <img src="assets/images/group/group-4.jpg" class="absolute w-full h-full inset-0 " alt="">
-                              </a>
-                              <div class="flex-1">
-                                  <a href="timeline-page.html" class="text-base font-semibold capitalize"> Mountain Riders </a>
-                                  <div class="text-sm text-gray-500 mt-0.5"> 452k Following </div>
-                              </div>
-                              <a href="timeline-page.html" class="flex items-center justify-center h-8 px-3 rounded-md text-sm border font-semibold bg-blue-500 text-white">
-                                  Join
-                              </a>
-                          </div>
-                          <div class="flex items-center space-x-4 rounded-md -mx-2 p-2 hover:bg-gray-50">
-                              <a href="timeline-group.html" class="w-12 h-12 flex-shrink-0 overflow-hidden rounded-full relative">
-                                  <img src="assets/images/group/group-2.jpg" class="absolute w-full h-full inset-0" alt="">
-                              </a>
-                              <div class="flex-1">
-                                  <a href="timeline-page.html" class="text-base font-semibold capitalize">  Coffee Addicts  </a>
-                                  <div class="text-sm text-gray-500 mt-0.5"> 845K Following</div>
-                              </div>
-                              <a href="timeline-page.html" class="flex items-center justify-center h-8 px-3 rounded-md text-sm border font-semibold bg-blue-500 text-white">
-                                  Join
-                              </a>
-                          </div>
-                          <div class="flex items-center space-x-4 rounded-md -mx-2 p-2 hover:bg-gray-50">
-                              <a href="timeline-group.html" class="w-12 h-12 flex-shrink-0 overflow-hidden rounded-full relative">
-                                  <img src="assets/images/group/group-1.jpg" class="absolute w-full h-full inset-0" alt="">
-                              </a>
-                              <div class="flex-1">
-                                  <a href="timeline-page.html" class="text-base font-semibold capitalize"> Architecture    </a>
-                                  <div class="text-sm text-gray-500 mt-0.5"> 237K Following</div>
-                              </div>
-                              <a href="timeline-page.html" class="flex items-center justify-center h-8 px-3 rounded-md text-sm border font-semibold bg-blue-500 text-white">
-                                  Join
-                              </a>
-                          </div>
-                  
+                        <div id="upload_Avatar" uk-modal>
+                            <div class="uk-modal-dialog">
+                                <button class="uk-modal-close-default" type="button" uk-close></button>
+                                <div class="uk-modal-header">
+                                    <h2 class="uk-modal-title text-center">Tải ảnh đại diện lên</h2>
+                                </div>
+                                <div class="uk-modal-body flex flex-column">
+                                    @livewire('clients.profile.upload-file')
+                                </div>
+                            </div>
                         </div>
+                    @endif
+                @endauth
+
+                <div class="profiles_content">
+                    <div class="profile_avatar cursor-pointer" uk-toggle="target: #viewProfile"
+                        uk-dropdown="pos: right-top;mode:click">
+                        <div class="profile_avatar_holder">
+                            {!! getAvatar($data->user_id, null, 'width:100%;height:100%;font-size:30px') !!}
+                        </div>
+                        @auth
+                            @if (auth()->user()->user_id == $data->user_id)
+                                <div class="icon_change_photo">
+                                    <ion-icon name="camera" class="text-xl"></ion-icon>
+                                </div>
+                            @endif
+                        @endauth
+                        <div class="uk-card uk-card-body uk-card-default w-60 md:-ml-9 -ml-10" id="viewProfile" hidden>
+                            <div class="card card-body">
+                                <ul class="list-none p-0 m-0 h-max">
+                                    @php
+                                        $check = \DB::table('users')
+                                            ->where('user_id', $data->user_id)
+                                            ->count();
+                                    @endphp
+                                    @if (isset($check))
+                                        <li class="cursor-pointer hover:bg-gray-100 hover:rounded-full px-3 text-left">Xem
+                                            ảnh đại diện</li>
+                                    @endif
+                                    @auth
+                                        @if (auth()->user()->user_id == $data->user_id)
+                                            <li class="cursor-pointer hover:bg-gray-100 hover:rounded-full px-3 text-left"
+                                                uk-toggle="target: #change-avatar">Thay đổi ảnh đại diện</li>
+                                        @endif
+                                    @endauth
+                                </ul>
+                            </div>
+                        </div>
+                        @auth
+                            @if (auth()->user()->user_id == $data->user_id)
+                                <div id="change-avatar" uk-modal>
+                                    <div class="uk-modal-dialog">
+                                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                                        <div class="uk-modal-header">
+                                            <h2 class="uk-modal-title text-center">Chọn ảnh đại diện</h2>
+                                        </div>
+                                        <div class="uk-modal-body flex flex-column">
+                                            <button uk-toggle="target: #upload_Avatar"
+                                                class="my-2 flex items-center justify-center h-10 px-5 rounded-md bg-blue-400 text-white space-x-1.5 hover:text-white">
+                                                <ion-icon name="add-outline"></ion-icon>
+                                                Tải ảnh lên</button>
+                                            @if (auth()->user()->user_avatar)
+                                                <pintura-editor src="{{ auth()->user()->user_avatar }}"></pintura-editor>
+                                                <button id="edit_Avatar" data-image-src="{{ auth()->user()->user_avatar }}"
+                                                    class="my-2 flex items-center justify-center h-10 px-5 rounded-md bg-gray-300 text-white space-x-1.5 hover:text-white">
+                                                    <ion-icon name="pencil-outline"></ion-icon>
+                                                    Chỉnh sửa hình ảnh</button>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="upload_Avatar" uk-modal>
+                                    <div class="uk-modal-dialog">
+                                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                                        <div class="uk-modal-header">
+                                            <h2 class="uk-modal-title text-center">Tải ảnh đại diện lên</h2>
+                                        </div>
+                                        <div class="uk-modal-body flex flex-column">
+                                            @livewire('clients.profile.upload-file')
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endauth
+                    </div>
+
+                    <div class="profile_info">
+                        <h1 class="text-center"> {!! getName($data->user_id, 'width:25px') !!} </h1>
+                        <p class="text-center"> {{ $data->user_bio }}</p>
                     </div>
 
                 </div>
-            </div>
-                  
-            <!-- Friends  -->
-            <div class="card md:p-6 p-2 max-w-3xl mx-auto">
 
-                <h2 class="text-xl font-bold"> Friends</h2>
+                <div class="flex justify-between lg:border-t border-gray-100 flex-col-reverse lg:flex-row pt-2">
+                    <nav class="responsive-nav pl-3">
+                        <ul uk-switcher="connect: #timeline-tab; animation: uk-animation-fade">
+                            <li><a href="#">Bài viết</a></li>
+                            <li><a href="#">Giới thiệu</a></li>
+                            <li><a href="#">Bạn bè <span>{{ countFriend($data->user_id) }}</span> </a></li>
+                            <li><a href="#">Hình ảnh </a></li>
+                        </ul>
+                    </nav>
 
-                <nav class="responsive-nav border-b">
-                    <ul>
-                        <li class="active"><a href="#" class="lg:px-2"> All Friends <span> 3,4510 </span> </a></li>
-                        <li><a href="#" class="lg:px-2"> Recently added </a></li>
-                        <li><a href="#" class="lg:px-2"> Family </a></li>
-                        <li><a href="#" class="lg:px-2"> University </a></li> 
-                    </ul>
-                </nav>
+                    <!-- button actions -->
+                    <div class="flex items-center space-x-1.5 flex-shrink-0 pr-4 mb-2 justify-center order-1 relative">
 
-                <div class="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-x-2 gap-y-4 mt-3">
+                        <!-- add story -->
+                        <a href="#"
+                            class="flex items-center justify-center h-10 px-5 rounded-md bg-blue-600 text-white space-x-1.5 hover:text-white"
+                            uk-toggle="target: #create-post-modal">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                class="w-5">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span> Đăng bài viết </span>
+                        </a>
 
-                    <div class="card p-2">
-                        <a href="timeline.html">
-                            <img src="assets/images/avatars/avatar-2.jpg" class="h-36 object-cover rounded-md shadow-sm w-full">
+                        {{-- <!-- search icon -->
+                        <a href="#" class="flex items-center justify-center h-10 w-10 rounded-md bg-gray-100"
+                            uk-toggle="target: #profile-search;animation: uk-animation-slide-top-small">
+                            <ion-icon name="search" class="text-xl"></ion-icon>
                         </a>
-                        <div class="pt-3 px-1">
-                            <a href="timeline.html" class="text-base font-semibold mb-0.5">  James Lewis </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-blue-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md text-blue-600 text-sm mb-1">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card p-2">
-                        <a href="timeline.html">
-                            <img src="assets/images/avatars/avatar-3.jpg" class="h-36 object-cover rounded-md shadow-sm w-full">
-                        </a>
-                        <div class="pt-3 px-1">
-                            <a href="timeline.html" class="text-base font-semibold mb-0.5"> Monroe Parker  </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-blue-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md text-blue-600 text-sm mb-1">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card p-2">
-                        <a href="timeline.html">
-                            <img src="assets/images/avatars/avatar-4.jpg" class="h-36 object-cover rounded-md shadow-sm w-full">
-                        </a>
-                        <div class="pt-3 px-1">
-                            <a href="timeline.html" class="text-base font-semibold mb-0.5">  Martin Gray  </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-blue-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md text-blue-600 text-sm mb-1">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card p-2">
-                        <a href="timeline.html">
-                            <img src="assets/images/avatars/avatar-7.jpg" class="h-36 object-cover rounded-md shadow-sm w-full">
-                        </a>
-                        <div class="pt-3 px-1">
-                            <a href="timeline.html" class="text-base font-semibold mb-0.5">  Alex Michael </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-blue-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md text-blue-600 text-sm mb-1">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card p-2">
-                        <a href="timeline.html">
-                            <img src="assets/images/avatars/avatar-5.jpg" class="h-36 object-cover rounded-md shadow-sm w-full">
-                        </a>
-                        <div class="pt-3 px-1">
-                            <a href="timeline.html" class="text-base font-semibold mb-0.5"> Jesse Stevens  </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-blue-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md text-blue-600 text-sm mb-1">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card p-2">
-                        <a href="timeline.html">
-                            <img src="assets/images/avatars/avatar-6.jpg" class="h-36 object-cover rounded-md shadow-sm w-full">
-                        </a>
-                        <div class="pt-3 px-1">
-                            <a href="timeline.html" class="text-base font-semibold mb-0.5"> Erica Jones  </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-blue-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md text-blue-600 text-sm mb-1">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card p-2">
-                        <a href="timeline.html">
-                            <img src="assets/images/avatars/avatar-2.jpg" class="h-36 object-cover rounded-md shadow-sm w-full">
-                        </a>
-                        <div class="pt-3 px-1">
-                            <a href="timeline.html" class="text-base font-semibold mb-0.5">  James Lewis </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-blue-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md text-blue-600 text-sm mb-1">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card p-2">
-                        <a href="timeline.html">
-                            <img src="assets/images/avatars/avatar-3.jpg" class="h-36 object-cover rounded-md shadow-sm w-full">
-                        </a>
-                        <div class="pt-3 px-1">
-                            <a href="timeline.html" class="text-base font-semibold mb-0.5"> Monroe Parker  </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-blue-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md text-blue-600 text-sm mb-1">
-                                Following
-                            </button>
-                        </div>
-                    </div>
+                        <!-- search dropdown -->
+                        <div class="absolute right-3 bg-white z-10 w-full flex items-center border rounded-md"
+                            id="profile-search" hidden>
+                            <input type="text" placeholder="Tìm kiếm..." class="flex-1">
+                            <ion-icon name="close-outline"
+                                class="text-2xl hover:bg-gray-100 p-1 rounded-full mr-2 cursor-pointer"
+                                uk-toggle="target: #profile-search;animation: uk-animation-slide-top-small"></ion-icon>
+                        </div> --}}
 
-                </div>
-                     
-                <div class="flex justify-center mt-6">
-                    <a href="#" class="bg-white font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
-                        Load more ..</a>
-                </div>
+                        <!-- more icon -->
+                        <a href="#" class="flex items-center justify-center h-10 w-10 rounded-md bg-gray-100">
+                            <ion-icon name="ellipsis-horizontal" class="text-xl"></ion-icon>
+                        </a>
+                        <!-- more drowpdown -->
+                        <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden border border-gray-100 dark:bg-gray-900 dark:text-gray-100 dark:border-gray-700"
+                            uk-drop="mode: click;pos: bottom-right;animation: uk-animation-slide-bottom-small; offset:5">
+                            <ul class="m-0">
+                                <li>
 
-            </div>
-
-            <!-- Photos  -->
-            <div class="card md:p-6 p-2 max-w-3xl mx-auto">
-
-                <div class="flex justify-between items-start relative md:mb-4 mb-3">
-                    <div class="flex-1">
-                        <h2 class="text-xl font-bold"> Photos </h2>
-                        <nav class="responsive-nav style-2 md:m-0 -mx-4">
-                            <ul>
-                                <li class="active"><a href="#">  Photos of you  <span> 230</span> </a></li>
-                                <li><a href="#"> Recently added </a></li>
-                                <li><a href="#"> Family </a></li>
-                                <li><a href="#"> University </a></li>
-                                <li><a href="#"> Albums </a></li>
+                                    <a id="sharelink"
+                                        data-clipboard-text="{{ route('profile', ['id' => $data->user_id]) }}"
+                                        class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 rounded-md dark:hover:bg-gray-800
+                                        text-primary">
+                                        <ion-icon id="shareIcon" name="arrow-redo-outline"
+                                            class="pr-2 text-xl"></ion-icon>
+                                        <span>Chia sẻ</span>
+                                    </a>
+                                </li>
+                                @auth
+                                    @if ($data->user_id == auth()->user()->user_id)
+                                        <li>
+                                            <a href="#"
+                                                class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                                <ion-icon name="create-outline" class="pr-2 text-xl"></ion-icon> Cài đặt
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if ($data->user_id != auth()->user()->user_id)
+                                        <li>
+                                            <hr class="-mx-2 my-2 dark:border-gray-800">
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('block', ['id' => encrypt($data->user_id)]) }}"
+                                                class="flex items-center px-3 py-2 text-red-500 hover:bg-red-50 hover:text-red-500 rounded-md dark:hover:bg-red-600">
+                                                <i class="fa-solid fa-user-xmark pr-2 text-xl"></i> Chặn
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <hr class="-mx-2 my-2 dark:border-gray-800">
+                                        </li>
+                                        <li>
+                                            <a href="#"
+                                                class="flex items-center px-3 py-2 text-red-500 hover:bg-red-50 hover:text-red-500 rounded-md dark:hover:bg-red-600">
+                                                <ion-icon name="stop-circle-outline" class="pr-2 text-xl"></ion-icon> Hủy kết
+                                                bạn
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endauth
                             </ul>
-                        </nav>
+                        </div>
                     </div>
-                    <a href="#offcanvas-create" uk-toggle class="flex items-center justify-center z-10 h-10 w-10 rounded-full bg-blue-600 text-white absolute right-0"
-                    data-tippy-placement="left" title="Create New Album">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                    </a>
-                </div>
 
-                <div class="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-3 mt-5">
-                    <div>
-                        <div class="bg-green-400 max-w-full lg:h-44 h-36 rounded-lg relative overflow-hidden shadow uk-transition-toggle">
-                            <img src="assets/images/post/img-1.jpg" class="w-full h-full absolute object-cover inset-0">
-                            <!-- overly-->
-                            <div class="-bottom-12 absolute bg-gradient-to-b from-transparent h-1/2 to-gray-800 uk-transition-slide-bottom-small w-full"></div>
-                            <div class="absolute bottom-0 w-full p-3 text-white uk-transition-slide-bottom-small">
-                                <div class="text-base"> Image description  </div>
-                                <div class="flex justify-between text-xs">
-                                   <a href="#">  Like</a>
-                                   <a href="#">  Comment </a>
-                                   <a href="#">  Share </a> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="bg-gray-200 max-w-full lg:h-44 h-36 rounded-lg relative overflow-hidden shadow uk-transition-toggle">
-                            <img src="assets/images/post/img-2.jpg" class="w-full h-full absolute object-cover inset-0">
-                            <!-- overly-->
-                            <div class="-bottom-12 absolute bg-gradient-to-b from-transparent h-1/2 to-gray-800 uk-transition-slide-bottom-small w-full"></div>
-                            <div class="absolute bottom-0 w-full p-3 text-white uk-transition-slide-bottom-small">
-                                <div class="text-base"> Image description  </div>
-                                <div class="flex justify-between text-xs">
-                                   <a href="#">  Like</a>
-                                   <a href="#">  Comment </a>
-                                   <a href="#">  Share </a> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="bg-gray-200 max-w-full lg:h-44 h-36 rounded-lg relative overflow-hidden shadow uk-transition-toggle">
-                            <img src="assets/images/avatars/avatar-3.jpg" class="w-full h-full absolute object-cover inset-0">
-                            <!-- overly-->
-                            <div class="-bottom-12 absolute bg-gradient-to-b from-transparent h-1/2 to-gray-800 uk-transition-slide-bottom-small w-full"></div>
-                            <div class="absolute bottom-0 w-full p-3 text-white uk-transition-slide-bottom-small">
-                                <div class="text-base"> Image description  </div>
-                                <div class="flex justify-between text-xs">
-                                   <a href="#">  Like</a>
-                                   <a href="#">  Comment </a>
-                                   <a href="#">  Share </a> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="bg-gray-200 max-w-full lg:h-44 h-36 rounded-lg relative overflow-hidden shadow uk-transition-toggle">
-                            <img src="assets/images/post/img-4.jpg" class="w-full h-full absolute object-cover inset-0">
-                            <!-- overly-->
-                            <div class="-bottom-12 absolute bg-gradient-to-b from-transparent h-1/2 to-gray-800 uk-transition-slide-bottom-small w-full"></div>
-                            <div class="absolute bottom-0 w-full p-3 text-white uk-transition-slide-bottom-small">
-                                <div class="text-base"> Image description  </div>
-                                <div class="flex justify-between text-xs">
-                                   <a href="#">  Like</a>
-                                   <a href="#">  Comment </a>
-                                   <a href="#">  Share </a> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="bg-gray-200 max-w-full lg:h-44 h-36 rounded-lg relative overflow-hidden shadow uk-transition-toggle">
-                            <img src="assets/images/avatars/avatar-7.jpg" class="w-full h-full absolute object-cover inset-0">
-                            <!-- overly-->
-                            <div class="-bottom-12 absolute bg-gradient-to-b from-transparent h-1/2 to-gray-800 uk-transition-slide-bottom-small w-full"></div>
-                            <div class="absolute bottom-0 w-full p-3 text-white uk-transition-slide-bottom-small">
-                                <div class="text-base"> Image description  </div>
-                                <div class="flex justify-between text-xs">
-                                   <a href="#">  Like</a>
-                                   <a href="#">  Comment </a>
-                                   <a href="#">  Share </a> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="bg-gray-200 max-w-full lg:h-44 h-36 rounded-lg relative overflow-hidden shadow uk-transition-toggle">
-                            <img src="assets/images/avatars/avatar-4.jpg" class="w-full h-full absolute object-cover inset-0">
-                            <!-- overly-->
-                            <div class="-bottom-12 absolute bg-gradient-to-b from-transparent h-1/2 to-gray-800 uk-transition-slide-bottom-small w-full"></div>
-                            <div class="absolute bottom-0 w-full p-3 text-white uk-transition-slide-bottom-small">
-                                <div class="text-base"> Image description  </div>
-                                <div class="flex justify-between text-xs">
-                                   <a href="#">  Like</a>
-                                   <a href="#">  Comment </a>
-                                   <a href="#">  Share </a> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="bg-gray-200 max-w-full lg:h-44 h-36 rounded-lg relative overflow-hidden shadow uk-transition-toggle">
-                            <img src="assets/images/post/img-1.jpg" class="w-full h-full absolute object-cover inset-0">
-                            <!-- overly-->
-                            <div class="-bottom-12 absolute bg-gradient-to-b from-transparent h-1/2 to-gray-800 uk-transition-slide-bottom-small w-full"></div>
-                            <div class="absolute bottom-0 w-full p-3 text-white uk-transition-slide-bottom-small">
-                                <div class="text-base"> Image description  </div>
-                                <div class="flex justify-between text-xs">
-                                   <a href="#">  Like</a>
-                                   <a href="#">  Comment </a>
-                                   <a href="#">  Share </a> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="bg-gray-200 max-w-full lg:h-44 h-36 rounded-lg relative overflow-hidden shadow uk-transition-toggle">
-                            <img src="assets/images/post/img-2.jpg" class="w-full h-full absolute object-cover inset-0">
-                            <!-- overly-->
-                            <div class="-bottom-12 absolute bg-gradient-to-b from-transparent h-1/2 to-gray-800 uk-transition-slide-bottom-small w-full"></div>
-                            <div class="absolute bottom-0 w-full p-3 text-white uk-transition-slide-bottom-small">
-                                <div class="text-base"> Image description  </div>
-                                <div class="flex justify-between text-xs">
-                                   <a href="#">  Like</a>
-                                   <a href="#">  Comment </a>
-                                   <a href="#">  Share </a> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-center mt-6">
-                    <a href="#" class="bg-white dark:bg-gray-900 font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
-                        Load more ..</a>
                 </div>
 
             </div>
 
-            <!-- Pages  -->
-            <div class="card md:p-6 p-2 max-w-3xl mx-auto">
+            <div class="uk-switcher lg:mt-8 mt-4" id="timeline-tab">
+                <!-- Timeline -->
+                <div class="md:flex md:space-x-6 ">
+                      <!-- create post  -->
+                    <div class="space-y-5 flex-shrink-0 md:w-7/12">
+                        <div class="card lg:mx-0 p-4" uk-toggle="target: #create-post-modal">
+                            <div class="flex space-x-3">
+                                {!! getAvatar(
+                                    $info->user_id,
+                                    null,
+                                    'border-radius:10px;font-size:30px!important;font-family: Arial, Helvetica, sans-serif;
+                                    background: #2a64e2f5;
+                                    font-size: 16px;
+                                    color: #fff;
+                                    text-align: center;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;',
+                                    'w-10 h-10 rounded-full',
+                                ) !!}
+                                <input placeholder="Có chuỵn gì thì đăng lên" class="bg-gray-100 hover:bg-gray-200 flex-1 h-10 px-6 rounded-full">
+                            </div>
+                            <div class="grid grid-flow-col pt-3 -mx-1 -mb-1 font-semibold text-sm">
+                                 <div class="hover:bg-gray-100 flex items-center p-1.5 rounded-md cursor-pointer">
+                                     <svg class="bg-blue-100 h-9 mr-2 p-1.5 rounded-full text-blue-600 w-9 -my-0.5 hidden lg:block" data-tippy-placement="top" title="Tooltip" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                     Photo/Video
+                                 </div>
+                                 <div class="hover:bg-gray-100 flex items-center p-1.5 rounded-md cursor-pointer">
+                                     <svg class="bg-green-100 h-9 mr-2 p-1.5 rounded-full text-green-600 w-9 -my-0.5 hidden lg:block" uk-tooltip="title: Messages ; pos: bottom ;offset:7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" title="" aria-expanded="false"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+                                     Tag Friend
+                                 </div>
+                                 <div class="hover:bg-gray-100 flex items-center p-1.5 rounded-md cursor-pointer">
+                                     <svg class="bg-red-100 h-9 mr-2 p-1.5 rounded-full text-red-600 w-9 -my-0.5 hidden lg:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                     Fealing /Activity
+                                 </div>
+                            </div>
+                        </div>
 
-                <h2 class="text-xl font-bold"> Pages</h2>
-                <nav class="responsive-nav border-b md:m-0 -mx-4">
-                    <ul>
-                        <li class="active"><a href="#" class="lg:px-2"> Following </a></li>
-                        <li><a href="#" class="lg:px-2"> Newest </a></li>
-                        <li><a href="#" class="lg:px-2"> My pages</a></li>
-                        <li><a href="#" class="lg:px-2"> Suggestions</a></li>
-                    </ul>
-                </nav>
 
-                <div class="grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4 mt-5">
-                    
-                    <div class="card">
-                        <a href="timeline-page.html">
-                            <img src="assets/images/avatars/avatar-4.jpg" class="h-36 object-cover rounded-t-md shadow-sm w-full">
-                        </a>
-                        <div class="p-3">
-                            <a href="timeline-page.html" class="text-base font-semibold mb-0.5"> John Michael  </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-gray-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md  text-sm">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                   
-                    <div class="card">
-                        <a href="timeline-page.html">
-                            <img src="assets/images/avatars/avatar-3.jpg" class="h-36 object-cover rounded-t-md shadow-sm w-full">
-                        </a>
-                        <div class="p-3">
-                            <a href="timeline-page.html" class="text-base font-semibold mb-0.5"> 
-                                Alex Dolgove </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-gray-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md  text-sm">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <a href="timeline-page.html">
-                            <img src="assets/images/avatars/avatar-5.jpg" class="h-36 object-cover rounded-t-md shadow-sm w-full">
-                        </a>
-                        <div class="p-3">
-                            <a href="timeline-page.html" class="text-base font-semibold mb-0.5"> Dennis Han  </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-gray-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md  text-sm">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <a href="timeline-page.html">
-                            <img src="assets/images/avatars/avatar-7.jpg" class="h-36 object-cover rounded-t-md shadow-sm w-full">
-                        </a>
-                        <div class="p-3">
-                            <a href="timeline-page.html" class="text-base font-semibold mb-0.5">  Monroe Parker   </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-gray-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md  text-sm">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <a href="timeline-page.html">
-                            <img src="assets/images/avatars/avatar-6.jpg" class="h-36 object-cover rounded-t-md shadow-sm w-full">
-                        </a>
-                        <div class="p-3">
-                            <a href="timeline-page.html" class="text-base font-semibold mb-0.5"> Erica Jones </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-gray-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md  text-sm">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <a href="timeline-page.html">
-                            <img src="assets/images/avatars/avatar-2.jpg" class="h-36 object-cover rounded-t-md shadow-sm w-full">
-                        </a>
-                        <div class="p-3">
-                            <a href="timeline-page.html" class="text-base font-semibold mb-0.5">  Stella Johnson</a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-gray-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md  text-sm">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <a href="timeline-page.html">
-                            <img src="assets/images/avatars/avatar-4.jpg" class="h-36 object-cover rounded-t-md shadow-sm w-full">
-                        </a>
-                        <div class="p-3">
-                            <a href="timeline-page.html" class="text-base font-semibold mb-0.5"> John Michael  </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-gray-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md  text-sm">
-                                Following
-                            </button>
-                        </div>
-                    </div>
-                   
-                    <div class="card">
-                        <a href="timeline-page.html">
-                            <img src="assets/images/avatars/avatar-3.jpg" class="h-36 object-cover rounded-t-md shadow-sm w-full">
-                        </a>
-                        <div class="p-3">
-                            <a href="timeline-page.html" class="text-base font-semibold mb-0.5"> 
-                                Alex Dolgove </a>
-                            <p class="font-medium text-sm">843K Following </p>
-                            <button class="bg-gray-100 w-full flex font-semibold h-8 items-center justify-center mt-3 px-3 rounded-md  text-sm">
-                                Following
-                            </button>
-                        </div>
+
+                        <livewire:clients.profile.posts :user_id="$info->user_id" />
+
+
                     </div>
 
-                </div>
-                 
-                <div class="flex justify-center mt-6">
-                    <a href="#" class="bg-white font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
-                        Load more ..</a>
-                </div>
-                
-            </div>
-
-            <!-- Groups  -->
-            <div class="card md:p-6 p-2 max-w-3xl mx-auto">
-
-                <div class="flex justify-between items-start relative md:mb-4 mb-3">
-                    <div class="flex-1">
-                        <h2 class="text-xl font-bold"> Groups </h2>
-                        <nav class="responsive-nav style-2 md:m-0 -mx-4">
-                            <ul>
-                                <li class="active"><a href="#"> Joined <span> 230</span> </a></li>
-                                <li><a href="#"> My Groups </a></li>
-                                <li><a href="#"> Discover </a></li> 
+                    <!-- Sidebar -->
+                    <div class="w-full space-y-6">
+                        <div class="widget card p-3">
+                            <h4 class="text-lg font-semibold"> Về tôi </h4>
+                            <ul class="text-gray-600 space-y-3 mt-3">
+                                @if (isset($introduction))
+                                    @if (isset($introduction->hometown))
+                                        <li class="flex items-center space-x-2">
+                                            <ion-icon name="home-sharp"
+                                                class="rounded-full bg-gray-200 text-xl p-1 mr-3"></ion-icon>
+                                            <strong> {{ $introduction->hometown }} </strong>
+                                        </li>
+                                    @endif
+                                    @if (isset($introduction->location))
+                                        <li class="flex items-center space-x-2">
+                                            <ion-icon name="globe"
+                                                class="rounded-full bg-gray-200 text-xl p-1 mr-3"></ion-icon>
+                                            <strong>{{ $introduction->location }} </strong>
+                                        </li>
+                                    @endif
+                                    @if (isset($introduction->marital))
+                                        <li class="flex items-center space-x-2">
+                                            <ion-icon name="heart-sharp"
+                                                class="rounded-full bg-gray-200 text-xl p-1 mr-3"></ion-icon>
+                                            <strong>
+                                                @if ($introduction->marital == 'single')
+                                                    Độc thân
+                                                @elseif ($introduction->marital == 'married')
+                                                    Đã kết hôn
+                                                @elseif ($introduction->marital == 'divorced')
+                                                    Đã ly hôn
+                                                @elseif ($introduction->marital == 'widowed')
+                                                    Góa phụ
+                                                @endif
+                                            </strong>
+                                        </li>
+                                    @endif
+                                @endif
+                                <li class="flex items-center space-x-2">
+                                    <ion-icon name="logo-rss"
+                                        class="rounded-full bg-gray-200 text-xl p-1 mr-3"></ion-icon>
+                                    Theo dõi <strong> 0 người </strong>
+                                </li>
                             </ul>
-                        </nav>
+                        </div>
+
+                        {{-- <div class="widget card p-3 border-t">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h4 class="text-lg font-semibold"> Bạn bè </h4>
+                                    <p class="text-sm"> {{ countFriend($data->user_id) }}</p>
+                                </div>
+                                <a href="#" class="text-blue-600 ">Xem tất cả</a>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3 text-gray-600 font-semibold">
+                                <a href="#">
+                                    <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2">
+                                        <img src="{{ asset('clients/assets/images/avatars/avatar-1.jpg') }}"
+                                            alt="" class="w-full h-full object-cover absolute">
+                                    </div>
+                                    <div class="text-sm truncate"> Dennis Han </div>
+                                </a>
+                                <a href="#">
+                                    <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2">
+                                        <img src="{{ asset('clients/assets/images/avatars/avatar-2.jpg') }}"
+                                            alt="" class="w-full h-full object-cover absolute">
+                                    </div>
+                                    <div class="text-sm truncate"> Erica Jones </div>
+                                </a>
+                                <a href="#">
+                                    <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2">
+                                        <img src="{{ asset('clients/assets/images/avatars/avatar-3.jpg') }}"
+                                            alt="" class="w-full h-full object-cover absolute">
+                                    </div>
+                                    <div class="text-sm truncate"> Stella Johnson </div>
+                                </a>
+                                <a href="#">
+                                    <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2">
+                                        <img src="{{ asset('clients/assets/images/avatars/avatar-4.jpg') }}"
+                                            alt="" class="w-full h-full object-cover absolute">
+                                    </div>
+                                    <div class="text-sm truncate"> Alex Dolgove</div>
+                                </a>
+                                <a href="#">
+                                    <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2">
+                                        <img src="{{ asset('clients/assets/images/avatars/avatar-5.jpg') }}"
+                                            alt="" class="w-full h-full object-cover absolute">
+                                    </div>
+                                    <div class="text-sm truncate"> Jonathan Ali </div>
+                                </a>
+                                <a href="#">
+                                    <div class="avatar relative rounded-md overflow-hidden w-full h-24 mb-2">
+                                        <img src="{{ asset('clients/assets/images/avatars/avatar-6.jpg') }}"
+                                            alt="" class="w-full h-full object-cover absolute">
+                                    </div>
+                                    <div class="text-sm truncate"> Erica Han </div>
+                                </a>
+                            </div>
+                            <a href="#" class="button gray mt-3 w-full">Xem tất cả </a>
+                        </div> --}}
+
+
                     </div>
-                    <a href="create-group.html" data-tippy-placement="left" data-tippy="" data-original-title="Create New Album" class="bg-blue-100 font-semibold py-2 px-6 rounded-md text-sm md:mt-0 mt-3 text-blue-600">
-                        Create       
-                    </a>
+                </div>
+                <div class="card md:p-6 p-2 mx-auto">
+                    <h2 class="text-xl font-bold">Giới thiệu</h2>
+                    @livewire('clients.profile.info', ['id' => $data->user_id])
+
                 </div>
 
-                <div class="grid md:grid-cols-2  grid-cols-2 gap-x-2 gap-y-4 mt-3"> 
-                     
-                    <div class="flex items-center flex-col md:flex-row justify-center p-4 rounded-md shadow hover:shadow-md md:space-x-4">
-                        <a href="timeline-group.html" iv="" class="w-16 h-16 flex-shrink-0 overflow-hidden rounded-full relative">
-                            <img src="assets/images/group/group-3.jpg" class="absolute w-full h-full inset-0 " alt="">
-                        </a>
-                        <div class="flex-1">
-                            <a href="timeline-page.html" class="text-base font-semibold capitalize">Graphic Design </a>
-                            <div class="text-sm text-gray-500"> 54 mutual friends </div>
-                        </div>
-                        <button class="bg-gray-100 font-semibold py-2 px-3 rounded-md text-sm md:mt-0 mt-3">
-                            Following
-                        </button>
-                    </div>
-                    <div class="flex items-center flex-col md:flex-row justify-center p-4 rounded-md shadow hover:shadow-md md:space-x-4">
-                        <a href="timeline-group.html" iv="" class="w-16 h-16 flex-shrink-0 overflow-hidden rounded-full relative">
-                            <img src="assets/images/group/group-4.jpg" class="absolute w-full h-full inset-0 " alt="">
-                        </a>
-                        <div class="flex-1">
-                            <a href="timeline-page.html" class="text-base font-semibold capitalize"> Mountain Riders  </a>
-                            <div class="text-sm text-gray-500"> 54 mutual friends </div>
-                        </div>
-                        <button class="bg-gray-100 font-semibold py-2 px-3 rounded-md text-sm md:mt-0 mt-3">
-                            Following
-                        </button>
-                    </div>
-                    <div class="flex items-center flex-col md:flex-row justify-center p-4 rounded-md shadow hover:shadow-md md:space-x-4">
-                        <a href="timeline-group.html" iv="" class="w-16 h-16 flex-shrink-0 overflow-hidden rounded-full relative">
-                            <img src="assets/images/group/group-2.jpg" class="absolute w-full h-full inset-0 " alt="">
-                        </a>
-                        <div class="flex-1">
-                            <a href="timeline-page.html" class="text-base font-semibold capitalize">  Coffee Addicts  </a>
-                            <div class="text-sm text-gray-500"> 54 mutual friends </div>
-                        </div>
-                        <button class="bg-gray-100 font-semibold py-2 px-3 rounded-md text-sm md:mt-0 mt-3">
-                            Following
-                        </button>
-                    </div>
-                    <div class="flex items-center flex-col md:flex-row justify-center p-4 rounded-md shadow hover:shadow-md md:space-x-4">
-                        <a href="timeline-group.html" iv="" class="w-16 h-16 flex-shrink-0 overflow-hidden rounded-full relative">
-                            <img src="assets/images/group/group-5.jpg" class="absolute w-full h-full inset-0 " alt="">
-                        </a>
-                        <div class="flex-1">
-                            <a href="timeline-page.html" class="text-base font-semibold capitalize">  Property Rent  </a>
-                            <div class="text-sm text-gray-500"> 54 mutual friends </div>
-                        </div>
-                        <button class="bg-gray-100 font-semibold py-2 px-3 rounded-md text-sm md:mt-0 mt-3">
-                            Following
-                        </button>
-                    </div>
-                    <div class="flex items-center flex-col md:flex-row justify-center p-4 rounded-md shadow hover:shadow-md md:space-x-4">
-                        <a href="timeline-group.html" iv="" class="w-16 h-16 flex-shrink-0 overflow-hidden rounded-full relative">
-                            <img src="assets/images/group/group-1.jpg" class="absolute w-full h-full inset-0 " alt="">
-                        </a>
-                        <div class="flex-1">
-                            <a href="timeline-page.html" class="text-base font-semibold capitalize"> Architecture </a>
-                            <div class="text-sm text-gray-500"> 54 mutual friends </div>
-                        </div>
-                        <button class="bg-gray-100 font-semibold py-2 px-3 rounded-md text-sm md:mt-0 mt-3">
-                            Following
-                        </button>
-                    </div>
-                    <div class="flex items-center flex-col md:flex-row justify-center p-4 rounded-md shadow hover:shadow-md md:space-x-4">
-                        <a href="timeline-group.html" iv="" class="w-16 h-16 flex-shrink-0 overflow-hidden rounded-full relative">
-                            <img src="assets/images/group/group-3.jpg" class="absolute w-full h-full inset-0 " alt="">
-                        </a>
-                        <div class="flex-1">
-                            <a href="timeline-page.html" class="text-base font-semibold capitalize">Graphic Design </a>
-                            <div class="text-sm text-gray-500"> 54 mutual friends </div>
-                        </div>
-                        <button class="bg-gray-100 font-semibold py-2 px-3 rounded-md text-sm md:mt-0 mt-3">
-                            Following
-                        </button>
-                    </div>
-                    <div class="flex items-center flex-col md:flex-row justify-center p-4 rounded-md shadow hover:shadow-md md:space-x-4">
-                        <a href="timeline-group.html" iv="" class="w-16 h-16 flex-shrink-0 overflow-hidden rounded-full relative">
-                            <img src="assets/images/group/group-4.jpg" class="absolute w-full h-full inset-0 " alt="">
-                        </a>
-                        <div class="flex-1">
-                            <a href="timeline-page.html" class="text-base font-semibold capitalize"> Mountain Riders  </a>
-                            <div class="text-sm text-gray-500"> 54 mutual friends </div>
-                        </div>
-                        <button class="bg-gray-100 font-semibold py-2 px-3 rounded-md text-sm md:mt-0 mt-3">
-                            Following
-                        </button>
-                    </div>
-                    <div class="flex items-center flex-col md:flex-row justify-center p-4 rounded-md shadow hover:shadow-md md:space-x-4">
-                        <a href="timeline-group.html" iv="" class="w-16 h-16 flex-shrink-0 overflow-hidden rounded-full relative">
-                            <img src="assets/images/group/group-2.jpg" class="absolute w-full h-full inset-0 " alt="">
-                        </a>
-                        <div class="flex-1">
-                            <a href="timeline-page.html" class="text-base font-semibold capitalize">  Coffee Addicts  </a>
-                            <div class="text-sm text-gray-500"> 54 mutual friends </div>
-                        </div>
-                        <button class="bg-gray-100 font-semibold py-2 px-3 rounded-md text-sm md:mt-0 mt-3">
-                            Following
-                        </button>
-                    </div>
-                    
+                <!-- Friends  -->
+                <div class="card md:p-6 p-2 mx-auto">
+                    <h2 class="text-xl font-bold"> Bạn bè</h2>
+                    @livewire('clients.profile.friend', ['data' => $data, 'id' => $data->user_id])
                 </div>
 
-                <div class="flex justify-center mt-6">
-                    <a href="#" class="bg-white dark:bg-gray-900 font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
-                        Load more ..</a>
+                <!-- Photos  -->
+                <div class="card md:p-6 p-2 mx-auto">
+
+                    @livewire('clients.profile.album', ['data' => $data, 'id' => $data->user_id])
                 </div>
+
 
             </div>
-
-             <!-- Videos -->
-            <div class="card md:p-6 p-2 max-w-3xl mx-auto">  
-                
-                <h2 class="text-xl font-semibold"> Friend</h2>
-                <nav class="responsive-nav border-b">
-                    <ul>
-                        <li class="active"><a href="#" class="lg:px-2">   Suggestions </a></li>
-                        <li><a href="#" class="lg:px-2"> Newest </a></li>
-                        <li><a href="#" class="lg:px-2"> My Videos </a></li>
-                    </ul>
-                </nav>
-
-                <div class="grid md:grid-cols-3 grid-cols-2  gap-x-2 gap-y-4 mt-3">  
-                    <div>
-                        <a href="video-watch.html" class="w-full h-36 overflow-hidden rounded-lg relative block">
-                            <img src="assets/images/video/img-1.png" alt="" class="w-full h-full absolute inset-0 object-cover">
-                            <span class="absolute bg-black bg-opacity-60 bottom-1 font-semibold px-1.5 py-0.5 right-1 rounded text-white text-xs"> 12:21</span>
-                            <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt="">
-                        </a>
-                    </div>
-                    <div>
-                        <a href="video-watch.html" class="w-full h-36 overflow-hidden rounded-lg relative block">
-                            <img src="assets/images/video/img-2.png" alt="" class="w-full h-full absolute inset-0 object-cover">
-                            <span class="absolute bg-black bg-opacity-60 bottom-1 font-semibold px-1.5 py-0.5 right-1 rounded text-white text-xs"> 12:21</span>
-                            <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt="">
-                        </a>
-                    </div>
-                    <div>
-                        <a href="video-watch.html" class="w-full h-36 overflow-hidden rounded-lg relative block">
-                            <img src="assets/images/video/img-3.png" alt="" class="w-full h-full absolute inset-0 object-cover">
-                            <span class="absolute bg-black bg-opacity-60 bottom-1 font-semibold px-1.5 py-0.5 right-1 rounded text-white text-xs"> 12:21</span>
-                            <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt="">
-                        </a>
-                    </div>
-                    <div>
-                        <a href="video-watch.html" class="w-full h-36 overflow-hidden rounded-lg relative block">
-                            <img src="assets/images/video/img-4.png" alt="" class="w-full h-full absolute inset-0 object-cover">
-                            <span class="absolute bg-black bg-opacity-60 bottom-1 font-semibold px-1.5 py-0.5 right-1 rounded text-white text-xs"> 12:21</span>
-                            <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt="">
-                        </a>
-                    </div>
-                    <div>
-                        <a href="video-watch.html" class="w-full h-36 overflow-hidden rounded-lg relative block">
-                            <img src="assets/images/video/img-5.png" alt="" class="w-full h-full absolute inset-0 object-cover">
-                            <span class="absolute bg-black bg-opacity-60 bottom-1 font-semibold px-1.5 py-0.5 right-1 rounded text-white text-xs"> 12:21</span>
-                            <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt="">
-                        </a>
-                        
-                    </div>
-                    <div>
-                        <a href="video-watch.html" class="w-full h-36 overflow-hidden rounded-lg relative block">
-                            <img src="assets/images/video/img-6.png" alt="" class="w-full h-full absolute inset-0 object-cover">
-                            <span class="absolute bg-black bg-opacity-60 bottom-1 font-semibold px-1.5 py-0.5 right-1 rounded text-white text-xs"> 12:21</span>
-                            <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt="">
-                        </a>
-                    </div>
-                    <div>
-                        <a href="video-watch.html" class="w-full h-36 overflow-hidden rounded-lg relative block">
-                            <img src="assets/images/video/img-3.png" alt="" class="w-full h-full absolute inset-0 object-cover">
-                            <span class="absolute bg-black bg-opacity-60 bottom-1 font-semibold px-1.5 py-0.5 right-1 rounded text-white text-xs"> 12:21</span>
-                            <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt="">
-                        </a>
-                    </div>
-                    <div>
-                        <a href="video-watch.html" class="w-full h-36 overflow-hidden rounded-lg relative block">
-                            <img src="assets/images/video/img-2.png" alt="" class="w-full h-full absolute inset-0 object-cover">
-                            <span class="absolute bg-black bg-opacity-60 bottom-1 font-semibold px-1.5 py-0.5 right-1 rounded text-white text-xs"> 12:21</span>
-                            <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt="">
-                        </a>
-                    </div>
-                    <div>
-                        <a href="video-watch.html" class="w-full h-36 overflow-hidden rounded-lg relative block">
-                            <img src="assets/images/video/img-4.png" alt="" class="w-full h-full absolute inset-0 object-cover">
-                            <span class="absolute bg-black bg-opacity-60 bottom-1 font-semibold px-1.5 py-0.5 right-1 rounded text-white text-xs"> 12:21</span>
-                            <img src="assets/images/icon-play.svg" class="w-12 h-12 uk-position-center" alt="">
-                        </a>
-                    </div>
-                </div>
-
-                <div class="flex justify-center mt-6">
-                    <a href="#" class="bg-white font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white">
-                        Load more ..</a>
-                </div>
-                
-            </div>
-
 
         </div>
-
     </div>
-</div>
-
 @endsection
 @section('js')
+    <script src="https://unpkg.com/calendarify@latest/dist/calendarify.iife.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
+        integrity="sha512-uKQ39gEGiyUJl4AI6L+ekBdGKpGw4xJ55+xyJG7YFlJokPNYegn9KwQ3P8A7aFQAUtUsAQHep+d/lrGqrbPIDQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('clients/assets/js/bootstrap-select.min.js') }}"></script>
+    <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            var changeInfoProfile = document.getElementById('changeInfoProfile');
+            if (changeInfoProfile) {
+                changeInfoProfile.addEventListener('click', function() {
+                    Livewire.dispatch('changeInfoProfile');
+                });
+            };
+        });
+        const dateRangePickerEl = document.getElementById('dateRangePickerId');
 
+        if (dateRangePickerEl) {
+            const dateRangeValue = dateRangePickerEl.value;
+            const now = new Date();
+            const options = {
+                accentColor: '#0090FC',
+                isDark: false,
+                zIndex: 9999,
+                customClass: ['font-poppins'],
+                onChange: (calendarify) => console.log(
+                    calendarify),
+                quickActions: false,
+                startDate: dateRangeValue ? new Date(dateRangeValue) : now,
+                locale: {
+                    format: "DD-MM-YYYY",
+                    lang: {
+                        code: 'vn',
+                        months: ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"],
+                        weekdays: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
+                    }
+                }
+            }
+            const calendarify = new Calendarify('#dateRangePickerId', {
+                ...options
+            })
+            calendarify.init()
+        }
+
+
+        const host = "http://127.0.0.1:8000/proxy?url=https://provinces.open-api.vn/api/";
+
+        var callAPI = (api) => {
+            return $.get(api)
+                .done((response) => {
+                    if (response) {
+                        renderData(response, "city1");
+                        renderData(response, "city");
+                    }
+                });
+        };
+
+        callAPI('http://127.0.0.1:8000/proxy?url=https://provinces.open-api.vn/api/?depth=1');
+
+        var callApiDistrict = (api, targetSelect) => {
+            return $.get(api)
+                .done((response) => {
+                    if (isValidJson(response)) {
+                        response = JSON.parse(response);
+                    }
+                    renderData(response.districts, targetSelect);
+                });
+        };
+
+        function isValidJson(str) {
+            try {
+                JSON.parse(str);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        var callApiWard = (api, targetSelect) => {
+            return $.get(api)
+                .done((response) => {
+                    if (isValidJson(response)) {
+                        response = JSON.parse(response);
+                    }
+                    renderData(response.wards, targetSelect);
+                });
+        };
+
+        var renderData = (data, select) => {
+            let row = '<option disabled value="" hidden>Select</option>';
+            if (data && typeof data == 'string') {
+                var dataArray = JSON.parse(data);
+                if (Array.isArray(dataArray)) {
+                    dataArray.sort((a, b) => a.name.localeCompare(b.name));
+                    $.each(dataArray, function(index, element) {
+                        row += '<option data-id="' + element.code + '" value="' + element.name + '">' +
+                            element
+                            .name + '</option>';
+                    });
+                }
+            } else {
+                $.each(data, function(index, element) {
+                    row += '<option data-id="' + element.code + '" value="' + element.name + '">' +
+                        element
+                        .name +
+                        '</option>';
+                });
+            }
+            $("#" + select).html(row);
+        };
+
+        $("#city, #city1, #district, #district1, #ward, #ward1").change(function() {
+            const selectedId = $(this).find(':selected').data('id');
+            const selectName = $(this).attr("id");
+            if ((selectName === "city" || selectName === "city1") && selectedId) {
+                callApiDistrict(host + "p/" + selectedId + "?depth=2", selectName === "city" ? "district" :
+                    "district1");
+            } else if ((selectName === "district" || selectName === "district1") && selectedId) {
+                callApiWard(host + "d/" + selectedId + "?depth=2", selectName === "district" ? "ward" :
+                    "ward1");
+            }
+        });
+    </script>
 @endsection

@@ -10,20 +10,20 @@
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="{{route('courses_register_content',['slug'=>$course->slug])}}">Thêm video</a></li>
-                  
+
                 </ol>
               </div>
             </div>
           </div><!-- /.container-fluid -->
         </section>
-    
+
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
             <div class="row">
               <div class="col-12">
                 @foreach ($sections as $section)
-                    
+
                 <div class="card">
                   <div class="card-header">
                     <h3 class="card-title">Phần {{$loop->iteration}}: {{$section->section_name}}</h3>
@@ -41,7 +41,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                        @foreach ($sectionVideos[$section->section_id] as $video)                            
+                        @foreach ($sectionVideos[$section->section_id] as $video)
                       <tr>
                         <td width='200'><video  height="200" controls src="{{$video->material_url}}"></video></td>
                         <td>{{$video->material_name}}
@@ -57,25 +57,25 @@
                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
                                 </svg>
                             </a>
-                     
+
                         </td>
                         @if($video->review == 1)
 
                         <td >
                             <button wire:click.prevent='turnOnPreview({{$video->material_id}})'  class="btn btn-primary">Bật</button>
-                            <button disabled wire:click.prevent='turnOffPreview({{$video->material_id}})'  class="btn btn-danger">Tắt</button></td>              
+                            <button disabled wire:click.prevent='turnOffPreview({{$video->material_id}})'  class="btn btn-danger">Tắt</button></td>
 
                             @else
                             <td >
                             <button disabled wire:click.prevent='turnOnPreview({{$video->material_id}})'  class="btn btn-primary">Bật</button>
-                                <button wire:click.prevent='turnOffPreview({{$video->material_id}})'  class="btn btn-danger">Tắt</button></td>              
+                                <button wire:click.prevent='turnOffPreview({{$video->material_id}})'  class="btn btn-danger">Tắt</button></td>
                                               @endif
-                        <td> <a wire:navigate href="{{route('control-video-edit', ['slug' => $course->slug])}}" class="btn btn-primary">Sửa</a> | <a class="btn btn-danger">Xóa</a></td>
+                        <td> <a   href="{{route('control-video-edit', ['slug' => $course->slug])}}" class="btn btn-primary">Sửa</a> | <a class="btn btn-danger">Xóa</a></td>
                       </tr>
                       @endforeach
-                     
+
                       </tbody>
-                     
+
                     </table>
                   </div>
                   <!-- /.card-body -->
@@ -83,8 +83,8 @@
                 @endforeach
 
                 <!-- /.card -->
-    
-           
+
+
                 <!-- /.card -->
               </div>
               <!-- /.col -->

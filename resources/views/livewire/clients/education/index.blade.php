@@ -11,9 +11,9 @@
         </a>
         <div class="flex-1 space-y-2">
 
-            <a wire:navigate href="/courses/{{$course->slug}}"class="md:text-xl font-semibold line-clamp-2"> {{$course->course_name}}  </a>
+            <a   href="/courses/{{$course->slug}}"class="md:text-xl font-semibold line-clamp-2"> {{$course->course_name}}  </a>
             <p class="leading-6 pr-4 line-clamp-2 md:block hidden"> {{$course->description}} </p>
-            <a href="/profile/{{auth()->user()->user_id}}" class="font-semibold block text-sm"> {{$course->user_fullname}}</a>
+            <a href="{{route('profile',['id' => auth()->user()->user_id])}}" class="font-semibold block text-sm"> {{$course->user_fullname}}</a>
 
            <div class="flex items-center justify-between">
             <div class="flex space-x-3 items-center text-sm md:pt-3 font-medium">

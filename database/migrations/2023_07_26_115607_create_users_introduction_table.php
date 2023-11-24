@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('users_introduction', function (Blueprint $table) {
             $table->bigIncrements('id');
-            // $table->bigInteger('user_id');
-            $table->text('position')->nullable();
-            $table->text('workplace')->nullable();
-            $table->timestamps();
+            $table->text('location')->nullable();
+            $table->text('hometown')->nullable();
+            $table->text('marital')->nullable();
+            $table->text('website')->nullable();
+            $table->text('job')->nullable();
+            $table->text('university')->nullable();
+            $table->text('high_school')->nullable();
+            $table->text('middle_school')->nullable();
+            $table->text('primary_school')->nullable();
+            $table->text('language')->nullable();
         });
     }
 

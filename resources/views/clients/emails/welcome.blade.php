@@ -17,7 +17,7 @@
               <div
                 style="font-size: 14px; font-weight: 500; margin-bottom: 27px; font-family:Arial,Helvetica,sans-serif;">
                 <p style="margin-bottom:9px; color:#181C32; font-size: 18px; font-weight:700">Xin chào {{ $name }},
-                  Đây là tin nhắn từ SHOP TSONIT!</p>
+                  Đây là tin nhắn từ Social Circle!</p>
                 <p style="margin-bottom:2px; color:#7E8299">Bạn đã yêu cầu đăng ký tài khoản. Vui lòng nhập mã xác minh
                   sau để kết thúc quá trình đăng ký.</p>
               </div>
