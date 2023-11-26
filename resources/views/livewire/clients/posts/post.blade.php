@@ -33,7 +33,7 @@
                                 {{ $diffInDays }} ngày trước
                             @endif
 
-                            <ion-icon name="people"></ion-icon>
+                            <ion-icon name="people" wire:ignore></ion-icon>
                         </div>
                     </div>
                 </div>
