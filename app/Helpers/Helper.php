@@ -72,9 +72,7 @@ class Helper
             }else{
                 return "Bạn đã nhập sai quá nhiều lần. Vui lòng thử lại sau {$formattedTime}.";
             }
-
         }
-
         RateLimiter::hit($key, $time);
 
         return null;

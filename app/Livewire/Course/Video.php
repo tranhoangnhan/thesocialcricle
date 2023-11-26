@@ -23,57 +23,57 @@ class Video extends Component
     }
     public function upPotision($section_id, $slug) {
         $video = VideoModel::where('section_id', $section_id)->where('slug', $slug)->first();
-    
+
         if ($video->potision == 1) {
             return redirect()->back();
         }
-    
+
         $previousVideo = VideoModel::where('section_id', $section_id)
             ->where('potision', $video->potision - 1)
             ->first();
-    
+
         if ($previousVideo) {
             \DB::transaction(function () use ($video, $previousVideo) {
                 $video->decrement('potision');
                 $previousVideo->increment('potision');
             });
         }
-    
+
         return redirect()->back();
     }
-    
+
     public function downPotision($section_id, $slug) {
         $video = VideoModel::where('section_id', $section_id)->where('slug', $slug)->first();
-    
+
         $nextVideo = VideoModel::where('section_id', $section_id)
             ->where('potision', $video->potision + 1)
             ->first();
-    
+
         if ($nextVideo) {
             \DB::transaction(function () use ($video, $nextVideo) {
                 $video->increment('potision');
                 $nextVideo->decrement('potision');
             });
         }
-    
+
         return redirect()->back();
     }
     public function turnOnPreview($id) {
         VideoModel::where('material_id', $id)->update([
             'review' => '0',
         ]);
-    
+
         return redirect()->back();
     }
-    
+
     public function turnOffPreview($id) {
         VideoModel::where('material_id', $id)->update([
             'review' => '1',
         ]);
-    
+
         return redirect()->back();
     }
-    
+
     public function render()
     {
         $sections = Section::where('course_id', $this->course->course_id)->get();
@@ -84,9 +84,9 @@ class Video extends Component
             $sectionVideos[$section->section_id] = $videos;
 
             // Kiểm tra xem video đầu tiên có phải là video có potision cao nhất không
-          
-            
-         
+
+
+
         }
 
         $this->sections = $sections;

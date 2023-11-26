@@ -24,7 +24,7 @@ class VideoEdit extends Component
             <h5><i class="icon fas fa-exclamation-triangle"></i> Thông báo!</h5>
             Tên không được để trống !
           </div>';
-            return;
+            return ;
         }
         $titleCurent = VideoModel::where('material_id', $id)->first()->material_name;
         if($this->title[$id] == $titleCurent) {
@@ -34,7 +34,7 @@ class VideoEdit extends Component
            Tên mới và tên hiện tại không có thay đổi !
           </div>';
             return;
-        } 
+        }
         VideoModel::where('material_id', $id)->update([
             'material_name' => $this->title[$id],
         ]);
@@ -43,7 +43,7 @@ class VideoEdit extends Component
         <h5><i class="icon fas fa-check"></i> Thông báo</h5>
         Cập nhật thành công !
     </div>';
-    
+
 
     }
     public function render()
@@ -56,9 +56,9 @@ class VideoEdit extends Component
             $sectionVideos[$section->section_id] = $videos;
 
             // Kiểm tra xem video đầu tiên có phải là video có potision cao nhất không
-          
-            
-         
+
+
+
         }
 
         $this->sections = $sections;
