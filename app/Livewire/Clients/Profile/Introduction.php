@@ -17,8 +17,8 @@ class Introduction extends Component
     $user_phone, $user_email, $user_job, $user_language, $user_marital, $user_bio, $id, $user_username;
     public $detail, $detail1,
     $selectedWard, $selectedWard1, $selectedDistrict,
-    $selectedDistrict1, $selectedProvince, $selectedProvince1,$user_website,$user_university,$user_university_type
-    ,$user_highschool,$user_middleschool,$user_primaryschool;
+    $selectedDistrict1, $selectedProvince, $selectedProvince1, $user_website, $user_university, $user_university_type
+    , $user_highschool, $user_middleschool, $user_primaryschool;
     public function mount()
     {
         $id = auth()->user()->user_id;
@@ -43,8 +43,7 @@ class Introduction extends Component
                     ]);
                 }
             }
-            if($check){
-                
+            if ($check) {
                 $this->info = $check;
                 $this->user_marital = $check->marital;
                 $this->user_job = $check->job;
@@ -140,12 +139,11 @@ class Introduction extends Component
             $hometownAddress = $this->detail ? $this->detail . ', ' . implode(', ', $hometownAddressParts) : implode(', ', $hometownAddressParts);
             $livingAddressParts = [$this->selectedWard1, $this->selectedDistrict1, $this->selectedProvince1];
             $livingAddress = $this->detail1 ? $this->detail1 . ', ' . implode(', ', $livingAddressParts) : implode(', ', $livingAddressParts);
-            $this->info->location = $livingAddress;
-            $this->info->hometown = $hometownAddress;
-            $log = $this->info->save();
-            if($log){
-                $this->goToStep(2);
-            }
+            $log = IntroductionModel::where('user_id', auth()->user()->user_id)->update([
+                'location' => $livingAddress,
+                'hometown' => $hometownAddress
+            ]);
+            $this->goToStep(2);
         }
         if ($type == 'infoBonus') {
             $this->validate([
@@ -154,45 +152,44 @@ class Introduction extends Component
                 'user_marital' => ['max:50', 'string', 'regex:/^[\pL\d\s,]+$/u', 'nullable'],
                 'user_website' => ['max:100', 'string', 'regex:/^[\pL\d\s.,:\/\-_]+(\.[\pL]{2,})+$/u', 'nullable'],
             ]);
-
-            $this->info->marital = $this->user_marital;
-            $this->info->job = $this->user_job;
-            $this->info->language = $this->user_language;
-            if(empty($this->user_language)){
-                $this->info->language = NULL;
+            if (empty($this->user_language)) {
+                $language = NULL;
+            } else {
+                $language = $this->user_language;
             }
-            $this->info->website = $this->user_website;
 
-            $log = $this->info->save();
-            if ($log) {
-                $this->goToStep(3);
-            }
+            $log = IntroductionModel::where('user_id', auth()->user()->user_id)->update([
+                'marital' => $this->user_marital,
+                'job' => $this->user_job,
+                'language' => $language,
+                'website' => $this->user_website,
+            ]);
+            $this->goToStep(3);
         }
 
-        if($type=="school"){
+        if ($type == "school") {
             $this->validate([
-                'user_university_type' => 'in:1,2,3,4|nullable',
+                'user_university_type' => 'in:0,1,2,3,4|nullable',
                 'user_highschool' => ['max:100', 'string', 'regex:/^[\pL\d\s]+$/u', 'nullable'],
                 'user_middleschool' => ['max:100', 'string', 'regex:/^[\pL\d\s,]+$/u', 'nullable'],
                 'user_primaryschool' => ['max:100', 'string', 'regex:/^[\pL\d\s,]+$/u', 'nullable'],
             ]);
-            if($this->user_university_type == 1){
-                $user_university = 'Đại học '.$this->user_university;
-            }else if($this->user_university_type ==2){
-                $user_university = 'Quốc tế '.$this->user_university;
-            }else if($this->user_university_type ==3){
-                $user_university = 'Cao đẳng '.$this->user_university;
-            }else if($this->user_university_type ==4){
-                $user_university = 'Cao đẳng nghề '.$this->user_university;
+            if ($this->user_university_type == 1) {
+                $user_university = 'Đại học ' . $this->user_university;
+            } else if ($this->user_university_type == 2) {
+                $user_university = 'Quốc tế ' . $this->user_university;
+            } else if ($this->user_university_type == 3) {
+                $user_university = 'Cao đẳng ' . $this->user_university;
+            } else if ($this->user_university_type == 4) {
+                $user_university = 'Cao đẳng nghề ' . $this->user_university;
             }
-            $this->info->university = $user_university;
-            $this->info->high_school = 'THPT '.$this->user_highschool;
-            $this->info->middle_school = 'THCS '.$this->user_middleschool;
-            $this->info->primary_school = 'Tiểu học '.$this->user_primaryschool;
-            $log = $this->info->save();
-            if($log){
-                redirect()->route('home');
-            }
+            $log = IntroductionModel::where('user_id', auth()->user()->user_id)->update([
+                'university' => isset($user_university) ? $user_university : NULL,
+                'high_school' => $this->user_highschool,
+                'middle_school' => $this->user_middleschool,
+                'primary_school' => $this->user_primaryschool,
+            ]);
+            redirect()->route('home');
         }
 
     }

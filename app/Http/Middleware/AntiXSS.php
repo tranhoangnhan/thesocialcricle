@@ -76,11 +76,11 @@ class AntiXSS
         // $request->merge($input);
 
         $response = $next($request);
-        $response->header('X-XSS-Protection', '1');
-        $response->header('X-Frame-Options', 'sameorigin');
-        $response->header('X-Content-Type-Options', 'nosniff');
-        $response->header('Strict-Transport-Security', 'max-age=15552000; preload');
-        $response->header('X-Powered-By', 'TSONIT');
+        // $response->header('X-XSS-Protection', '1');
+        // $response->header('X-Frame-Options', 'sameorigin');
+        // $response->header('X-Content-Type-Options', 'nosniff');
+        // $response->header('Strict-Transport-Security', 'max-age=15552000; preload');
+        // $response->header('X-Powered-By', 'TSONIT');
         return $response;
     }
 
