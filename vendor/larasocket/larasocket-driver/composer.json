@@ -1,0 +1,34 @@
+{
+    "name": "larasocket/larasocket-driver",
+    "description": "Pay as you go broadcast driver for Laravel.",
+    "type": "project",
+    "keywords": [
+        "laravel",
+        "broadcast",
+        "websocket",
+        "driver",
+        "larasocket"
+    ],
+    "homepage": "https://larasocket.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Zach Vander Velden",
+            "email": "zachvv11@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Larasocket\\": "src/"
+        }
+    },
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Larasocket\\LarasocketServiceProvider"
+            ]
+        }
+    }
+}
