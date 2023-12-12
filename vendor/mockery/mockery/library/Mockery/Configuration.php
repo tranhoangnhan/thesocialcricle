@@ -10,8 +10,6 @@
 
 namespace Mockery;
 
-use Mockery\Matcher\MatcherInterface;
-
 class Configuration
 {
     /**
@@ -247,14 +245,13 @@ class Configuration
     {
         $isHamcrest = is_a($matcherClass, \Hamcrest\Matcher::class, true) || is_a($matcherClass, \Hamcrest_Matcher::class, true);
         if (
-            !is_a($matcherClass, MatcherInterface::class, true) &&
+            !is_a($matcherClass, \Mockery\Matcher\MatcherAbstract::class, true) &&
             !$isHamcrest
         ) {
-            throw new InvalidArgumentException(sprintf(
-                "Matcher class must implement %s, '%s' given.",
-                MatcherInterface::class,
-                $matcherClass
-            ));
+            throw new \InvalidArgumentException(
+                "Matcher class must extend \Mockery\Matcher\MatcherAbstract, " .
+                "'$matcherClass' given."
+            );
         }
 
         if ($isHamcrest) {

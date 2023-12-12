@@ -10,11 +10,7 @@
 
 namespace Mockery\Matcher;
 
-/**
- * @deprecated Implement \Mockery\Matcher\MatcherInterface instead of extending this class
- * @see https://github.com/mockery/mockery/pull/1338
- */
-abstract class MatcherAbstract implements MatcherInterface
+abstract class MatcherAbstract
 {
     /**
      * The expected value (or part thereof)
@@ -32,4 +28,21 @@ abstract class MatcherAbstract implements MatcherInterface
     {
         $this->_expected = $expected;
     }
+
+    /**
+     * Check if the actual value matches the expected.
+     * Actual passed by reference to preserve reference trail (where applicable)
+     * back to the original method parameter.
+     *
+     * @param mixed $actual
+     * @return bool
+     */
+    abstract public function match(&$actual);
+
+    /**
+     * Return a string representation of this Matcher
+     *
+     * @return string
+     */
+    abstract public function __toString();
 }

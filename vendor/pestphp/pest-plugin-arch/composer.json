@@ -37,7 +37,7 @@
         ]
     },
     "require-dev": {
-        "pestphp/pest": "^2.27.0",
+        "pestphp/pest": "^2.23.2",
         "pestphp/pest-dev-tools": "^2.16.0"
     },
     "minimum-stability": "dev",
@@ -62,12 +62,5 @@
             "@test:types",
             "@test:unit"
         ]
-    },
-    "extra": {
-        "pest": {
-            "plugins": [
-                "Pest\\Arch\\Plugin"
-            ]
-        }
     }
 }

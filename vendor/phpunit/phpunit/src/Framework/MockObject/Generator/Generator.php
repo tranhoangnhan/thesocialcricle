@@ -730,13 +730,7 @@ final class Generator
 
         foreach ($mockMethods->asArray() as $mockMethod) {
             $mockedMethods .= $mockMethod->generateCode();
-
-            $configurable[] = new ConfigurableMethod(
-                $mockMethod->methodName(),
-                $mockMethod->defaultParameterValues(),
-                $mockMethod->numberOfParameters(),
-                $mockMethod->returnType(),
-            );
+            $configurable[] = new ConfigurableMethod($mockMethod->methodName(), $mockMethod->returnType());
         }
 
         /** @psalm-var trait-string[] $traits */

@@ -17,9 +17,7 @@ use Mockery\Generator\MockNameBuilder;
 use Mockery\Generator\StringManipulationGenerator;
 use Mockery\Loader\EvalLoader;
 use Mockery\Loader\Loader;
-use Mockery\Matcher\IsEqual;
-use Mockery\Matcher\IsSame;
-use Mockery\Matcher\MatcherInterface;
+use Mockery\Matcher\MatcherAbstract;
 use Mockery\Reflector;
 
 class Mockery
@@ -465,28 +463,6 @@ class Mockery
     }
 
     /**
-     * Return instance of IsEqual matcher.
-     *
-     * @template TExpected
-     * @param TExpected $expected
-     */
-    public static function isEqual($expected): IsEqual
-    {
-        return new IsEqual($expected);
-    }
-
-    /**
-     * Return instance of IsSame matcher.
-     *
-     * @template TExpected
-     * @param TExpected $expected
-     */
-    public static function isSame($expected): IsSame
-    {
-        return new IsSame($expected);
-    }
-
-    /**
      * Return instance of NOT matcher.
      *
      * @param mixed $expected
@@ -582,7 +558,7 @@ class Mockery
      */
     private static function formatArgument($argument, $depth = 0)
     {
-        if ($argument instanceof MatcherInterface) {
+        if ($argument instanceof MatcherAbstract) {
             return (string) $argument;
         }
 

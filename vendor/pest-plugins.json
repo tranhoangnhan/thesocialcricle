@@ -14,6 +14,5 @@
     "Pest\\Plugins\\Snapshot",
     "Pest\\Plugins\\Verbose",
     "Pest\\Plugins\\Version",
-    "Pest\\Plugins\\Parallel",
-    "Pest\\Arch\\Plugin"
+    "Pest\\Plugins\\Parallel"
 ]

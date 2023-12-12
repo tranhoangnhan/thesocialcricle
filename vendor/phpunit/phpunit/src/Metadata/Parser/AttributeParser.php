@@ -38,7 +38,6 @@ use PHPUnit\Framework\Attributes\ExcludeGlobalVariableFromBackup;
 use PHPUnit\Framework\Attributes\ExcludeStaticPropertyFromBackup;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\IgnoreClassForCodeCoverage;
-use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\Attributes\IgnoreFunctionForCodeCoverage;
 use PHPUnit\Framework\Attributes\IgnoreMethodForCodeCoverage;
 use PHPUnit\Framework\Attributes\Large;
@@ -168,13 +167,6 @@ final class AttributeParser implements Parser
                     assert($attributeInstance instanceof IgnoreClassForCodeCoverage);
 
                     $result[] = Metadata::ignoreClassForCodeCoverage($attributeInstance->className());
-
-                    break;
-
-                case IgnoreDeprecations::class:
-                    assert($attributeInstance instanceof IgnoreDeprecations);
-
-                    $result[] = Metadata::ignoreDeprecationsOnClass();
 
                     break;
 
@@ -487,13 +479,6 @@ final class AttributeParser implements Parser
                     assert($attributeInstance instanceof Group);
 
                     $result[] = Metadata::groupOnMethod($attributeInstance->name());
-
-                    break;
-
-                case IgnoreDeprecations::class:
-                    assert($attributeInstance instanceof IgnoreDeprecations);
-
-                    $result[] = Metadata::ignoreDeprecationsOnMethod();
 
                     break;
 

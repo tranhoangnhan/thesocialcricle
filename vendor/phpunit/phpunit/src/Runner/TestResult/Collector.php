@@ -348,10 +348,6 @@ final class Collector
 
     public function testTriggeredDeprecation(DeprecationTriggered $event): void
     {
-        if ($event->ignoredByTest()) {
-            return;
-        }
-
         if ($event->ignoredByBaseline()) {
             $this->numberOfIssuesIgnoredByBaseline++;
 
@@ -384,10 +380,6 @@ final class Collector
 
     public function testTriggeredPhpDeprecation(PhpDeprecationTriggered $event): void
     {
-        if ($event->ignoredByTest()) {
-            return;
-        }
-
         if ($event->ignoredByBaseline()) {
             $this->numberOfIssuesIgnoredByBaseline++;
 
