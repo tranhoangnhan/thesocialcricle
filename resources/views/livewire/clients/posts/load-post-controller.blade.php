@@ -77,11 +77,9 @@
                                 </a>
                             </li>
                             <li>
-                                <form wire:submit.prevent="createReport('{{ $post->post_id }}', 'post')">
-                                    <button type="submit" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
+                                    <a wire:click="createReport('{{ $post->post_id }}')" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
                                         <i class="uil-favorite mr-1"></i> Báo cáo
-                                    </button>
-                                </form>
+                                    </a>
                             </li>
                             <li>
                                 <hr class="-mx-2 my-2 dark:border-gray-800">

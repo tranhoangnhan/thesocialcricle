@@ -40,7 +40,7 @@
                             @php
                                 $check = \DB::table('users')
                                     ->where('user_id', $data->user_id)
-                                    ->count();
+                                    ->count(); 
                             @endphp
                             @if (isset($check))
                                 <li class="cursor-pointer hover:bg-gray-100 hover:rounded-full px-3 text-left">
@@ -57,59 +57,59 @@
                     </div>
                 </div>
                 @auth
-                    @if (auth()->user()->user_id == $data->user_id)
-                        <div id="change-cover" uk-modal>
-                            <div class="uk-modal-dialog">
-                                <button class="uk-modal-close-default" type="button" uk-close></button>
-                                <div class="uk-modal-header">
-                                    <h2 class="uk-modal-title text-center">Chọn ảnh bìa</h2>
-                                </div>
-                                <div class="uk-modal-body flex flex-column">
-                                    <button uk-toggle="target: #upload_Cover"
-                                        class="my-2 flex items-center justify-center h-10 px-5 rounded-md bg-blue-400 text-white space-x-1.5 hover:text-white">
-                                        <ion-icon name="add-outline"></ion-icon>
-                                        Tải ảnh lên</button>
-                                    @if (auth()->user()->user_cover)
-                                        <pintura-editor src="{{ auth()->user()->user_cover }}"></pintura-editor>
-                                        <button id="edit_Cover" data-image-src="{{ auth()->user()->user_cover }}"
-                                            class="my-2 flex items-center justify-center h-10 px-5 rounded-md bg-gray-300 text-white space-x-1.5 hover:text-white">
-                                            <ion-icon name="pencil-outline"></ion-icon>
-                                            Chỉnh sửa hình ảnh</button>
-                                    @endif
-                                </div>
+                @if (auth()->user()->user_id == $data->user_id)
+                    <div id="change-cover" uk-modal>
+                        <div class="uk-modal-dialog">
+                            <button class="uk-modal-close-default" type="button" uk-close></button>
+                            <div class="uk-modal-header">
+                                <h2 class="uk-modal-title text-center">Chọn ảnh bìa</h2>
+                            </div>
+                            <div class="uk-modal-body flex flex-column">
+                                <button uk-toggle="target: #upload_Cover"
+                                    class="my-2 flex items-center justify-center h-10 px-5 rounded-md bg-blue-400 text-white space-x-1.5 hover:text-white">
+                                    <ion-icon name="add-outline"></ion-icon>
+                                    Tải ảnh lên</button>
+                                @if (auth()->user()->user_cover)
+                                    <pintura-editor src="{{ auth()->user()->user_cover }}"></pintura-editor>
+                                    <button id="edit_Cover" data-image-src="{{ auth()->user()->user_cover }}"
+                                        class="my-2 flex items-center justify-center h-10 px-5 rounded-md bg-gray-300 text-white space-x-1.5 hover:text-white">
+                                        <ion-icon name="pencil-outline"></ion-icon>
+                                        Chỉnh sửa hình ảnh</button>
+                                @endif
                             </div>
                         </div>
-                        <div id="upload_Cover" uk-modal>
-                            <div class="uk-modal-dialog">
-                                <button class="uk-modal-close-default" type="button" uk-close></button>
-                                <div class="uk-modal-header">
-                                    <h2 class="uk-modal-title text-center">Tải ảnh bìa lên</h2>
-                                </div>
-                                <div class="uk-modal-body flex flex-column">
-                                    <section wire:ignore>
-                                        <div class="dropzone" id="uploadCoverProfile">
-                                        </div>
-                                        <button id="UuploadCoverProfile"
-                                            class="mt-3 ml-5 flex items-center justify-center h-10 px-5 rounded-md bg-blue-600 text-white space-x-1.5 hover:text-white">
-                                            <span> Đăng ảnh </span>
-                                        </button>
-                                    </section>
-                                </div>
+                    </div>
+                    <div id="upload_Cover" uk-modal>
+                        <div class="uk-modal-dialog">
+                            <button class="uk-modal-close-default" type="button" uk-close></button>
+                            <div class="uk-modal-header">
+                                <h2 class="uk-modal-title text-center">Tải ảnh bìa lên</h2>
+                            </div>
+                            <div class="uk-modal-body flex flex-column">
+                                <section wire:ignore>
+                                    <div class="dropzone" id="uploadCoverProfile">
+                                    </div>
+                                    <button id="UuploadCoverProfile"
+                                        class="mt-3 ml-5 flex items-center justify-center h-10 px-5 rounded-md bg-blue-600 text-white space-x-1.5 hover:text-white">
+                                        <span> Đăng ảnh </span>
+                                    </button>
+                                </section>
                             </div>
                         </div>
-                        <div id="upload_Avatar" uk-modal>
-                            <div class="uk-modal-dialog">
-                                <button class="uk-modal-close-default" type="button" uk-close></button>
-                                <div class="uk-modal-header">
-                                    <h2 class="uk-modal-title text-center">Tải ảnh đại diện lên</h2>
-                                </div>
-                                <div class="uk-modal-body flex flex-column">
-                                    @livewire('clients.profile.upload-file')
-                                </div>
+                    </div>
+                    <div id="upload_Avatar" uk-modal>
+                        <div class="uk-modal-dialog">
+                            <button class="uk-modal-close-default" type="button" uk-close></button>
+                            <div class="uk-modal-header">
+                                <h2 class="uk-modal-title text-center">Tải ảnh đại diện lên</h2>
+                            </div>
+                            <div class="uk-modal-body flex flex-column">
+                                @livewire('clients.profile.upload-file')
                             </div>
                         </div>
-                    @endif
-                @endauth
+                    </div>
+                @endif
+            @endauth
 
                 <div class="profiles_content">
                     <div class="profile_avatar cursor-pointer" uk-toggle="target: #viewProfile"
@@ -249,37 +249,7 @@
                                         <span>Chia sẻ</span>
                                     </a>
                                 </li>
-                                @auth
-                                    @if ($data->user_id == auth()->user()->user_id)
-                                        <li>
-                                            <a href="#"
-                                                class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 rounded-md dark:hover:bg-gray-800">
-                                                <ion-icon name="create-outline" class="pr-2 text-xl"></ion-icon> Cài đặt
-                                            </a>
-                                        </li>
-                                    @endif
-                                    @if ($data->user_id != auth()->user()->user_id)
-                                        <li>
-                                            <hr class="-mx-2 my-2 dark:border-gray-800">
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('block', ['id' => encrypt($data->user_id)]) }}"
-                                                class="flex items-center px-3 py-2 text-red-500 hover:bg-red-50 hover:text-red-500 rounded-md dark:hover:bg-red-600">
-                                                <i class="fa-solid fa-user-xmark pr-2 text-xl"></i> Chặn
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <hr class="-mx-2 my-2 dark:border-gray-800">
-                                        </li>
-                                        <li>
-                                            <a href="#"
-                                                class="flex items-center px-3 py-2 text-red-500 hover:bg-red-50 hover:text-red-500 rounded-md dark:hover:bg-red-600">
-                                                <ion-icon name="stop-circle-outline" class="pr-2 text-xl"></ion-icon> Hủy kết
-                                                bạn
-                                            </a>
-                                        </li>
-                                    @endif
-                                @endauth
+                              @livewire('clients.profile.index')
                             </ul>
                         </div>
                     </div>

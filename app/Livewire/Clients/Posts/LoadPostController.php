@@ -10,6 +10,9 @@ use App\Models\PostsComment;
 use App\Events\Clients\Notification\User;
 use App\Models\NotificationModel;
 use App\Models\FriendsModel;
+use App\Models\ReportModel;
+use Beta\Microsoft\Graph\Model\Report;
+
 class LoadPostController extends Component
 {
     public $totalRecords;
@@ -137,8 +140,6 @@ class LoadPostController extends Component
             // Đặt lại nội dung bình luận sau khi thêm
             $this->ContentComment[$post_id] = '';
 
-            // Có thể trả về thông báo thành công cho người dùng nếu cần
-            return response()->json(['success' => 'Bình luận đã được thêm'], 200);
             if (auth()->user()->user_id != $post->user_id) {
                 NotificationModel::create([
                     'from_user_id' => auth()->user()->user_id,
@@ -151,11 +152,32 @@ class LoadPostController extends Component
                 ]);
                 event(new User(auth()->user()->user_fullname . ' đã bình luận một bài viết của bạn', auth()->user(), $post->user_id));
             }
-            event(new User(auth()->user()->user_fullname . ' đã bình luận một bài viết của bạn', auth()->user(), $post->user_id));
         }
     }
 
-
+    public function createReport($post_id)
+    {
+        $post = ReportModel::find($post_id);
+        if($post){
+            $report = ReportModel::where('post_id', $post_id)->first();
+            if($report){
+                if($report->user_id_reporter == auth()->user()->user_id){
+                return;
+                }
+                else{
+                    $report->vote = $post->vote + 1;
+                    $report->save();
+                }
+            }
+            else{
+                ReportModel::create([
+                    'user_id_reporter' => auth()->user()->user_id,
+                    'post_id' => $post_id,
+                    'vote' => 1,
+                ]);
+            }
+        }
+    }
     public function render()
     {
         $userId =  auth()->user()->id;

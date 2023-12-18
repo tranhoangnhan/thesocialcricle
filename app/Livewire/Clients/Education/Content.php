@@ -60,7 +60,7 @@ class Content extends Component
                 'material_name' => $videoTitle, // Sử dụng giá trị tiêu đề ở đây
                 'section_id' => $this->section_id,
                 'slug' => str::slug($videoTitle),
-                'material_url' => 'https://hatishop.hoangnhan.tech/'.$this->path,
+                'material_url' => env('APP_URL').'/'.$this->path,
                 'material_type' => 'video',
                 'material_status' => 'active',
                 'review' => '1',

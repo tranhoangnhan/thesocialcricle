@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title mb-0">Danh sách khóa học</h4>
+                    <h4 class="card-title mb-0">Danh sách danh mục khóa học</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div class="listjs-table" id="customerList">
@@ -94,9 +94,8 @@
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">Cập nhật danh
                                                             mục</h5>
-                                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                                        <button type="button" class="btn btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close">
-                                                            <span aria-hidden="true close-btn">×</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
@@ -132,9 +131,8 @@
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">Cảnh báo hành
                                                             động</h5>
-                                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                                        <button type="button" class="btn btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close">
-                                                            <span aria-hidden="true close-btn">×</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
@@ -159,15 +157,14 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Thêm danh mục</h5>
-                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true close-btn">×</span>
+                                                    <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="mb-3">
                                                         <label for="exampleFormControlInput1" class="form-label">Tên danh mục</label>
-                                                        <input type="email" class="form-control" wire:model='category_new'>
-                                                        @error('check_create')
+                                                        <input type="email" class="form-control" wire:model='category_name'>
+                                                        @error('category_name')
                                                             <small class="text-danger">{{ $message }}</small>
                                                         @enderror
                                                     </div>

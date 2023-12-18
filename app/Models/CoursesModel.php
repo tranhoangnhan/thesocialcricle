@@ -14,6 +14,7 @@ class CoursesModel extends Model
          'payment',
          'required_skill',
          'learn_skill',
+         'amount',
          'course_name',
          'description',
          'banner',
@@ -23,4 +24,9 @@ class CoursesModel extends Model
          'updated_at',
          'slug',
     ];
+    public function isEmpty() {
+     // Custom logic to check if the course is empty
+     // For example, you might check if certain properties are not set.
+     return !isset($this->someProperty);
+ }
 }

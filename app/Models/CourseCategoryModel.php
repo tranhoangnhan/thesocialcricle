@@ -12,7 +12,7 @@ class CourseCategoryModel extends Model
     protected $primaryKey = 'category_id';
     protected $fillable = [
         'category_name',
-        'category_slug',
+        'slug',
         'course_id'
     ];
 }

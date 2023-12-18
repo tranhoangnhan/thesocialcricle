@@ -36,6 +36,7 @@ class Index extends Component
             'email' => $this->email,
             'content' => $this->content,
         ]);
+        $this->reset();
     }
     public function render()
     {

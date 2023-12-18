@@ -81,9 +81,11 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
+            "third-party/required-plugin": true,
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
-        }
+        },
+        "process-timeout":0
     },
     "minimum-stability": "stable",
     "prefer-stable": true

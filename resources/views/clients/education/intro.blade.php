@@ -173,5 +173,13 @@
         });
     });
 </script>
+<script>
+    // Add JavaScript to handle the tooltip or popover
+    document.getElementById('optionsMenu').addEventListener('click', function () {
+        // Toggle the visibility of the additional options menu
+        const optionsMenu = document.querySelector('.bg-white');
+        optionsMenu.classList.toggle('hidden');
+    });
+</script>
 
 @endsection

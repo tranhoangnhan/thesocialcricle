@@ -40,6 +40,7 @@
                                         <th>Họ tên</th>
                                         <th>Email</th>
                                         <th>Nội dung</th>
+                                        <th>Ngày gửi</th>
                                         <th>Hành động</th>
                                     </tr>
                                 </thead>
@@ -56,6 +57,7 @@
                                             <td>{{ $row->name }}</td>
                                             <td>{{ $row->email }}</td>
                                             <td>{{ $row->content }}</td>
+                                            <td>{{$row->created_at}}</td>
                                             <td>
                                                 <div class="d-flex gap-2">
                                                     <div class="edit">

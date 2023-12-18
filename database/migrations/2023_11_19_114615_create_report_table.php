@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->bigInteger('post_id')->nullable();
             $table->bigInteger('course_id')->nullable();
+            $table->bigInteger('vote')->default(1);
             $table->timestamps();
         });
     }

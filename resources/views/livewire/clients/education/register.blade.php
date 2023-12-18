@@ -60,9 +60,8 @@
                         khóa
                         học
                         của bạn</div>
-                    <select id="" name="payment" wire:model='payment'
+                    <select id="" name="payment" wire:model='payment' wire:change='changePayment'
                         class="block w-full p-2 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200">
-                        <option value="" class="text-gray-800 hover:bg-blue-100 hover:text-blue-500">Chọn</option>
                         <option data-icon="uil-bullseye" value="0"
                             class="text-gray-800 hover:bg-blue-100 hover:text-blue-500">Có</option>
                         <option data-icon="uil-chat-bubble-user" class="text-gray-800 hover:bg-blue-100 hover:text-blue-500"
@@ -70,6 +69,14 @@
                             Không</option>
                     </select>
                 </div>
+                @if ($payment == 0)
+                    <div class="space-y-2 mb-4">
+                        <label for="" class="font-semibold text-base">Giá khóa học</label>
+                        <div> Nhập giá khóa học của bạn</div>
+                        <input type="number" min="1" max="100000000" wire:model="amount" name="amount" value="{{$amount}}"
+                            class="block w-full p-3 border border-gray-300 rounded shadow-sm focus:ring focus:ring-blue-200">
+                    </div>
+                @endif
             </div>
 
         <div class="mb-3 container-input">

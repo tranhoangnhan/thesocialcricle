@@ -12,7 +12,8 @@ class Register extends Component
 {
     public $course_name;
     public $category;
-    public $payment;
+    public $payment=1;
+    public $amount;
     public $description;
     public $banner;
     public $skills = [''];
@@ -31,12 +32,18 @@ class Register extends Component
     {
         $this->learns[] = '';
     }
+    public function changePayment(){
+        if($this->payment == 0){
+            $this->amount = 1;
+        }
+    }
     public function create(){
         $education = CoursesModel::create([
             'course_name'=>$this->course_name,
             'slug'=>str::slug($this->course_name),
             'category_id'=>$this->category,
             'payment'=>$this->payment,
+            'amount'=>$this->amount ?? 0,
             'description'=>$this->description,
             'instructor_id'=>auth()->user()->user_id,
             'required_skill'=>json_encode($this->skills),

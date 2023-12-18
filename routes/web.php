@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\admin\FeedbackController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\Auth\VeirfyController;
 use App\Http\Controllers\ConversationsController;
 use App\Http\Controllers\GroupController;
@@ -18,7 +18,7 @@ use App\Livewire\Clients\Auth\Login;
 use App\Livewire\Clients\HomeController as HomeC;
 use App\Livewire\Clients\Posts\PostController as Post;
 use app\Livewire\Clients\Report\Index as Report;
-use App\Livewire\Admin\Home as AdminHome;
+use App\Http\Controllers\admin\AdminHomeController as AdminHome;
 use App\Http\Controllers\admin\CourseController as AdminCourse;
 use App\Http\Controllers\admin\CourseCategoryController as AdminCourseCategory;
 use App\Http\Controllers\admin\CourseMountController as AdminCourseMount;
@@ -54,6 +54,7 @@ Route::middleware(['checkuser', 'antixss'])->group(function () {
 
     Route::post('/search', [SearchController::class, 'index'])->name('search');
     Route::get('/friends',[ShowAddFriendsController::class,'render'])->name('friends');
+    Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback');
     Route::post('/create-post', [Post::class, 'createPostIndex'])->name('createPostIndex');
     Route::get('/create-course', [EducationController::class, 'courses_register'])->name('courses_register');
     Route::get('/create-course/{slug}', [EducationController::class, 'courses_register_content'])->name('courses_register_content');
@@ -89,8 +90,7 @@ Route::middleware(['checkuser', 'antixss'])->group(function () {
 });
 Route::middleware(['checkadmin'])->group(function () {
     Route::get('/admin/user', [\App\Http\Controllers\admin\AdminUserController::class, 'index'])->name('admin-user.index');
-    Route::get('feedback', [FeedbackController::class, 'index'])->name('feedback');
-    Route::get('/admin', [AdminHome::class, 'render'])->name('admin');
+    Route::get('/admin', [AdminHome::class, 'index'])->name('admin');
     Route::get('/admin/course', [AdminCourse::class, 'Index'])->name('admin.course');
     Route::get('/admin/grossing', [AdminCourseMount::class, 'index'])->name('admin.course-mount');
     Route::get('/admin/course-category', [AdminCourseCategory::class, 'Index'])->name('admin.course-category');

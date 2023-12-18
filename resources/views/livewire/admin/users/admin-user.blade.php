@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title mb-0">Add, Edit & Remove</h4>
+                        <h4 class="card-title mb-0">Quản lý tài khoản</h4>
                     </div><!-- end card header -->
 
                     <div class="card-body">
@@ -12,8 +12,7 @@
                             <div class="row g-4 mb-3">
                                 <div class="col-sm-auto">
                                     <div>
-                                        <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add</button>
-                                        <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
+                                        <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Thêm</button>
                                     </div>
                                 </div>
                                 <div class="col-sm">
@@ -86,7 +85,7 @@
                                                 @if($users->user_banned == 0)
                                                     <div class="d-flex gap-2">
                                                         <div class="edit">
-                                                            <button wire:click="getUpdateId({{$users->user_id}})" class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#updateModal">Sửa</button>
+                                                            <button wire:click.prevent="getUpdateId({{$users->user_id}})" class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#updateModal">Sửa</button>
                                                         </div>
                                                         <div class="block">
                                                             <button wire:click="getBlockId({{$users->user_id}})" class="btn btn-sm btn-warning remove-item-btn" data-bs-toggle="modal" data-bs-target="#blockRecordModal">Chặn</button>
@@ -106,7 +105,7 @@
                                                 @if($users->user_banned == 0 && $users->user_role == 0 || $users->user_role == 1)
                                                     <div class="d-flex gap-2">
                                                         <div class="edit">
-                                                            <button wire:click="getUpdateId({{$users->user_id}})" class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#updateModal">Sửa</button>
+                                                            <button wire:click="confirmUpdateId({{$users->user_id}})" class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#updateModal">Sửa</button>
                                                         </div>
                                                         <div class="block">
                                                             <button wire:click="getBlockId({{$users->user_id}})" class="btn btn-sm btn-warning remove-item-btn" data-bs-toggle="modal" data-bs-target="#blockRecordModal">Chặn</button>
@@ -275,44 +274,9 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="d-flex align-items-start gap-3 mt-4">
-                                                    <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="pills-info-desc-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Bước tiếp theo</button>
-                                                </div>
                                             </div>
                                             <!-- end tab pane -->
 
-                                            <div class="tab-pane fade" id="pills-info-desc" role="tabpanel" aria-labelledby="pills-info-desc-tab">
-                                                <div>
-                                                    <div class="text-center">
-                                                        <div class="profile-user position-relative d-inline-block mx-auto mb-2">
-                                                            <img src="assets/images/users/user-dummy-img.jpg" class="rounded-circle avatar-lg img-thumbnail user-profile-image" alt="user-profile-image">
-                                                            <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                                                                <input id="profile-img-file-input" type="file" class="profile-img-file-input" accept="image/png, image/jpeg">
-                                                                <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
-                                                                    <span class="avatar-title rounded-circle bg-light text-body">
-                                                                        <i class="ri-camera-fill"></i>
-                                                                    </span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <h5 class="fs-14">Thêm ảnh đại diện</h5>
-
-                                                    </div>
-                                                    <div>
-                                                        <label class="form-label" for="gen-info-description-input">Nơi làm việc</label>
-                                                        <input wire:model="user_workplace" type="text" class="form-control" id="gen-info-username-input" placeholder="Nhập nơi làm việc" required >
-                                                        <div class="invalid-feedback">Please enter a description</div>
-                                                    </div>
-                                                    <div>
-                                                        <label class="form-label" for="gen-info-description-input">Chức vụ</label>
-                                                        <input wire:model="user_positon" type="text" class="form-control" id="gen-info-username-input" placeholder="Nhập chức vụ" required >
-                                                        <div class="invalid-feedback">Please enter a description</div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-start gap-3 mt-4">
-                                                    <button type="button" class="btn btn-link text-decoration-none btn-label previestab" data-previous="pills-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Quay lại </button>
-                                                </div>
-                                            </div>
                                             <!-- end tab pane -->
                                         </div>
                                         <!-- end tab content -->
@@ -334,17 +298,17 @@
         </div>
     </div>
 {{--Modal-update--}}
-    <div wire:ignore class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-light p-3">
-                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-                </div>
-                <div class="card-body">
-                    <form class="form-steps" autocomplete="off">
-                        @if($UpdateId != NULL)
-
+    @if($modalOpen)
+        <div wire:click="closeModal" wire:ignore class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-light p-3">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('update-user') }}"  class="form-steps" autocomplete="off">
+                            @csrf
                                 <div class="modal-body">
                                     <div class="card">
                                         <div class="card-header">
@@ -377,40 +341,40 @@
                                                                 <div class="col-lg-6">
                                                                     <div class="mb-3">
                                                                         <label class="form-label" for="gen-info-username-input">Tên tài khoản</label>
-                                                                        <input wire:model="user_name" type="text" class="form-control" id="gen-info-username-input" placeholder="" value="" required >{{$UpdateId->user_fullname}}
+                                                                        <input type="text" class="form-control" id="gen-info-username-input" name="username" placeholder="" value="{{$dataUpdate->user_username}}" required >
                                                                         <div class="invalid-feedback">Please enter a user name</div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-6">
                                                                     <div class="mb-3">
                                                                         <label class="form-label" for="gen-info-username-input">Họ và tên</label>
-                                                                        <input wire:model="user_fullname" type="text" class="form-control" id="gen-info-username-input" placeholder="" value="" required >
+                                                                        <input type="text" class="form-control" id="gen-info-username-input" name="fullname" placeholder="" value="{{$dataUpdate->user_fullname}}" required >
                                                                         <div class="invalid-feedback">Please enter a user name</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label class="form-label" for="gen-info-email-input">Email</label>
-                                                                <input wire:model="user_email" type="email" class="form-control" id="gen-info-email-input" placeholder="Nhập email" required >
+                                                                <input type="email" class="form-control" id="gen-info-email-input" name="email" value="{{$dataUpdate->user_email}}" placeholder="Nhập email" required >
                                                                 <div class="invalid-feedback">Please enter an email address</div>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label class="form-label" for="gen-info-password-input">Mật khẩu</label>
-                                                                <input wire:model="user_password" type="password" class="form-control" id="gen-info-password-input" placeholder="Nhập Password" required >
+                                                                <label class="form-label" for="gen-info-password-input">Nhập mật khẩu mới( bắt buộc )</label>
+                                                                <input type="password" class="form-control" id="gen-info-password-input" name="password" value="" placeholder="Nhập Password" required >
                                                                 <div class="invalid-feedback">Please enter a password</div>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-lg-6">
                                                                     <div class="mb-3">
                                                                         <label class="form-label" for="gen-info-username-input">Số điện thoại</label>
-                                                                        <input wire:model="user_phone" type="text" class="form-control" id="gen-info-username-input" placeholder="Nhập số điện thoại" required >
+                                                                        <input type="text" class="form-control" id="gen-info-username-input" name="phone" value="{{$dataUpdate->user_phone}}" placeholder="Nhập số điện thoại" required >
                                                                         <div class="invalid-feedback">Please enter a user name</div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-6">
                                                                     <div class="mb-3">
                                                                         <label class="form-label" for="gen-info-username-input">Ngày sinh</label>
-                                                                        <input wire:model="user_date" type="date" class="form-control" id="gen-info-username-input" required >
+                                                                        <input type="date" class="form-control" id="gen-info-username-input" name="birthday" value="{{$dataUpdate->user_birthday}}" required >
                                                                         <div class="invalid-feedback">Please enter a user name</div>
                                                                     </div>
                                                                 </div>
@@ -419,7 +383,7 @@
                                                                 <div class="col-lg-6">
                                                                     <div class="mb-3">
                                                                         <label class="form-label" for="gen-info-username-input">Giới tính: </label>
-                                                                        <select wire:model="user_gender" id="cars">
+                                                                        <select name="genre" value="{{$dataUpdate->user_gender}}" id="cars">
                                                                             <option value="0" selected>Nam</option>
                                                                             <option value="1">Nữ</option>
                                                                             <option value="2">Khác</option>
@@ -430,75 +394,52 @@
                                                                 <div class="col-lg-6">
                                                                     <div class="mb-3">
                                                                         <label class="form-label" for="gen-info-username-input">Kích hoạt tài khoản: </label>
-                                                                        <select wire:model="user_active" id="cars">
+                                                                        <select name="active" value="{{$dataUpdate->user_email_verified}}" id="cars">
                                                                             <option value="1" selected>Có</option>
                                                                             <option value="0">Không</option>
                                                                         </select>
                                                                         <div class="invalid-feedback">Please enter a user name</div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label" for="gen-info-username-input">Vai trò: </label>
+                                                                        <select name="role" value="{{$dataUpdate->user_role}}" id="cars">
+                                                                            <option value="0" selected>Người dùng</option>
+                                                                            <option value="1">Giảng viên</option>
+                                                                            <option value="9">Mod</option>
+                                                                            <option value="10">Admin</option>
+                                                                        </select>
+                                                                        <div class="invalid-feedback">Please enter a user name</div>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="hidden" name="id" value="{{$dataUpdate->user_id}}">
                                                             </div>
-                                                        </div>
-                                                        <div class="d-flex align-items-start gap-3 mt-4">
-                                                            <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="pills-info-desc-tab2"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Mở rộng</button>
                                                         </div>
                                                     </div>
                                                     <!-- end tab pane -->
-
-                                                    <div class="tab-pane fade" id="pills-info-desc2" role="tabpanel" aria-labelledby="pills-info-desc-tab2">
-                                                        <div>
-                                                            <div class="text-center">
-                                                                <div class="profile-user position-relative d-inline-block mx-auto mb-2">
-                                                                    <img src="assets/images/users/user-dummy-img.jpg" class="rounded-circle avatar-lg img-thumbnail user-profile-image" alt="user-profile-image">
-                                                                    <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                                                                        <input id="profile-img-file-input" type="file" class="profile-img-file-input" accept="image/png, image/jpeg">
-                                                                        <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
-                                                                    <span class="avatar-title rounded-circle bg-light text-body">
-                                                                        <i class="ri-camera-fill"></i>
-                                                                    </span>
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                                <h5 class="fs-14">Thêm ảnh đại diện</h5>
-
-                                                            </div>
-                                                            <div>
-                                                                <label class="form-label" for="gen-info-description-input">Nơi làm việc</label>
-                                                                <input wire:model="user_workplace" type="text" class="form-control" id="gen-info-username-input" placeholder="Nhập nơi làm việc" required >
-                                                                <div class="invalid-feedback">Please enter a description</div>
-                                                            </div>
-                                                            <div>
-                                                                <label class="form-label" for="gen-info-description-input">Chức vụ</label>
-                                                                <input wire:model="user_positon" type="text" class="form-control" id="gen-info-username-input" placeholder="Nhập chức vụ" required >
-                                                                <div class="invalid-feedback">Please enter a description</div>
-                                                            </div>
-                                                        </div>
-                                                        {{--                                                <div class="d-flex align-items-start gap-3 mt-4">--}}
-                                                        {{--                                                    <button type="button" class="btn btn-link text-decoration-none btn-label previestab" data-previous="pills-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Quay lại </button>--}}
-                                                        {{--                                                </div>--}}
-                                                    </div>
                                                     <!-- end tab pane -->
                                                 </div>
                                                 <!-- end tab content -->
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <button wire:click="closeModal" type="button" class="btn btn-light" data-bs-dismiss="modal">Đóng</button>
+                                                    <input type="submit" class="btn btn-success" id="add-btn">
+                                                    <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
+                                                </div>
                                             </form>
                                         </div>
                                         <!-- end card body -->
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <div class="hstack gap-2 justify-content-end">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Đóng</button>
-                                        <button wire:click="updateUser" type="submit" class="btn btn-success" id="add-btn">Thêm</button>
-                                        <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
-                                    </div>
-                                </div>
 
-                        @endif
-                    </form>
+                                </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 {{--    Modal-block--}}
     <div wire:ignore class="modal fade zoomIn" id="blockRecordModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -514,9 +455,9 @@
                             style="width:250px;height:250px">
                         </lord-icon>
                         <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                            <h4>Bạn đã chắc muốn chặn tài khoản này không ?</h4>
+                            <h4>Bạn có muốn chặn tài khoản này không ?</h4>
                             <p class="text-muted mx-4 mb-0">Tài khoản này sẽ dừng hoạt động sau khi xác nhận!</p>
-                            <p>Người thực hiện chặn: {{Auth::user()->user_username}}</p>
+                            <p>Người thực hiện chặn: {{Auth::user()->user_fullname}}</p>
                         </div>
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
@@ -542,7 +483,7 @@
                             style="width:250px;height:250px">
                         </lord-icon>
                         <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                            <h4>Bạn đã chắc muốn bỏ chặn tài khoản này không ?</h4>
+                            <h4>Bạn có muốn bỏ chặn tài khoản này không ?</h4>
                             <p class="text-muted mx-4 mb-0">Tài khoản này sẽ hoạt động trở lại sau khi xác nhận!</p>
                         </div>
                     </div>

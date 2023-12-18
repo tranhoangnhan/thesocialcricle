@@ -38,17 +38,20 @@ class EducationController extends Controller
     public function courses_intro($slug)
 
     {
-       
+        $review = [];
+        $enroll_first = '';
         $course = CoursesModel::join('users', 'users.user_id', '=', 'course.instructor_id')
         ->where('slug', "$slug")
         ->select('course.*', 'users.user_fullname')
         ->first();
-        $first_video = VideoModel::where('course_id', $course->course_id)->first();
-        $enroll_first = $first_video->slug;
+        $first_video = VideoModel::where('course_id', $course->course_id)->orderBy('potision','asc')->first();
+        if($first_video){
+            $enroll_first = $first_video->slug;
+        }
         $course_section = CourseSectionModel::where('course_section.course_id', $course->course_id)
             ->get();
         foreach ($course_section as $section) {
-            $section->material = CourseMaterialModel::where('section_id', $section->section_id)->get();
+            $section->material = CourseMaterialModel::where('section_id', $section->section_id)->orderBy('potision','asc')->get();
         }
         foreach ($course_section as $section) {
             foreach ($section->material as $material) {
