@@ -1,148 +1,127 @@
 <div>
-    @extends('layouts.admin')
-    @section('content')
     <div class="row">
-        <div class="col">
-
-            <div class="h-100">
-                <div class="row mb-3 pb-1">
-                    <div class="col-12">
-                        <div class="d-flex align-items-lg-center flex-lg-row flex-column">
-                            <div class="flex-grow-1">
-                                <h4 class="fs-16 mb-1">Xin chào, {{auth()->user()->user_fullname}}!</h4>
-                                <p class="text-muted mb-0">Dữ liệu thống kê website.</p>
-                            </div>
-
-                        </div><!-- end card header -->
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header border-0 align-items-center d-flex">
+                    <div class="col-10">
+                        <h4 class="card-title mb-0 flex-grow-1">Thống kê người dùng</h4>
                     </div>
-                    <!--end col-->
-                </div>
-                <!--end row-->
+                    <div class="col-2">
+                        <select class="form-select" wire:model='year' name="year" wire:change='updateChart'>
+                            @foreach ($getYear as $row)
+                                <option {{ $row->year == $selectedYear ? 'selected' : '' }} value="{{ $row->year }}">
+                                    Năm {{ $row->year }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div><!-- end card header -->
+                <!-- Include Chart.js -->
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <div class="card-body p-0 pb-2">
+                    <div class="w-100" wire:ignore>
+                        <!-- Create a canvas element for the chart -->
+                        <canvas id="userChart" class=" p-4" height="300"></canvas>
 
-                <div class="row">
-                    <div class="col-xl-3 col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-grow-1 overflow-hidden">
-                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Người dùng</p>
-                                    </div>
-                                    {{-- <div class="flex-shrink-0">
-                                       {!! displayStatistical() !!}
-                                    </div> --}}
-                                </div>
-                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                    <div>
-                                        <h3 class="fs-30 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{countAll('user')}}">{{countAll('user')}}</span> </h3>
-                                    </div>
-                                    <div class="avatar-sm flex-shrink-0">
-                                        <span class="avatar-title bg-success-subtle rounded fs-3">
-                                            <i class="bx bx-dollar-circle text-success"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
+                        <!-- Your other HTML content -->
 
-                    <div class="col-xl-3 col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-grow-1 overflow-hidden">
-                                     <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Bài viết</p>
-                                    </div>
-                                    {{-- <div class="flex-shrink-0">
-                                        <h5 class="text-danger fs-14 mb-0">
-                                            <i class="ri-arrow-right-down-line fs-13 align-middle"></i> -3.57 %
-                                        </h5>
-                                    </div> --}}
-                                </div>
-                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                    <div>
-                                        <h3 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{countAll('post')}}">{{countAll('post')}}</span></h3>
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header border-0 align-items-center d-flex">
+                    <div class="col-12">
+                        <h4 class="card-title mb-0 flex-grow-1">Thống kê khóa học</h4>
+                    </div>
+                </div><!-- end card header -->
 
-                                    </div>
-                                    <div class="avatar-sm flex-shrink-0">
-                                        <span class="avatar-title bg-info-subtle rounded fs-3">
-                                            <i class="bx bx-shopping-bag text-info"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
+                <div class="card-body p-0 pb-2">
+                    <div class="w-100">
+                        <!-- Create a canvas element for the chart -->
+                        <canvas id="courseChart"  class=" p-4" height="320"></canvas>
 
-                    <div class="col-xl-3 col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-grow-1 overflow-hidden">
-                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Đăng nhập</p>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        {{-- <h5 class="text-success fs-14 mb-0">
-                                            <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +29.08 %
-                                        </h5> --}}
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                    <div>
-                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{countAll('loginLog')}}">{{countAll('loginLog')}}</span> </h4>
+                        <!-- Your other HTML content -->
 
-                                    </div>
-                                    <div class="avatar-sm flex-shrink-0">
-                                        <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                            <i class="bx bx-user-circle text-warning"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-
-                    <div class="col-xl-3 col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-grow-1 overflow-hidden">
-                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Khóa học</p>
-                                    </div>
-                                    {{-- <div class="flex-shrink-0">
-                                        <h5 class="text-muted fs-14 mb-0">
-                                            +0.00 %
-                                        </h5>
-                                    </div> --}}
-                                </div>
-                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                    <div>
-                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{countAll('course')}}">{{countAll('course')}}</span></h4>
-
-                                    </div>
-                                    <div class="avatar-sm flex-shrink-0">
-                                        <span class="avatar-title bg-primary-subtle rounded fs-3">
-                                            <i class="bx bx-wallet text-primary"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                </div> <!-- end row-->
-
-
-
-
-
-            </div> <!-- end .h-100-->
-
-        </div> <!-- end col -->
-
-      
+                    </div>
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
     </div>
-    @endsection
+    
+    <script wire:ignore>
+        var paymentData = @json($course);
+
+        // Lấy labels từ các khóa của đối tượng
+        var labels = Object.keys(paymentData).map(month => "Danh mục " + month);
+
+        // Lấy amounts từ các giá trị của đối tượng
+        var amounts = Object.values(paymentData);
+        var ctx = document.getElementById('courseChart').getContext('2d');
+        myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Tổng khóa học',
+                    data: amounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+    <div wire:ignore>
+        <script>
+            document.addEventListener('livewire:init', () => {
+                var userChart;
+                Livewire.on('userUpdated', function(data) {
+                    user = data[0].user;
+                    console.log(user);
+                    if (user) {
+                        var labels = Object.keys(user).map(month => "Tháng " + month);
+                        var amounts = Object.values(user).map(count => count);
+                        if (userChart) {
+                            userChart.data.labels = labels;
+                            userChart.data.datasets[0].data = amounts;
+                            userChart.update();
+
+                        } else {
+                            var ctx = document.getElementById('userChart').getContext('2d');
+                            userChart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Số người dùng',
+                                        data: amounts,
+                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    },
+                                    responsive: true,
+                                    maintainAspectRatio: false
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        </script>
+    </div>
 </div>

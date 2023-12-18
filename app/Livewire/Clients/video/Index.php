@@ -14,6 +14,8 @@ class Index extends Component
 {   public $slug;
     public $video;
     public $related;
+    public $sections;
+    public $sectionVideos;
     public $course;
     public $slug_video;
     
@@ -59,6 +61,7 @@ class Index extends Component
         return view('livewire.clients.video.index', [
             'videos' => $this->video,
             'related' => $this->related,
+            'course' => $this->course,
             'sections' => $this->sections,
             'sectionVideos' => $this->sectionVideos,
             

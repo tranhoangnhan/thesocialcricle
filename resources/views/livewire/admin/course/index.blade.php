@@ -10,7 +10,7 @@
                             <div class="row g-4 mb-3">
                                 <div class="col-sm-auto">
                                     <div>
-                                        <a href="/  create-course" class="btn btn-success add-btn"><i
+                                        <a href="/create-course" class="btn btn-success add-btn"><i
                                                 class="ri-add-line align-bottom me-1"></i> Thêm</a>
                                         <button class="btn btn-soft-danger" hidden id="btn_delete" type="submit"
                                             onclick="return confirm('Bạn xác nhận muốn xóa tài khoản?')"><i
@@ -63,7 +63,7 @@
                                                             name="checkboxes[]" value="{{ $row->id }}">
                                                     </div>
                                                 </th>
-                                                <td class="img_product"><img src="{{ asset($row->banner) }}" alt="">
+                                                <td class="img_product"><img width="50" src="{{ asset($row->banner) }}" alt="">
                                                 </td>
                                                 <td>{{ $row->course_name }}</td>
                                                 <td>{{ $row->status }}</td>

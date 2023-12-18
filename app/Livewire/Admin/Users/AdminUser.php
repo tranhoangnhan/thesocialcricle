@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\User_Block;
 use App\Models\User_Intro;
 use App\Models\UsersModel;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -25,8 +26,9 @@ class AdminUser extends Component
     public $user_positon;
     public $user_role;
 
-    public $getUserId = '';
-    public $dataUpdate;
+    public $modalOpen = false;
+    protected $listeners = ['openModal'];
+    public $dataUpdate = '';
 
     public function createUser(){
         $createUser = UsersModel::create([
@@ -42,16 +44,31 @@ class AdminUser extends Component
             'user_token' => encrypt(Str::random(16))
         ]);
         $createUser->save();
-        $createUserIntro = User_Intro::create([
-            'position' => $this->user_positon,
-            'workplace' => $this->user_workplace,
-            'user_id' => User::latest()->first()->user_id
-        ]);
-        $createUserIntro->save();
     }
 
     public function getUpdateId($id){
-        $this->getUserId = $id;
+
+        $this->dataUpdate = User::where('user_id', $id)->first();
+        $this->modalOpen = true;
+    }
+    public function closeModal(){
+        $this->modalOpen = false;
+        $this->dataUpdate = '';
+    }
+
+    public function updateUser(Request $request){
+        $user = User::where('user_id', $request->id)->update([
+            'user_username' => $request->username,
+            'user_fullname' => $request->fullname,
+            'user_email' => $request->email,
+            'user_password' => Hash::make($request->password),
+            'user_phone' => $request->phone,
+            'user_birthday' => $request->birthdate,
+            'user_gender' => $request->genre,
+            'user_email_verified' => $request->active,
+            'user_role' => $request->role,
+        ]);
+        return back();
     }
 
     public function getBlockId($id){
@@ -94,8 +111,7 @@ class AdminUser extends Component
     public function render()
     {
         return view('livewire.admin.users.admin-user',[
-            'users' => User::all(),
-            'UpdateId' => User::where('user_id', $this->getUserId)->first()
+            'users' => User::orderBy('user_id', 'DESC')->get(),
         ]);
     }
 }

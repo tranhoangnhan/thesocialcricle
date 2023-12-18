@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\PaymentModel;
 use App\Models\CoursesModel;
 use App\Models\EnrollmentModel;
+use App\Mail\InvoicePaid;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -140,6 +142,13 @@ $returnData = array('code' => '00'
             'user_id' => auth()->user()->user_id,
             'course_id' => CoursesModel::where('slug', request()->slug)->first()->course_id
         ]);
+$amount = request()->vnp_Amount / 100;
+$course = CoursesModel::where('slug', request()->slug)->first();
+$date = date('Y-m-d H:i:s');
+$id_bill = request()->vnp_TxnRef;
+
+$courseLink =  env('APP_URL') . "/courses/$request->slug/";
+Mail::to(auth()->user()->user_email)->send(new InvoicePaid($amount, $course, $date, $id_bill, $courseLink));
         return redirect('/courses/' . request()->slug . '/');
         
     }
@@ -147,4 +156,5 @@ $returnData = array('code' => '00'
         return redirect('/courses/' . request()->slug);
     }
 }
+
 }

@@ -36,6 +36,8 @@
     <link rel="stylesheet" href="{{ asset('css/pintura.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
     <link rel="stylesheet" href="{{ asset('clients/assets/fontawesome/css/all.min.css') }}" />
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         a {
@@ -222,6 +224,8 @@
     <!-- Javascript
 
     ================================================== -->
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+
     <script src="{{ asset('js/app.js?v=1.03') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -253,199 +257,235 @@
         style="z-index:999999">
         <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
     </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             window.userId = {{ auth()->user()->user_id }};
-            if (document.getElementById('loadingOverlay')) {
-                document.getElementById('loadingOverlay').style.display = 'none';
-            }
-            window.Echo.channel(`laravel_database_loading.${window.userId}`)
-                .listen('.AllUsersEvent', (e) => {
-                    if (e.status == 'end') {
-                        document.getElementById('loadingOverlay').style.display = 'none';
-                    } else {
-                        document.getElementById('loadingOverlay').style.display = 'flex';
-                    }
-                });
+            window.Echo.channel(`laravel_database_Notification`).listen('.PostLike', (data) => {
+                    var notificationList = document.getElementById('notification-list');
+                    var newListItemHTML = `
+                    <li class="notification-0 dropdown-item p-4">
+                        <div class="drop_avatar d-flex justify-content-center">
+                            <img src="${data.user.user_avatar}" alt=""
+                            class="w-8 h-8 rounded-full">
+                            <p class="text-sm m-1">${data.message}</p>
+                        </div>
+                        <div class="drop_text">
+                            <time class="text-xs mx-4">
+                                Vừa xong
+                            </time>
+                        </div>
+                    </li>`;
+                    console.log(data);
+                    if (window.userId == data.user_id) {
+                        var newListItem = document.createElement('li'); // Create a new list item element
+                        newListItem.innerHTML = newListItemHTML; // Set the innerHTML of the new list item
 
-            var images = document.getElementsByTagName("img");
-            var batchSize = 10;
-            var currentIndex = 0;
-            if (images) {
-                function checkImages() {
-                    for (var i = currentIndex; i < Math.min(currentIndex + batchSize, images.length); i++) {
-                        var image = images[i];
-                        if (!image.checked) {
-                            image.checked = true; // Đánh dấu ảnh đã kiểm tra
-                            image.onerror = function() {
-                                this.src =
-                                    "https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png";
-                            };
+                        var listItems = notificationList.getElementsByTagName('li');
+                        var firstListItem = listItems[0]; // Selects the first <li> element
+
+                        // Insert the new list item element before the first list item
+                        notificationList.insertBefore(newListItem, firstListItem);
+
+                        // Update the UI to display the new count
+                        var countElement = document.getElementById('count-display');
+                        if (countElement) {
+                            var count = parseInt(countElement.innerText);
+                            countElement.innerText = count + 1;
                         }
                     }
-                    currentIndex += batchSize;
-                    if (currentIndex < images.length) {
-                        setTimeout(checkImages, 100);
-                    }
+            })
+      
+        if (document.getElementById('loadingOverlay')) {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+        window.Echo.channel(`laravel_database_loading.${window.userId}`)
+            .listen('.AllUsersEvent', (e) => {
+                if (e.status == 'end') {
+                    document.getElementById('loadingOverlay').style.display = 'none';
+                } else {
+                    document.getElementById('loadingOverlay').style.display = 'flex';
                 }
-                checkImages();
-            }
-            //copy
-            const shareLinkButton = document.querySelector('#sharelink');
-            const shareIcon = document.getElementById('shareIcon');
-
-            if (shareLinkButton) {
-                const clipboard = new ClipboardJS(shareLinkButton);
-
-                clipboard.on('success', function(e) {
-                    e.clearSelection();
-                    shareIcon.setAttribute("name", "checkmark-circle");
-                    shareLinkButton.querySelector('span').innerText = "Đã sao chép";
-
-                    setTimeout(function() {
-                        shareIcon.setAttribute("name", "arrow-redo-outline");
-                        shareLinkButton.querySelector('span').innerText = "Chia sẻ";
-                    }, 2000);
-                });
-            }
-
-
-
-            Fancybox.bind("[data-fancybox]", {
-                Carousel: {
-                    transition: "slide",
-                },
-                l10n: Fancybox.l10n.vi,
             });
-            var chatBox = document.getElementById('conversation');
 
-            function scrollConversation() {
-                var chatBox = document.getElementById('conversation');
-                if (chatBox) {
-                    chatBox.scrollTo({
-                        top: chatBox.scrollHeight,
-                        behavior: 'smooth'
-                    });
-                }
-            }
-
-
-            // Hàm tạo thông báo
-            function createNotification(title, message) {
-                const notification = new Notification(title, {
-                    body: message,
-                    icon: '{{ asset('clients/assets/images/logo-dark.png') }}', // Đường dẫn đến biểu tượng thông báo
-                });
-
-                // Xử lý sự kiện khi thông báo được nhấn
-                notification.onclick = function() {
-                    window.focus(); // Tập trung vào cửa sổ trình duyệt
-                    notification.close(); // Đóng thông báo
-                };
-            }
-            if (chatBox) {
-                scrollConversation();
-            }
-            document.addEventListener('livewire:initialized', () => {
-                // Livewire.on('slideTransition', () => {
-                //     const tl = gsap.timeline({});
-                //     tl.to(item, {
-                //         opacity: 1,
-                //         duration: 0.5,
-                //         ease: "power1.out",
-                //         scaleY: 0.9,
-                //         scaleX: 0.9
-                //     }, index * 0.5); // Thời gian trễ giữa mỗi item
-                //     tl.to(item, {
-                //         opacity: 1,
-                //         duration: 1,
-                //         scaleY: 1,
-                //         scaleX: 1
-                //     }, index * 0.2);
-                // });
-
-
-
-
-                var markAsReadMessage = document.getElementById('markAsReadMessage');
-                if (markAsReadMessage) {
-                    markAsReadMessage.addEventListener('click', function() {
-                        Livewire.dispatch('markAsReadMessage');
-                    });
-                }
-                Livewire.on('reloadPage', function() {
-                    location.reload();
-                });
-                if (chatBox) {
-                    var chat = document.getElementById('chat');
-                    if (chat) {
-                        chat.addEventListener('input', function() {
-                            setTimeout(() => {
-                                scrollConversation();
-                            }, 500);
-                        });
+        var images = document.getElementsByTagName("img");
+        var batchSize = 10;
+        var currentIndex = 0;
+        if (images) {
+            function checkImages() {
+                for (var i = currentIndex; i < Math.min(currentIndex + batchSize, images.length); i++) {
+                    var image = images[i];
+                    if (!image.checked) {
+                        image.checked = true; // Đánh dấu ảnh đã kiểm tra
+                        image.onerror = function() {
+                            this.src =
+                                "https://www.elegantthemes.com/blog/wp-content/uploads/2020/02/000-404.png";
+                        };
                     }
-                    scrollConversation();
                 }
-                Livewire.on('chat', (e) => {
-                    scrollConversation();
+                currentIndex += batchSize;
+                if (currentIndex < images.length) {
+                    setTimeout(checkImages, 100);
+                }
+            }
+            checkImages();
+        }
+        //copy
+        const shareLinkButton = document.querySelector('#sharelink');
+        const shareIcon = document.getElementById('shareIcon');
+
+        if (shareLinkButton) {
+            const clipboard = new ClipboardJS(shareLinkButton);
+
+            clipboard.on('success', function(e) {
+                e.clearSelection();
+                shareIcon.setAttribute("name", "checkmark-circle");
+                shareLinkButton.querySelector('span').innerText = "Đã sao chép";
+
+                setTimeout(function() {
+                    shareIcon.setAttribute("name", "arrow-redo-outline");
+                    shareLinkButton.querySelector('span').innerText = "Chia sẻ";
+                }, 2000);
+            });
+        }
+
+
+
+        Fancybox.bind("[data-fancybox]", {
+            Carousel: {
+                transition: "slide",
+            },
+            l10n: Fancybox.l10n.vi,
+        });
+        var chatBox = document.getElementById('conversation');
+
+        function scrollConversation() {
+            var chatBox = document.getElementById('conversation');
+            if (chatBox) {
+                chatBox.scrollTo({
+                    top: chatBox.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+
+        // Hàm tạo thông báo
+        function createNotification(title, message) {
+            const notification = new Notification(title, {
+                body: message,
+                icon: '{{ asset('clients/assets/images/logo-dark.png') }}', // Đường dẫn đến biểu tượng thông báo
+            });
+
+            // Xử lý sự kiện khi thông báo được nhấn
+            notification.onclick = function() {
+                window.focus(); // Tập trung vào cửa sổ trình duyệt
+                notification.close(); // Đóng thông báo
+            };
+        }
+        if (chatBox) {
+            scrollConversation();
+        }
+        document.addEventListener('livewire:initialized', () => {
+        // Livewire.on('slideTransition', () => {
+        //     const tl = gsap.timeline({});
+        //     tl.to(item, {
+        //         opacity: 1,
+        //         duration: 0.5,
+        //         ease: "power1.out",
+        //         scaleY: 0.9,
+        //         scaleX: 0.9
+        //     }, index * 0.5); // Thời gian trễ giữa mỗi item
+        //     tl.to(item, {
+        //         opacity: 1,
+        //         duration: 1,
+        //         scaleY: 1,
+        //         scaleX: 1
+        //     }, index * 0.2);
+        // });
+
+
+
+
+        var markAsReadMessage = document.getElementById('markAsReadMessage');
+        if (markAsReadMessage) {
+            markAsReadMessage.addEventListener('click', function() {
+                Livewire.dispatch('markAsReadMessage');
+            });
+        }
+        Livewire.on('reloadPage', function() {
+            location.reload();
+        });
+        if (chatBox) {
+            var chat = document.getElementById('chat');
+            if (chat) {
+                chat.addEventListener('input', function() {
                     setTimeout(() => {
                         scrollConversation();
                     }, 500);
                 });
+            }
+            scrollConversation();
+        }
+        Livewire.on('chat', (e) => {
+            scrollConversation();
+            setTimeout(() => {
+                scrollConversation();
+            }, 500);
+        });
 
 
-                const channelName = `laravel_database_chat.${window.userId}`;
+        const channelName = `laravel_database_chat.${window.userId}`;
 
-                const messageSound = new Audio('{{ asset('clients/assets/mp3/tone.wav') }}');
+        const messageSound = new Audio('{{ asset('clients/assets/mp3/tone.wav') }}');
 
-                function playAudio() {
-                    messageSound.play();
-                }
-                window.Echo.channel(channelName)
-                    .listen('.MessageEvent', (data) => {
-                        if (data.receiverId == window.userId) {
-                            Livewire.dispatch('chat');
-                            setTimeout(() => {
-                                const messageToShow = data.message ? data.message :
-                                    'Gửi 1 hình ảnh';
-                                playAudio();
-                                scrollConversation();
-                                if ("Notification" in window) {
-                                    if (Notification.permission === "granted") {
-                                        createNotification(`Tin nhắn từ ${data.name}`,
-                                            `${messageToShow}`);
-                                    } else if (Notification.permission !== "denied") {
-                                        Notification.requestPermission().then(function(
-                                            permission) {
-                                            if (permission === "granted") {
-                                                createNotification("Tin nhắn mới",
-                                                    "Bạn có một tin nhắn mới từ ai đó."
-                                                );
-                                            }
-                                        });
+        function playAudio() {
+            messageSound.play();
+        }
+        window.Echo.channel(channelName)
+            .listen('.MessageEvent', (data) => {
+                if (data.receiverId == window.userId) {
+                    Livewire.dispatch('chat');
+                    setTimeout(() => {
+                        const messageToShow = data.message ? data.message :
+                            'Gửi 1 hình ảnh';
+                        playAudio();
+                        scrollConversation();
+                        if ("Notification" in window) {
+                            if (Notification.permission === "granted") {
+                                createNotification(`Tin nhắn từ ${data.name}`,
+                                    `${messageToShow}`);
+                            } else if (Notification.permission !== "denied") {
+                                Notification.requestPermission().then(function(
+                                    permission) {
+                                    if (permission === "granted") {
+                                        createNotification("Tin nhắn mới",
+                                            "Bạn có một tin nhắn mới từ ai đó."
+                                        );
                                     }
-                                }
-                            }, 500);
+                                });
+                            }
                         }
-                    });
+                    }, 500);
+                }
+            });
 
-                window.Echo.channel(`laravel_database_chat_notifications.${window.userId}`)
-                    .listen('.AllUsersEvent', (e) => {
-                        location.reload();
-                    });
+        window.Echo.channel(`laravel_database_chat_notifications.${window.userId}`)
+            .listen('.AllUsersEvent', (e) => {
+                location.reload();
+            });
 
-                if (document.getElementById('typing-chat')) {
-                    const avatarHTML = document.getElementById('typing-chat').getAttribute('data-avatar');
-                    let typingIndicatorShown = false;
-                    // Lắng nghe sự kiện "đang gõ văn bản"
-                    window.Echo.channel(`laravel_database_users_typing_to.${window.userId}`)
-                        .listen('.AllUsersEvent', (data) => {
-                            if (data.receiverId == window.userId && data.type == 'typing') {
-                                const typingIndicatorExists = document.querySelector(
-                                    '.message-bubble .typing-indicator');
-                                if (data.status == 1 && !typingIndicatorExists) {
-                                    const typingIndicator = `
+        if (document.getElementById('typing-chat')) {
+            const avatarHTML = document.getElementById('typing-chat').getAttribute('data-avatar');
+            let typingIndicatorShown = false;
+            // Lắng nghe sự kiện "đang gõ văn bản"
+            window.Echo.channel(`laravel_database_users_typing_to.${window.userId}`)
+                .listen('.AllUsersEvent', (data) => {
+                    if (data.receiverId == window.userId && data.type == 'typing') {
+                        const typingIndicatorExists = document.querySelector(
+                            '.message-bubble .typing-indicator');
+                        if (data.status == 1 && !typingIndicatorExists) {
+                            const typingIndicator = `
                                     <div class="message-bubble">
                                         <div class="message-bubble-inner">
                                             <div class="message-avatar relative">
@@ -462,22 +502,22 @@
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>`;
-                                    document.getElementById('typing-chat').insertAdjacentHTML(
-                                        'beforeend',
-                                        typingIndicator);
-                                    setTimeout(() => {
-                                        scrollConversation();
-                                    }, 500);
-                                } else if (data.status == 0 && typingIndicatorExists) {
+                            document.getElementById('typing-chat').insertAdjacentHTML(
+                                'beforeend',
+                                typingIndicator);
+                            setTimeout(() => {
+                                scrollConversation();
+                            }, 500);
+                        } else if (data.status == 0 && typingIndicatorExists) {
 
-                                    typingIndicatorExists.parentElement.parentElement.parentElement
-                                        .remove();
-                                }
-                            }
-                        });
-                }
+                            typingIndicatorExists.parentElement.parentElement.parentElement
+                                .remove();
+                        }
+                    }
+                });
+        }
 
-            });
+        });
         });
     </script>
     <script>
@@ -528,7 +568,9 @@
             xhr.send();
         }
     </script>
-
+<script>
+    const player = new Plyr('#player');
+  </script>
     @yield('js')
     @livewireScripts()
 </body>

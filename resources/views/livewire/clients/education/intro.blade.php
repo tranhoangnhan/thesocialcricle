@@ -12,9 +12,16 @@
     </ul>
     @if ($enroller==true)
     <div class="row d-flex justify-content-between">
+        @if ($first_video)
         <div class="col-6">
             <a class="btn btn-primary w-100" href="/courses/{{$course->slug}}/enroll/{{$first_video}}"> <i class="uil-play mr-1"></i>  Xem nội dung khóa học</a>
         </div>
+        @else
+        <div class="col-6">
+            <a class="btn btn-secondary w-100"> <i class="uil-play mr-1"></i>Chưa có nội dung</a>
+        </div>
+        @endif
+  
         <div class="col-6">
             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete"><i class="uil-cancel mr-1"></i>  Hủy Tham gia </button>
         </div>

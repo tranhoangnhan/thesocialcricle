@@ -10,22 +10,21 @@ use Illuminate\Support\Str;
 class Category extends Component
 {
     public $category_name;
-    public $category_new;
     public $check_update = false;
     public $check_create ='';
     protected $rules = [
-        'check_create' => 'required|unique:course_category,category_new',
+        'category_name' => 'required|unique:course_category,category_name',
     ];
     protected $messages = [
-        'check_create.required' => 'Vui lòng nhập tên danh mục.',
-        'check_create.unique'=> 'Tên đã tồn tại',
+        'category_name.required' => 'Vui lòng nhập tên danh mục.',
+        'category_name.unique'=> 'Tên đã tồn tại',
     ];
     public function Create()
     {
         $this->validate();
         CourseCategoryModel::create([
-            'category_name' =>  $this->category_new,
-            'slug' => Str::slug($this->category_new)
+            'category_name' =>  $this->category_name,
+            'slug' => Str::slug($this->category_name)
         ]);
     }
 

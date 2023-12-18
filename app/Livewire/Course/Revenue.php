@@ -4,6 +4,7 @@ namespace App\Livewire\Course;
 
 use Livewire\Component;
 use App\Models\PaymentModel;
+use App\Models\UsersModel;
 class Revenue extends Component
 {
     public $course;
@@ -27,9 +28,17 @@ class Revenue extends Component
             ->whereBetween(\DB::raw('DATE(created_at)'), [$this->startdate, $this->enddate])
             ->first()
             ->total_revenue;
-                    return view('livewire.course.revenue')->with('revenue', $revenue);
+            $members = UsersModel::join('payment', 'users.user_id', '=', 'payment.user_id')
+        ->where('payment.course_id', $this->course->course_id)
+        ->whereBetween(\DB::raw('DATE(payment.created_at)'), [$this->startdate, $this->enddate])
+        ->get();
+                    return view('livewire.course.revenue')->with('revenue', $revenue)->with('members', $members);
         }
         $revenue = PaymentModel::where('course_id', $this->course->course_id)->sum('vnp_Amount');
-        return view('livewire.course.revenue')->with('revenue', $revenue);
+        $members = UsersModel::select('users.user_fullname','users.user_username','payment.*')->join('payment', 'users.user_id', '=', 'payment.user_id')
+        ->where('payment.course_id', $this->course->course_id)
+        
+        ->get();
+        return view('livewire.course.revenue')->with('revenue', $revenue)->with('members', $members);
     }
 }

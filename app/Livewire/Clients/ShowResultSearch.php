@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Clients;
 
+use App\Models\CoursesModel;
 use App\Models\PostReaction;
 use App\Models\PostsComment;
 use App\Models\PostsModel;
@@ -21,6 +22,20 @@ class ShowResultSearch extends Component
     public $statusLike;
     public $ContentComment = [];
     public $loadComment = [];
+
+    public $category = 0;
+    public function category0(){
+        $this->category = 0;
+    }
+    public function category1(){
+        $this->category = 1;
+    }
+    public function category2(){
+        $this->category = 2;
+    }
+    public function category3(){
+        $this->category = 3;
+    }
 
 
     public function mount(Request $request){
@@ -107,6 +122,11 @@ class ShowResultSearch extends Component
             $friend = User::where('user_fullname', 'LIKE', "%{$this->search}%")
             ->limit(5)->get();
         }
+        $course = [];
+        if(strlen($this->search >= 1)){
+            $course = CoursesModel::where('course_name', 'LIKE', "%{$this->search}%")
+                ->limit(5)->get();
+        }
         $posts = PostsModel::where('text','LIKE',"%{$this->search}%")
             ->limit($this->loadAmount)
             ->get();
@@ -131,6 +151,7 @@ class ShowResultSearch extends Component
         return view('livewire.clients.show-result-search', [
             'friend' => $friend,
             'posts' => $posts,
+            'course' => $course
         ]);
     }
 }
