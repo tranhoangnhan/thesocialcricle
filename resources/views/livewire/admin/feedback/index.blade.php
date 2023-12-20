@@ -9,20 +9,15 @@
                     <div class="listjs-table" id="customerList">
                         <div class="row g-4 mb-3">
                             <div class="col-sm">
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex">
                                     <form action="{{ route('home') }}" method="post">
                                         @csrf
-                                        <div class="row">
-                                            <div class="col-8">
-                                                <input type="text" name="kw" class="form-control search"
-                                                    placeholder="Tìm kiếm...">
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-4">
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="ri-search-line search-icon"></i>
-                                                </button>
-                                            </div>
+                                        <div class="d-flex">
+                                            <input type="text" name="kw" class="form-control search" placeholder="Tìm kiếm...">
+                                            <button type="submit" class="btn btn-primary mx-1">
+                                                <i class="ri-search-line search-icon"></i>
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

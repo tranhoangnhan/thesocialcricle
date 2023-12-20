@@ -31,6 +31,7 @@ class Index extends Component
             $course->status=1;
             $course->save();
        }
+       $this->changeOption();
     }
     public function changeOption(){
         if($this->option==0){

@@ -19,8 +19,8 @@
                 </div>
                 <!--end row-->
 
-                <div class="row">
-                    <div class="col-xl-3 col-md-6">
+                <div class="row ">
+                    <div class="col-xl-3 col-md-6 col-6">
                         <!-- card -->
                         <div class="card card-animate">
                             <div class="card-body">
@@ -43,7 +43,7 @@
                         </div><!-- end card -->
                     </div><!-- end col -->
 
-                    <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-3 col-md-6 col-6">
                         <!-- card -->
                         <div class="card card-animate">
                             <div class="card-body">
@@ -67,7 +67,7 @@
                         </div><!-- end card -->
                     </div><!-- end col -->
 
-                    <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-3 col-md-6 col-6">
                         <!-- card -->
                         <div class="card card-animate">
                             <div class="card-body">
@@ -91,7 +91,7 @@
                         </div><!-- end card -->
                     </div><!-- end col -->
 
-                    <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-3 col-md-6 col-6">
                         <!-- card -->
                         <div class="card card-animate">
                             <div class="card-body">
@@ -120,12 +120,34 @@
                         </div><!-- end card -->
                     </div><!-- end col -->
                 </div> <!-- end row-->
-                @livewire('admin.home')
+                <div class="row">
+                    @livewire('admin.home')
+                </div>
             </div> <!-- end .h-100-->
 
         </div> <!-- end col -->
 
       
     </div>
+    @endsection
+    @section('css')
+    <style>
+        @media (min-width: 992px) {
+            #userChart {
+                height: 300px;
+            }
+            #courseChart {
+                height: 320px;
+            }
+        }
+        @media (max-width: 767px) {
+            #userChart {
+                height: 200px;
+            }
+            #courseChart {
+                height: 220px;
+            }
+        }
+    </style>
     @endsection
 </div>

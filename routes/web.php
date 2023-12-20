@@ -24,6 +24,7 @@ use App\Http\Controllers\admin\CourseCategoryController as AdminCourseCategory;
 use App\Http\Controllers\admin\CourseMountController as AdminCourseMount;
 use App\Http\Controllers\admin\FeedbackController as AdminFeedBack;
 use App\Http\Controllers\admin\ReportController as AdminReport;
+use App\Http\Controllers\admin\BillController as AdminBill;
 use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShowAddFriendsController;
@@ -96,6 +97,7 @@ Route::middleware(['checkadmin'])->group(function () {
     Route::get('/admin/course-category', [AdminCourseCategory::class, 'Index'])->name('admin.course-category');
     Route::get('/admin/feedback', [AdminFeedBack::class, 'Index'])->name('admin.feedback');
     Route::get('/admin/report', [AdminReport::class, 'Index'])->name('admin.report');
+    Route::get('/admin/bill', [AdminBill::class, 'index'])->name('admin.bill');
 });
 
 Route::get('/@{id}', [ProfileController::class, 'index'])->where('id', '[0-9A-Za-z]+')->middleware('check.profile')->name('profile');
