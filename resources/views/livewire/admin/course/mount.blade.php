@@ -3,10 +3,10 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header border-0 align-items-center d-flex">
-                    <div class="col-10">
+                    <div class="col-sm-10 col-8">
                         <h4 class="card-title mb-0 flex-grow-1">Thống kê doanh thu</h4>
                     </div>
-                    <div class="col-2">
+                    <div class="col-sm-2 col-4">
                         <select class="form-select" wire:model='year' name="year" wire:change='updateChart'>
                             @foreach ($getYear as $row)
                                 <option {{ $row->year == $selectedYear ? 'selected' : '' }} value="{{ $row->year }}">

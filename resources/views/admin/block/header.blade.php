@@ -24,7 +24,7 @@
                             </span>
                         </span>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="page-header-user-dropdown">
+                    <div class="dropdown-menu dropdown-menu-end " aria-labelledby="page-header-user-dropdown">
                         <a class="dropdown-item" href="">
                             <i class="ri-user-line align-middle me-1"></i>
                             <span class="align-middle">Hồ sơ</span>
@@ -38,3 +38,10 @@
         </div>
     </div>
 </header>
+<style>
+    @media (max-width: 991px) {
+        .header-item.topbar-user .dropdown-menu {
+            width: 10%;
+        }
+    }
+</style>

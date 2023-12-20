@@ -1,18 +1,21 @@
 <div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-md-6">
             <div class="card">
-                <div class="card-header border-0 align-items-center d-flex">
-                    <div class="col-10">
-                        <h4 class="card-title mb-0 flex-grow-1">Thống kê người dùng</h4>
-                    </div>
-                    <div class="col-2">
-                        <select class="form-select" wire:model='year' name="year" wire:change='updateChart'>
-                            @foreach ($getYear as $row)
-                                <option {{ $row->year == $selectedYear ? 'selected' : '' }} value="{{ $row->year }}">
-                                    Năm {{ $row->year }}</option>
-                            @endforeach
-                        </select>
+                <div class="card-header border-0 ">
+                    <div class="row">   
+                        <div class="col-8 col-sm-5">
+                            <h4 class="card-title mb-0 flex-grow-1">Thống kê người dùng</h4>
+                        </div>
+                        <div class="col-sm-4 d-none d-sm-block"></div>
+                        <div class="col-4 col-sm-3 float-end">
+                            <select class="form-select" wire:model='year' name="year" wire:change='updateChart'>
+                                @foreach ($getYear as $row)
+                                    <option {{ $row->year == $selectedYear ? 'selected' : '' }} value="{{ $row->year }}">
+                                        Năm {{ $row->year }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div><!-- end card header -->
                 <!-- Include Chart.js -->
@@ -20,7 +23,7 @@
                 <div class="card-body p-0 pb-2">
                     <div class="w-100" wire:ignore>
                         <!-- Create a canvas element for the chart -->
-                        <canvas id="userChart" class=" p-4" height="300"></canvas>
+                        <canvas id="userChart" class=" p-4"></canvas>
 
                         <!-- Your other HTML content -->
 
@@ -28,7 +31,7 @@
                 </div><!-- end card body -->
             </div><!-- end card -->
         </div><!-- end col -->
-        <div class="col-6">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header border-0 align-items-center d-flex">
                     <div class="col-12">
@@ -39,7 +42,7 @@
                 <div class="card-body p-0 pb-2">
                     <div class="w-100">
                         <!-- Create a canvas element for the chart -->
-                        <canvas id="courseChart"  class=" p-4" height="320"></canvas>
+                        <canvas id="courseChart"  class=" p-4" ></canvas>
 
                         <!-- Your other HTML content -->
 
@@ -86,7 +89,6 @@
                 var userChart;
                 Livewire.on('userUpdated', function(data) {
                     user = data[0].user;
-                    console.log(user);
                     if (user) {
                         var labels = Object.keys(user).map(month => "Tháng " + month);
                         var amounts = Object.values(user).map(count => count);

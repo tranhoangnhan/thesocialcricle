@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <div class="listjs-table" id="customerList">
                         <div class="row g-4 mb-3">
-                            <div class="col-3">
+                            <div class="col-sm-3 col-6">
                                 <div class="d-flex">
                                         <input type="text" name="kw" class="form-control search"
                                             placeholder="Tìm kiếm...">
@@ -16,9 +16,9 @@
                                             <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
-                            <div class="col-6"></div>
-                            <div class="col-2" style="margin-left: 80px">
-                                <select wire:model='option' name="option" wire:change='changeOption()' class="form-select">
+                            <div class="col-sm-7 d-sm-block d-none"></div>
+                            <div class="col-sm-2 col-6 float-end d-flex justify-content-end">
+                                <select wire:model='option' name="option" wire:change='changeOption()' class="form-select w-75">
                                     <option value="0">Bài viết</option>
                                     <option value="1">Người dùng</option>
                                     <option value="2">Khóa học</option>
